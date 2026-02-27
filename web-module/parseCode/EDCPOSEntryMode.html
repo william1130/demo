@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Context-Script-Type" content="text/javascript">
+	
+	<link href='../css/common.css' rel="stylesheet" type="text/css">
+	<link href='../css/dialog.css' rel="stylesheet" type="text/css">
+	<link href='../css/folding.css' rel='stylesheet' type='text/css'>
+	<link href='../css/project.css' rel='stylesheet' type='text/css'>
+	<link href='../css/widget.css' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="ieVersion">
+	<div id="mainContentBlock" style="width: 100%">
+
+		<div id='criteriaBlock' class='foldingBlock' style="width: 98%">
+
+
+			<table border="0" cellpadding="2" cellspacing="1" class="listTable"
+				align="center">
+				<thead>
+					<tr>
+						<th width="33%">Position 1<br/>Terminal Entry Capability</th>
+						<th width="33%">Position 2-3<br/>PAN Entry Mode</th>
+						<th width="33%">Position 4<br/>PIN Entry Mode</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="oddRow">
+						<td align="center" style="vertical-align: top;">
+							<table border="0" cellpadding="4" cellspacing="0" class="listTable" align="center">
+								<tr class="oddRow">
+									<td align="center" width="20%">0</td>
+									<td align="left" width="80%">Unspecified</td>
+								</tr>
+								<tr class="evenRow">
+									<td align="center">5</td>
+									<td align="left">EMV compliance terminal</td>
+								</tr>
+							</table>
+
+						</td>
+						<td align="center" style="vertical-align: top;">
+							<table border="0" cellpadding="4" cellspacing="0" class="listTable" align="center">
+								<tr class="oddRow">
+									<td align="center" width="20%">00</td>
+									<td align="left" width="80%">Unspecified</td>
+								</tr>
+								<tr class="evenRow">
+									<td align="center">01</td>
+									<td align="left">PAN entered manually</td>
+								</tr>
+								<tr class="oddRow">
+									<td align="center">02</td>
+									<td align="left">
+										(1)	PAN auto-entry via magnetic stripe<br/>
+										(2)	UICC Fallback
+									</td>
+								</tr>
+								<tr class="evenRow">
+									<td align="center">05</td>
+									<td align="left">PAN auto-entry via chip</td>
+								</tr>
+								<tr class="oddRow">
+									<td align="center">07</td>
+									<td align="left">
+										(1)	PAN auto-entry via contactless<br/>
+										(2)	MasterCard PayPass Chip<br/>
+										(3)	VISA Paywave 1<br/>
+										(4)	VISA Paywave 3<br/>
+										(5)	JCB J/Speedy
+									</td>
+								</tr>
+								<tr class="evenRow">
+									<td align="center">80</td>
+									<td align="left">M/Chip Fallback</td>
+								</tr>	
+								<tr class="oddRow">
+									<td align="center">90</td>
+									<td align="left">VSDC Fallback</td>
+								</tr>
+								<tr class="evenRow">
+									<td align="center">91</td>
+									<td align="left">
+										(1)PAN auto-entry via contactless<br/>
+										(2)PayPass Magnetic Stripe only
+									</td>
+								</tr>
+								<tr class="oddRow">
+									<td align="center">97</td>
+									<td align="left">J/Smart Fallback</td>
+								</tr>
+							</table>
+						</td>
+						<td align="center" style="vertical-align: top;">
+							<table border="0" cellpadding="4" cellspacing="0" class="listTable" align="center">
+								<tr class="oddRow">
+									<td align="center" width="20%">1</td>
+									<td align="left" width="80%">With PIN entry capability</td>
+								</tr>
+								<tr class="evenRow">
+									<td align="center">2</td>
+									<td align="left">Without PIN entry capability</td>
+								</tr>
+								<tr class="oddRow">
+									<td align="center">8</td>
+									<td align="left">Terminal has PIN entry capability but currently PIN PAD is not operative(M/Chip only)</td>
+								</tr>
+								<tr class="evenRow">
+									<td align="center">9</td>
+									<td align="left">PIN verified by terminal device(M/Chip only)</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</body>
+</html>

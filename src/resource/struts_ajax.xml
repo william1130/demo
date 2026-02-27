@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 6.0//EN" "https://struts.apache.org/dtds/struts-6.0.dtd">
+
+<struts>
+	<package name="ajax" namespace="/ajax" extends="proj-default">
+		<action name="queryOptions" method="queryOptions"
+			class="proj.nccc.logsearch.struts.AjaxActions">
+			<result name="input">/front.jsp</result>
+			<result name="Result">/ajax/ajax_result.jsp</result>
+		</action>
+
+		<action name="showReturnWord" method="showReturnWord"
+			class="proj.nccc.logsearch.struts.AjaxActions">
+			<result name="input">/front.jsp</result>
+			<result name="Result">/ajax/ajax_result.jsp</result>
+		</action>
+
+		<action name="queryTranTypeOptionsFromMti" method="queryTranTypeOptionsFromMti"
+			class="proj.nccc.logsearch.struts.AjaxActions">
+			<result name="input">/front.jsp</result>
+			<result name="Result">/ajax/ajax_result.jsp</result>
+		</action>
+		<action name="queryTranTypeOptionsFromHost" method="queryTranTypeOptionsFromHost"
+			class="proj.nccc.logsearch.struts.AjaxActions">
+			<result name="input">/front.jsp</result>
+			<result name="Result">/ajax/ajax_result.jsp</result>
+		</action>
+		<action name="queryBankBase" method="queryBankBase" class="proj.nccc.logsearch.struts.AjaxActions">
+			<result name="input">/front.jsp</result>
+			<result name="Result">/ajax/ajax_result.jsp</result>
+		</action>
+		<action name="queryMchtBase" method="queryMchtBase" class="proj.nccc.logsearch.struts.AjaxActions">
+			<result name="input">/front.jsp</result>
+			<result name="Result">/ajax/ajax_result.jsp</result>
+		</action>	
+	</package>
+</struts>
+

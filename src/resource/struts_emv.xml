@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 6.0//EN" "https://struts.apache.org/dtds/struts-6.0.dtd">
+
+<struts>
+	<package name="emv" namespace="/emv" extends="proj-default">
+		<action name="toEmvQuery">
+			<result>/emv/emvQuery.jsp</result>
+		</action>
+		<action name="toEmvIndex">
+			<result>/emv/emvIndex.jsp</result>
+		</action>
+		<action name="toMaintainEmvCardType">
+			<result>/emv/emvCardTypeQuery.jsp</result>
+		</action>
+		<action name="toCreateEmvCardType">
+			<result>/emv/emvCardTypeCreate.jsp</result>
+		</action>
+		<action name="toEmvCardTypeTemp">
+			<result>/emv/emvCardTypeTempQuery.jsp</result>
+		</action>
+		<action name="toEmvUiLogQuery">
+			<result>/emv/emvUiLogQuery.jsp</result>
+		</action>
+		<action name="toMaintainEmvRefSpec">
+			<result>/emv/emvRefSpecQuery.jsp</result>
+		</action>
+		<action name="toCreateEmvRefSpec">
+			<result>/emv/emvRefSpecCreate.jsp</result>
+		</action>
+		<action name="toEmvRefSpecTemp">
+			<result>/emv/emvRefSpecTempQuery.jsp</result>
+		</action>
+		<action name="toEmvTagRecordQuery">
+			<result>/emv/emvTagRecordQuery.jsp</result>
+		</action>
+		<action name="toEmvTagRecordCreate">
+			<result>/emv/emvTagRecordCreate.jsp</result>
+		</action>
+		<action name="toEmvTagRecordModQuery">
+			<result>/emv/emvTagRecordModQuery.jsp</result>
+		</action>
+		<action name="toEmvTagRecordDelQuery">
+			<result>/emv/emvTagRecordDelQuery.jsp</result>
+		</action>
+		<action name="toEmvTagRecordTemp">
+			<result>/emv/emvTagRecordTempQuery.jsp</result>
+		</action>
+		<action name="queryEmvCardType" method="queryList" class="proj.nccc.logsearch.struts.EmvCardTypeActions">
+			<result name="input">/emv/emvCardTypeList.jsp</result>
+			<result name="Fail">/emv/emvCardTypeList.jsp</result>
+			<result name="Success">/emv/emvCardTypeList.jsp</result>
+		</action>
+		<action name="createEmvCardType" method="create" class="proj.nccc.logsearch.struts.EmvCardTypeActions">
+			<result name="input">/emv/emvCardTypeCreate.jsp</result>
+			<result name="Fail">/emv/emvCardTypeCreate.jsp</result>
+			<result name="Success">/jsp/result.jsp?refreshOpener=true</result>
+		</action>
+		<action name="toModifyEmvCardType" method="queryProjPersistable" class="proj.nccc.logsearch.struts.EmvCardTypeActions">
+			<result name="input">/emv/emvCardTypeQuery.jsp</result>
+			<result name="Fail">/emv/emvCardTypeMod.jsp</result>
+			<result name="Success">/emv/emvCardTypeMod.jsp</result>
+		</action>
+		<action name="modifyEmvCardType" method="modify" class="proj.nccc.logsearch.struts.EmvCardTypeActions">
+			<result name="input">/emv/emvCardTypeMod.jsp</result>
+			<result name="Fail">/emv/emvCardTypeMod.jsp</result>
+			<result name="Success">/jsp/result.jsp?refreshOpener=true</result>
+		</action>
+		<action name="deleteEmvCardType" method="delete" class="proj.nccc.logsearch.struts.EmvCardTypeActions">
+			<result name="input">/emv/emvCardTypeQuery.jsp</result>
+			<result name="Fail">/jsp/result.jsp</result>
+			<result name="Success">/jsp/result.jsp?refreshOpener=true</result>
+		</action>
+		<action name="queryEmvCardTypeTemp" method="queryList" class="proj.nccc.logsearch.struts.EmvCardTypeTempActions">
+			<result name="input">/emv/emvCardTypeTempQueryList.jsp</result>
+			<result name="Fail">/emv/emvCardTypeTempQueryList.jsp</result>
+			<result name="Success">/emv/emvCardTypeTempQueryList.jsp</result>
+		</action>
+		<action name="approveEmvCardTypeTemp" method="approve" class="proj.nccc.logsearch.struts.EmvCardTypeTempActions">
+			<result name="input">/emv/emvCardTypeTempQueryList.jsp</result>
+			<result name="Fail">/jsp/result.jsp</result>
+			<result name="Success">/jsp/result.jsp?refreshOpener=true</result>
+		</action>
+		<action name="rejectEmvCardTypeTemp" method="reject" class="proj.nccc.logsearch.struts.EmvCardTypeTempActions">
+			<result name="input">/emv/emvCardTypeTempQueryList.jsp</result>
+			<result name="Fail">/jsp/result.jsp</result>
+			<result name="Success">/jsp/result.jsp?refreshOpener=true</result>
+		</action>
+		<action name="queryEmvUiLogList" method="queryUiLog" class="proj.nccc.logsearch.struts.EmvUiLogActions">
+			<result name="input">/emv/emvUiLogQueryList.jsp</result>
+			<result name="Fail">/emv/emvUiLogQueryList.jsp</result>
+			<result name="Success">/emv/emvUiLogQueryList.jsp</result>
+		</action>
+		<action name="queryEmvRefSpec" method="queryList" class="proj.nccc.logsearch.struts.EmvRefSpecActions">
+			<result name="input">/emv/emvRefSpecList.jsp</result>
+			<result name="Fail">/emv/emvRefSpecList.jsp</result>
+			<result name="Success">/emv/emvRefSpecList.jsp</result>
+		</action>
+		<action name="createEmvRefSpec" method="create" class="proj.nccc.logsearch.struts.EmvRefSpecActions">
+			<result name="input">/emv/emvRefSpecCreate.jsp</result>
+			<result name="Fail">/emv/emvRefSpecCreate.jsp</result>
+			<result name="Success">/jsp/result.jsp?refreshOpener=true</result>
+		</action>
+		<action name="toModifyEmvRefSpec" method="queryProjPersistable" class="proj.nccc.logsearch.struts.EmvRefSpecActions">
+			<result name="input">/emv/emvRefSpecQuery.jsp</result>
+			<result name="Fail">/emv/emvRefSpecMod.jsp</result>
+			<result name="Success">/emv/emvRefSpecMod.jsp</result>
+		</action>
+		<action name="modifyEmvRefSpec" method="modify" class="proj.nccc.logsearch.struts.EmvRefSpecActions">
+			<result name="input">/emv/emvRefSpecMod.jsp</result>
+			<result name="Fail">/emv/emvRefSpecMod.jsp</result>
+			<result name="Success">/jsp/result.jsp?refreshOpener=true</result>
+		</action>
+		<action name="deleteEmvRefSpec" method="delete" class="proj.nccc.logsearch.struts.EmvRefSpecActions">
+			<result name="input">/emv/emvRefSpecQuery.jsp</result>
+			<result name="Fail">/jsp/result.jsp</result>
+			<result name="Success">/jsp/result.jsp?refreshOpener=true</result>
+		</action>
+		<action name="queryEmvRefSpecTemp" method="queryList" class="proj.nccc.logsearch.struts.EmvRefSpecTempActions">
+			<result name="input">/emv/emvRefSpecTempQueryList.jsp</result>
+			<result name="Fail">/emv/emvRefSpecTempQueryList.jsp</result>
+			<result name="Success">/emv/emvRefSpecTempQueryList.jsp</result>
+		</action>
+		<action name="approveEmvRefSpecTemp" method="approve" class="proj.nccc.logsearch.struts.EmvRefSpecTempActions">
+			<result name="input">/emv/emvRefSpecTempQueryList.jsp</result>
+			<result name="Fail">/jsp/result.jsp</result>
+			<result name="Success">/jsp/result.jsp?refreshOpener=true</result>
+		</action>
+		<action name="rejectEmvRefSpecTemp" method="reject" class="proj.nccc.logsearch.struts.EmvRefSpecTempActions">
+			<result name="input">/emv/emvRefSpecTempQueryList.jsp</result>
+			<result name="Fail">/jsp/result.jsp</result>
+			<result name="Success">/jsp/result.jsp?refreshOpener=true</result>
+		</action>
+		<action name="createEmvTagRecord" method="create" class="proj.nccc.logsearch.struts.EmvTagRecordActions">
+			<result name="input">/emv/emvTagRecordCreate.jsp</result>
+			<result name="Fail">/emv/emvTagRecordCreate.jsp</result>
+			<result name="Success">/emv/emvTagRecordCreate.jsp?success=true</result>
+		</action>
+		<action name="queryEmvTagRecordMod" method="queryMod" class="proj.nccc.logsearch.struts.EmvTagRecordActions">
+			<result name="input">/emv/emvTagRecordModQuery.jsp</result>
+			<result name="Fail">/emv/emvTagRecordModQueryList.jsp</result>
+			<result name="Success">/emv/emvTagRecordModQueryList.jsp</result>
+		</action>
+		<action name="toModifyEmvTagRecord" method="queryProjPersistable" class="proj.nccc.logsearch.struts.EmvTagRecordActions">
+			<result name="input">/emv/emvTagRecordModQuery.jsp</result>
+			<result name="Fail">/emv/emvTagRecordMod.jsp</result>
+			<result name="Success">/emv/emvTagRecordMod.jsp</result>
+		</action>
+		<action name="modifyEmvTagRecord" method="modify" class="proj.nccc.logsearch.struts.EmvTagRecordActions">
+			<result name="input">/emv/emvTagRecordMod.jsp</result>
+			<result name="Fail">/emv/emvTagRecordMod.jsp</result>
+			<result name="Success">/jsp/result.jsp?refreshOpener=true</result>
+		</action>
+		<action name="queryEmvTagRecordDel" method="queryMod" class="proj.nccc.logsearch.struts.EmvTagRecordActions">
+			<result name="input">/emv/emvTagRecordDelQuery.jsp</result>
+			<result name="Fail">/emv/emvTagRecordDelQueryList.jsp</result>
+			<result name="Success">/emv/emvTagRecordDelQueryList.jsp</result>
+		</action>
+		<action name="deleteEmvTagRecord" method="delete" class="proj.nccc.logsearch.struts.EmvTagRecordActions">
+			<result name="input">/emv/emvTagRecordDelQuery.jsp</result>
+			<result name="Fail">/jsp/result.jsp</result>
+			<result name="Success">/jsp/result.jsp?refreshOpener=true</result>
+		</action>
+		<action name="queryEmvTagRecordTemp" method="queryList" class="proj.nccc.logsearch.struts.EmvTagRecordTempActions">
+			<result name="input">/emv/emvTagRecordTempQueryList.jsp</result>
+			<result name="Fail">/emv/emvTagRecordTempQueryList.jsp</result>
+			<result name="Success">/emv/emvTagRecordTempQueryList.jsp</result>
+		</action>
+		<action name="approveEmvTagRecordTemp" method="approve" class="proj.nccc.logsearch.struts.EmvTagRecordTempActions">
+			<result name="input">/emv/emvTagRecordTempQueryList.jsp</result>
+			<result name="Fail">/jsp/result.jsp</result>
+			<result name="Success">/jsp/result.jsp?refreshOpener=true</result>
+		</action>
+		<action name="rejectEmvTagRecordTemp" method="reject" class="proj.nccc.logsearch.struts.EmvTagRecordTempActions">
+			<result name="input">/emv/emvTagRecordTempQueryList.jsp</result>
+			<result name="Fail">/jsp/result.jsp</result>
+			<result name="Success">/jsp/result.jsp?refreshOpener=true</result>
+		</action>
+		<action name="toShowModDetail" method="modDetail" class="proj.nccc.logsearch.struts.EmvTagRecordTempActions">
+			<result name="input">/emv/emvTagRecordTempQueryList.jsp</result>
+			<result name="Fail">/emv/emvTagRecordModDetail.jsp</result>
+			<result name="Success">/emv/emvTagRecordModDetail.jsp</result>
+		</action>
+		<action name="queryEmvTagRecord" method="queryList" class="proj.nccc.logsearch.struts.EmvTagRecordActions">
+			<result name="input">/emv/emvTagRecordQueryList.jsp</result>
+			<result name="Fail">/emv/emvTagRecordQueryList.jsp</result>
+			<result name="Success">/emv/emvTagRecordQueryList.jsp</result>
+		</action>
+		<action name="toShowDetail" method="queryProjPersistable" class="proj.nccc.logsearch.struts.EmvTagRecordActions">
+			<result name="input">/emv/emvTagRecordQueryList.jsp</result>
+			<result name="Fail">/emv/emvTagRecordDetail.jsp</result>
+			<result name="Success">/emv/emvTagRecordDetail.jsp</result>
+		</action>
+		<action name="toBeApprove" method="queryApproveCount" class="proj.nccc.logsearch.struts.EmvCardTypeTempActions">
+			<result name="input">/emv/toBeApprove.jsp</result>
+			<result name="Fail">/jsp/result.jsp</result>
+			<result name="Success">/emv/toBeApprove.jsp</result>
+		</action>
+	</package>
+</struts>
+

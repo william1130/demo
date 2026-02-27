@@ -1,0 +1,312 @@
+/*
+ * ==============================================================================================
+ * $Id: widget.css,v 1.1 2014/01/02 02:54:33 asiapacific\hungmike Exp $
+ * ==============================================================================================
+ */
+body.layoutPage {
+	/* 防止Scrollbar出現, 因為所有網頁內容都是出現在div中, 所以若內容過多, 是在DIV中出現Scrollbar, 而非在body中出現 */
+	/* 若使用div來顯示scrollbar, 其顯示之位置不一定很正確, 所以先以body來設定scrollbar的顯示  */
+	overflow: hidden;
+	/*background: white url(../images/background.png) repeat-x fixed left top !important;*/
+}
+.layoutContainer {
+	position: relative;
+	left: 0;
+	top: 0;
+	overflow: hidden;
+	/*width: 100%;*/
+	/*height: 100%;*/
+}
+.layoutSizerH, .layoutSizerV {
+	font-size: 1px;
+	cursor: move;
+	cursor: w-resize;
+	background-color: ThreeDFace;
+	border: 1px solid;
+	border-color: ThreeDHighlight ThreeDShadow ThreeDShadow ThreeDHighlight;
+	margin: 0;
+	/* 此z-index必須比.layoutSizerPanel設定之值要大 */
+	z-Index: 2;
+}
+.layoutSizerH img {
+	vertical-align: top;
+	text-align: center;
+	cursor: pointer !important;
+	margin-top: 3px;
+}
+.layoutSizerV {
+	cursor: n-resize;
+}
+.layoutSizerV img {
+	vertical-align: top;
+	text-align: center;
+	cursor: pointer !important;
+}
+.layoutSizerPanel {
+	position: relative;
+	display: none;
+	width: 100%;
+	height: 100%;
+	/* 此z-index必須比.layoutSizerH, .layoutSizerV小, 但要比layoutwidget大 */
+	z-Index: 1;
+}
+.absoluteTabContainer {
+	position: absolute;
+	/* 在IE上, absolute的element在顯示時, left必須指定為0, 才會正確出現在最左邊. */
+	left: 0;
+}
+.relativeTabContainer {
+	position: relative;
+}
+.tabContainer {
+	position: relative;
+	overflow: hidden !important;
+	/* 設定預設寬度及高度, 否則若空間不足時, 在IE上會出現錯誤.
+       此外, 由於是使用absolute(外框的高度不會包含此container高度), 使用百分比實際上不會增加空間, 所以高度必須指定數字, 才能增加高度.*/
+	width: 100%;
+	height: 600px;
+}
+.tabHolder {
+	position: absolute;
+	/* 在IE上, absolute的element在顯示時, left必須指定為0, 才會正確出現在最左邊. */
+	left: 0;
+	/*
+	top: 0;
+	width: 100%;
+	*/
+	z-index: 3;
+	display: block;
+	clear: both;
+	overflow: hidden;
+	text-align: left;
+	/*
+	margin-left: 3;
+	*/
+}
+.ieVersion .tabHolder {
+	_zoom: 1; /* force IE6 layout mode so top border doesnt disappear */
+}
+.tabName {
+	background : transparent url(../images/tab_left.gif) no-repeat scroll left top;
+	float: left;
+	position: relative;
+	padding-left: 6px;
+	white-space: nowrap;
+	z-index: 3;
+	cursor: pointer;
+	border-bottom: 1px solid #6290D2;
+	margin-top: 2px;
+}
+.tabName div {
+	background : transparent url(../images/tab_top_right.gif) no-repeat scroll right top;
+	display: block;
+	padding: 4px 10px 4px 6px;
+}
+.tabName.currentTabName {
+	background-position: 0 -150px;
+	border-bottom: 0px none;
+	font-weight: bold;
+	margin-top: 0px;
+}
+.tabName.currentTabName div {
+	background-position: 100% -150px;
+	padding-bottom: 7px;
+}
+.tabName a.closeImage {
+	background : transparent url(../images/tab_close.gif) no-repeat scroll right bottom;
+	display: inline-block;
+	text-decoration: none;
+	padding-left: 3px;
+}
+.tabName a.closeImage:hover {
+	background : transparent url(../images/tab_close_over.gif) no-repeat scroll right center;
+}
+.tabName a.reloadImage {
+	background : transparent url(../images/link.gif) no-repeat scroll right bottom;
+	display: inline-block;
+	text-decoration: none;
+	padding-left: 5px;
+}
+.tabContent {
+	border: 1px solid #6290D2;
+	position: absolute;
+	display: block;
+	/* 在IE上, absolute的element在顯示時, left必須指定為0, 才會正確出現在最左邊. */
+	left: 0;
+}
+.tabContentWrapper {
+	width: 100%;
+	height: 100%;
+}
+.comboBoxContainer {
+	position: relative;
+	/*width: 100%;*/
+	/*background-color: white;*/
+}
+.comboBoxWrapper {
+	border: 1px solid SteelBlue;
+	white-space: nowrap;
+	width: 100%;
+}
+.geckoVersion .comboBoxWrapper {
+	padding: 1px;
+}
+.webKitVersion .comboBoxWrapper {
+	padding: 1px;
+}
+.operaVersion .comboBoxWrapper {
+	padding: 1px 1px 2px 1px;
+}
+.comboBoxInput {
+	border-width: 0;
+}
+.comboBoxButton {
+	vertical-align: top;
+}
+.webKitVersion .comboBoxButton {
+	margin-top: 2px;
+}
+.geckoVersion .comboBoxButton, .webKitVersion .comboBoxButton, .operaVersion .comboBoxButton {
+	vertical-align: top;
+}
+.comboBoxOptionPanel {
+	position: absolute;
+	left: 0;
+	border: 1px solid SteelBlue;
+	background-color: white;
+	z-index: 999;
+}
+/* 當下拉選單項目數目超出設定值時, 下拉選單會套用此class, 限制其高度. */
+.comboBoxOptionPanelHeight {
+	height: 180px;
+	overflow-y: auto;
+}
+.comboBoxOption {
+	padding: 1px;
+	white-space: nowrap;
+	cursor: pointer;
+	text-align: left;
+}
+.comboBoxOptionSelected {
+	background-color: #CCCCFF;
+}
+.comboBoxOptionOver {
+	background-color: #DDDDFF;
+}
+
+
+/* ================= Start of dialog style ================= */
+
+#dialogTable {
+	width: 100%;
+	height: 100%;
+}
+
+#dialogTable th {
+	background-color: #9999FF;
+	color: white;
+	border-bottom: 1px solid black;
+	height: 20px;
+}
+
+#dialogTable th a {
+	color: white;
+	text-decoration: none;
+}
+
+a#dialogCloseCtrl {
+	background: transparent url(../images/dialog_close.gif) no-repeat scroll right center;
+	text-decoration: none;
+}
+a#dialogCloseCtrl:hover {
+	background: transparent url(../images/dialog_close_over.gif) no-repeat scroll right center !important;
+}
+
+.draggable {
+	cursor: pointer;
+}
+
+#informationDialog {
+	background-color : #CCCCFF;
+	border : 1px solid black;
+	width: 700px;
+}
+#informationDialogContent {
+	background-color : #FAFAD2;
+	width: 100%;
+	text-align: center;
+}
+#informationContent {
+	/* informationContent是設計顯示於informationDialog內, 所以先將其預設為看不到. */
+	display: none;
+}
+
+#helpDialog {
+	background-color : #CCCCFF;
+	border : 1px solid black;
+	width: 700px;
+}
+#helpDialogContent {
+	background-color : #FAFAD2;
+	width: 100%;
+	text-align: left;
+}
+#helpDialogContent ul {
+	line-height: 2em;
+	list-style-type: circle;
+}
+
+#helpContent {
+	/* helpContent是設計顯示於helpDialog內, 所以先將其預設為看不到. */
+	display: none;
+}
+
+#alertDialog {
+	background-color : mistyrose;
+	border : 1px solid black;
+	width: 300px;
+}
+#alertDialogContent {
+	padding-left : 3em;
+	padding-right : 3em;
+	padding-top : 1em;
+	padding-bottom : 1em;
+	text-align: center;
+}
+
+.tooltipDialog {
+	background-color: white;
+	border: 1px solid black;
+	visibility: hidden;
+}
+
+#iframeDialog {
+	background-color : #FFFFDD;
+	border : 1px solid black;
+}
+#iframeDialog iframe {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+#iframeDialog .dialogTable td {
+	padding: 0;
+	margin: 0 auto;
+}
+
+#submitDialog {
+	background-color : #FFFFDD;
+	border : 1px solid black;
+	width: 300px;
+}
+#submitDialogContent {
+	padding-left : 3em;
+	padding-right : 3em;
+	padding-top : 1em;
+	padding-bottom : 1em;
+	text-align: center;
+}
+
+/* ================= End of dialog style ================= */
+

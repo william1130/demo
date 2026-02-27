@@ -1,0 +1,17 @@
+<%--
+ * ==============================================================================================
+ * $Id: front.jsp,v 1.1 2014/11/14 03:14:30 asiapacific\hsiehes Exp $
+ * ==============================================================================================
+--%>
+<%@page pageEncoding="UTF-8"%>
+<%@include file="/jsp/directive.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html >
+<head>
+	<%@include file="/jsp/header.jsp"%>	
+	<title>Front Page</title>
+</head>
+<body>
+	This is Front Page.
+</body>
+</html>

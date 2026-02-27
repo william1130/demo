@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : validation.xml
+    Created on : 2005年10月3日, 下午 6:35
+    Author     : 許欽程/Vincent Shiu
+    Description:
+        Validation
+    =====================================================================================================
+    $Id: validation.xml,v 1.1 2014/11/14 03:14:10 asiapacific\hsiehes Exp $
+    =====================================================================================================
+-->
+<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.4.0//EN" "http://commons.apache.org/dtds/validator_1_4_0.dtd">
+
+<form-validation>
+	<!--
+	This is a minimal Validator form file with a couple of examples.
+	-->
+	<global>
+		<!-- An example global constant
+		<constant>
+		<constant-name>postalCode</constant-name>
+		<constant-value>^\d{5}\d*$</constant-value>
+		</constant>
+		end example-->
+	</global>
+	<formset>
+		<form name="/login">
+			<field property="userId" depends="required">
+				<arg position="0" key="使用者代碼" resource="false" />
+			</field>
+			<field property="password" depends="required">
+				<arg position="0" key="密碼" resource="false" />
+			</field>
+		</form>
+		<!--
+		<form name="/login">
+			<field property="userInfo.userID" depends="required">
+				<arg0 key="使用者代碼" resource="false"/>
+				<!- bankExists >
+				<var>
+					<var-name>nssQS</var-name>
+					<var-value>${nssQSKey}</var-value>
+				</var>
+			</field>
+			<field property="arg.binNo" depends="required, minlength">
+				<arg0 key="Bin No" resource="false"/>
+				<arg1 key="${var:minlength}" name="minlength" resource="false"/>
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>${binNoLength}</var-value>
+				</var>
+			</field>
+		</form>
+		-->
+	</formset>
+</form-validation>
+

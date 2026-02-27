@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AtslogTransLog" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b90ef6cf-54db-4dc7-a93a-81c85a729417">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="utf8"/>
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="BaseFont" isDefault="true" markup="styled" fontName="Kai" fontSize="9" pdfFontName="Kai" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+	<style name="NumberStyle" style="BaseFont" hAlign="Right" markup="styled" isBlankWhenNull="true" isPdfEmbedded="false">
+		<box rightPadding="2"/>
+	</style>
+	<style name="DoubleStyle" style="NumberStyle" markup="styled" pattern="#,##0.00"/>
+	<style name="IntStyle" style="NumberStyle" markup="styled" pattern="#,###"/>
+	<style name="ReportTitle" style="BaseFont" fontSize="16"/>
+	<style name="CenterFont" style="BaseFont" hAlign="Center"/>
+	<parameter name="REPORT_DATE" class="java.util.Date" isForPrompting="false"/>
+	<parameter name="BANK_NAME_MAP" class="java.util.Map" isForPrompting="false"/>
+	<parameter name="TRANS_TYPE_NAME_MAP" class="java.util.Map" isForPrompting="false"/>
+	<parameter name="RESPONSE_CODEN_AME_MAP" class="java.util.Map" isForPrompting="false"/>
+	<parameter name="CARD_NAME_MAP" class="java.util.Map" isForPrompting="false"/>
+	<parameter name="PRINT_USER" class="java.lang.String"/>
+	<field name="cardNumMask" class="java.lang.String"/>
+	<field name="bankId" class="java.lang.String"/>
+	<field name="merchantId" class="java.lang.String"/>
+	<field name="merchantChinName" class="java.lang.String"/>
+	<field name="tranAmount" class="java.lang.Double"/>
+	<field name="tranDate" class="java.lang.String"/>
+	<field name="tranYear" class="java.lang.String"/>
+	<field name="tranTime" class="java.lang.String"/>
+	<field name="tranType" class="java.lang.String"/>
+	<field name="batchNum" class="java.lang.String"/>
+	<field name="acqId" class="java.lang.String"/>
+	<field name="respCode" class="java.lang.String"/>
+	<field name="mtiStatus" class="java.lang.String"/>
+	<field name="b24Mti" class="java.lang.String"/>
+	<field name="expDate" class="java.lang.String"/>
+	<field name="cardType" class="java.lang.String"/>
+	<field name="termId" class="java.lang.String"/>
+	<field name="approveCode" class="java.lang.String"/>
+	<field name="payTypeInd" class="java.lang.String"/>
+	<field name="icTran" class="java.lang.String"/>
+	<field name="cardVeryFlag" class="java.lang.String"/>
+	<field name="seqNum" class="java.lang.String"/>
+	<field name="cupHotKeyInd" class="java.lang.String"/>
+	<field name="b24PosEntryMode" class="java.lang.String"/>
+	<field name="standInFlag" class="java.lang.String"/>
+	<field name="edcMti" class="java.lang.String"/>
+	<field name="atsReversal" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Prevent"/>
+	</title>
+	<pageHeader>
+		<band height="74" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-1" style="ReportTitle" x="280" y="0" width="365" height="32" uuid="fa3459db-67f2-476f-bd61-638f8b834995"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[交易Log報表]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-56" style="BaseFont" x="645" y="20" width="48" height="20" uuid="3230e014-53cd-4ca4-9d15-a7169fb70b59"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[列印日期:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-43" style="BaseFont" stretchType="RelativeToTallestObject" x="692" y="20" width="88" height="20" uuid="e449ffe5-748f-4053-9e3a-1d9707cf62b6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{REPORT_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-95" style="BaseFont" x="0" y="40" width="104" height="16" uuid="dd9e5d81-cf72-4c37-8e00-3e7fe9e9da10"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[卡號]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-96" style="BaseFont" x="0" y="56" width="104" height="16" uuid="b65a82f5-e524-42c9-9c18-f8ca834d56ad"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[有效期]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-97" style="BaseFont" x="104" y="40" width="88" height="16" uuid="bbde1327-c0bf-4286-978d-2190d5176a17"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[金融機構名稱]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-98" style="BaseFont" x="192" y="40" width="88" height="16" uuid="5bb04e3b-0666-48e1-9b54-53ec02d074c7"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[商店代碼]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-99" style="BaseFont" x="280" y="40" width="80" height="16" uuid="14cc5e65-d048-45f9-a6bd-4a1c5fc8e592"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-100" style="BaseFont" x="104" y="56" width="88" height="16" uuid="52b8a5b5-90d1-4b81-9921-b7177986129a"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[卡別]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-101" style="BaseFont" x="192" y="56" width="88" height="16" uuid="c12cd45e-0a36-4c22-b728-4d8879e5d485"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[端末機代碼]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-102" style="BaseFont" x="280" y="56" width="80" height="16" uuid="1c6f7707-c390-42f1-8656-74c64a2d417c"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[授權碼]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-103" style="BaseFont" x="360" y="40" width="56" height="16" uuid="d1ac603c-1781-4cef-9e07-8cca31084df8"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[交易日期]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-104" style="BaseFont" x="360" y="56" width="56" height="16" uuid="19f37dc8-18c8-4641-8632-7ff14aea0a97"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[分期紅利]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-105" style="BaseFont" x="416" y="40" width="56" height="16" uuid="c18f6bea-adb5-46a6-a655-f59754388e6d"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[交易時間]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-106" style="BaseFont" x="472" y="40" width="88" height="16" uuid="03bb234a-62b2-402e-82b4-8ef9e20499d5"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[交易類別]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-107" style="BaseFont" x="560" y="40" width="56" height="16" uuid="1a0e2ab5-c8ef-4a89-8fd2-e509cedaf3e4"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[批號]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-108" style="BaseFont" x="416" y="56" width="56" height="16" uuid="c54f8c8a-75ec-41f3-9b68-6ae941aa2b4f"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[IC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-109" style="BaseFont" x="472" y="56" width="88" height="16" uuid="8f18e28d-8e4b-4c10-ab43-eeb0fc80e55a"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[驗證結果]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-110" style="BaseFont" x="560" y="56" width="56" height="16" uuid="bbaf5c36-d003-4b4e-af0c-db6c4acb95d9"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[序號]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-111" style="BaseFont" x="616" y="40" width="72" height="16" uuid="afc4d4c8-c1da-472d-ba62-9016d452f076"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[收單行]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-112" style="BaseFont" x="616" y="56" width="72" height="16" uuid="df76df37-2b43-40c9-a834-a6633cb42f8c"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[銀聯卡 Hot key]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-113" style="BaseFont" x="688" y="40" width="56" height="16" uuid="0752f39b-18a4-4de1-a359-3f36623eb21a"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[回應碼]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-114" style="BaseFont" x="744" y="40" width="40" height="16" uuid="01dab2a8-4de3-4260-824a-143b17c40bd5"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[狀況]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-115" style="BaseFont" x="784" y="40" width="48" height="16" uuid="cbd1d43e-6578-40f1-8789-bdd7d1a5890c"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[B24 MTI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-116" style="BaseFont" x="688" y="56" width="56" height="16" uuid="6b351f9f-cd5d-43c2-ae04-932c00574c5f"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Entry Mode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-117" style="BaseFont" x="744" y="56" width="40" height="16" uuid="1a2f51cb-68f5-47cd-80c8-50dba1959f0a"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[代行]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-118" style="BaseFont" x="784" y="56" width="48" height="16" uuid="0c0cd614-1362-4612-9a7f-cc98af207a1c"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[EDC MTI]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-1" style="BaseFont" x="0" y="73" width="832" height="1" uuid="ce05902e-abea-4bd2-8e87-969557f54c3a"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-56" style="BaseFont" x="645" y="0" width="48" height="20" uuid="e8a279c0-83af-4450-b135-070064f1d857"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai" size="10"/>
+				</textElement>
+				<text><![CDATA[列印人員:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-43" style="BaseFont" stretchType="RelativeToTallestObject" x="692" y="0" width="54" height="20" uuid="896e2736-05b3-4883-bb35-9faccb186b4f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PRINT_USER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="745" y="0" width="39" height="20" uuid="1d085f21-7dcc-42d7-9f91-729db809cf9a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA["第 "+$V{PAGE_NUMBER}+" 頁"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="784" y="0" width="48" height="20" uuid="1e2768a4-84b1-4e54-a2ea-97878c5e7eb8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA["，共 "+$V{PAGE_NUMBER}+" 頁"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="BaseFont" stretchType="RelativeToTallestObject" x="0" y="0" width="104" height="16" uuid="71ee9deb-f221-4647-8aca-46c4fa2fcce5"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cardNumMask}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-44" style="BaseFont" stretchType="RelativeToTallestObject" x="0" y="16" width="104" height="16" uuid="ce632f17-0d65-455a-ab2c-6aeec446a5a2"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-45" style="BaseFont" stretchType="RelativeToTallestObject" x="104" y="0" width="88" height="16" uuid="90677979-796a-41c5-bc30-10d7fd59f747"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[("IP".equals($F{cardType}) || "IC".equals($F{cardType}) || "HC".equals($F{cardType})  || "EZ".equals($F{cardType}))  ? "" : $P{BANK_NAME_MAP}.get($F{bankId})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-46" style="BaseFont" stretchType="RelativeToTallestObject" x="104" y="16" width="88" height="16" uuid="aa08d1ee-feca-4ef5-ab76-da0b863c7d1f"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CARD_NAME_MAP}.get($F{cardType})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-47" style="BaseFont" stretchType="RelativeToTallestObject" x="192" y="0" width="88" height="16" uuid="92d01071-9f0f-496d-b54a-defa1bdc4bd8"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{merchantId}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-48" style="BaseFont" stretchType="RelativeToTallestObject" x="192" y="16" width="88" height="16" uuid="44bf057e-4d02-4f9f-b3ad-c58360797173"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{termId}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.###" isBlankWhenNull="true">
+				<reportElement key="textField-49" style="BaseFont" stretchType="RelativeToTallestObject" x="280" y="0" width="80" height="16" uuid="2b80d9d4-17ad-4e6f-80f3-774d8eedcdc2"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tranAmount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-50" style="BaseFont" stretchType="RelativeToTallestObject" x="280" y="16" width="80" height="16" uuid="7b776ade-cb27-4f70-bc65-0f6c29f59ee7"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{approveCode}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-51" style="BaseFont" stretchType="RelativeToTallestObject" x="360" y="0" width="56" height="16" uuid="5d21b04e-fc8e-46a6-9445-ce2c0218a2b2"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{tranYear} == null ? "" : $F{tranYear}) + ($F{tranDate} == null ? "" : $F{tranDate})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-52" style="BaseFont" stretchType="RelativeToTallestObject" x="360" y="16" width="56" height="16" uuid="f3174c9c-1e4a-480e-8808-0b103b55cbb1"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[("1".equals($F{payTypeInd}) || "2".equals($F{payTypeInd})) ? "紅利" :
+("I".equals($F{payTypeInd}) || "E".equals($F{payTypeInd})) ? "分期" : ""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-53" style="BaseFont" stretchType="RelativeToTallestObject" x="416" y="0" width="56" height="16" uuid="8ec1dbd8-4efb-4ec9-a41d-a553b1c800f7"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tranTime}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-54" style="BaseFont" stretchType="RelativeToTallestObject" x="416" y="16" width="56" height="16" uuid="a124d47f-ac09-40c4-9dcd-a5561952dd63"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{icTran}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-55" style="BaseFont" stretchType="RelativeToTallestObject" x="472" y="0" width="88" height="16" uuid="43346728-eb3e-4c6c-a83a-cba7652f1ca5"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[("IP".equals($F{cardType}) || "IC".equals($F{cardType}) || "HC".equals($F{cardType})  || "EZ".equals($F{cardType}))  ? $F{tranType} : $P{TRANS_TYPE_NAME_MAP}.get($F{tranType})
++ ("Y".equals($F{atsReversal}) ? "(人工沖銷)" : "")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-56" style="BaseFont" stretchType="RelativeToTallestObject" x="472" y="16" width="88" height="16" uuid="3b2e8091-eec5-49e6-8676-5ce768f2019d"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cardVeryFlag}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-57" style="BaseFont" stretchType="RelativeToTallestObject" x="560" y="0" width="56" height="16" uuid="6ccd8bf8-a137-4659-91df-24dd1823a51c"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{batchNum}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-58" style="BaseFont" stretchType="RelativeToTallestObject" x="560" y="16" width="56" height="16" uuid="60b6406d-5830-4435-a63c-d00bf09beeb2"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{seqNum}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-59" style="BaseFont" stretchType="RelativeToTallestObject" x="616" y="0" width="72" height="16" uuid="674b0bde-9b30-4872-b549-e34c4dfdd2ca"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BANK_NAME_MAP}.get($F{acqId})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-60" style="BaseFont" stretchType="RelativeToTallestObject" x="616" y="16" width="72" height="16" uuid="f664f948-bd6f-473c-871b-a9e6e8741555"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["C".equals($F{cupHotKeyInd}) ? "Y" : ""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-61" style="BaseFont" stretchType="RelativeToTallestObject" x="688" y="0" width="56" height="16" uuid="729c591d-f5c1-45f2-96db-6397c43b2ebc"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{RESPONSE_CODEN_AME_MAP}.get($F{respCode} )]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-62" style="BaseFont" stretchType="RelativeToTallestObject" x="688" y="16" width="56" height="16" uuid="d64365cd-8d80-4d2a-9661-0e9ad2ec4ca1"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b24PosEntryMode}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-63" style="BaseFont" stretchType="RelativeToTallestObject" x="744" y="0" width="40" height="16" uuid="f68060f8-bf5f-4b68-ae4f-43ad3f6ed6de"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mtiStatus}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-64" style="BaseFont" stretchType="RelativeToTallestObject" x="744" y="16" width="40" height="16" uuid="a9ad9a0b-9182-4e47-86bf-e8e323d55d0a"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{standInFlag}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-65" style="BaseFont" stretchType="RelativeToTallestObject" x="784" y="0" width="48" height="16" uuid="1ca17205-22f7-4afd-8ee8-d50b7ab5b818"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b24Mti}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-66" style="BaseFont" stretchType="RelativeToTallestObject" x="784" y="16" width="48" height="16" uuid="b64e48a7-edbd-4f91-b8c5-d00ce4474d90"/>
+				<box bottomPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{edcMti}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-2" style="BaseFont" x="0" y="33" width="832" height="1" uuid="70c3b995-cf95-46f4-ac8a-83538137beb5"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="19" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
