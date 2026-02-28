@@ -1,0 +1,89 @@
+<!-- 正式環境 -->
+<Configuration status="off" monitorInterval="30">
+	<Properties>
+ 		<Property name="LOG_HOME">./log/</Property>
+		<Property name="LOG_NAME">atsLogBatch</Property>
+		<Property name="SCAN_LOG_NAME">scanCheck</Property>
+		<Property name="ERRORLOG_NAME">atsLogBatch_Error</Property>
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{yyyyMMdd HH:mm:ss}||BATCH_ID=%X{BATCH_ID}||StartAt=%X{ACTIVE_HHMMSS}|| %-5level [%F:%L] - %m%n" />
+		</Console>
+
+		<RollingFile name="log" fileName="${LOG_HOME}/${LOG_NAME}.log"
+			filePattern="${LOG_HOME}/${LOG_NAME}.log.%d{yyyy-MM-dd}" append="true">
+			<PatternLayout
+				pattern="%d{yyyyMMdd HH:mm:ss}||BATCH_ID=%X{BATCH_ID}||StartAt=%X{ACTIVE_HHMMSS}|| %-5level [%F:%L] - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true" interval="1" />
+				<SizeBasedTriggeringPolicy size="250 MB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="200">
+				<Delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfLastModified age="90d" />
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+		
+		<RollingFile name="scanCheckLog" fileName="${LOG_HOME}/${SCAN_LOG_NAME}.log"
+			filePattern="${LOG_HOME}/${SCAN_LOG_NAME}.log.%d{yyyy-MM-dd}" append="true">
+			<PatternLayout
+				pattern="%d{yyyyMMdd HH:mm:ss}||BATCH_ID=%X{BATCH_ID}||StartAt=%X{ACTIVE_HHMMSS}|| %-5level [%F:%L] - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true" interval="1" />
+				<SizeBasedTriggeringPolicy size="250 MB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="200">
+				<Delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfLastModified age="90d" />
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+		
+		
+		<RollingFile name="errLog" fileName="${LOG_HOME}/${ERRORLOG_NAME}.log"
+			filePattern="${LOG_HOME}/${ERRORLOG_NAME}.log.%d{yyyy-MM-dd}" append="true">
+			<Filters>
+				<ThresholdFilter level="WARN" />
+				<ThresholdFilter level="ERROR" onMatch="NEUTRAL" />
+			</Filters>
+			<PatternLayout
+				pattern="%d{yyyyMMdd HH:mm:ss}||BATCH_ID=%X{BATCH_ID}||StartAt=%X{ACTIVE_HHMMSS}|| %-5level [%F:%L] - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true" interval="1" />
+				<SizeBasedTriggeringPolicy size="250 MB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="200">
+				<Delete basePath="${LOG_HOME}" maxDepth="3">
+					<IfLastModified age="90d" />
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+		
+	</Appenders>
+	
+	<Loggers>
+		<!-- 
+		TRACE < DEBUG < INFO < WARN < ERROR < FATAL
+		 -->
+		
+		<root level="INFO">
+		<!--
+			<appender-ref ref="Console"/>
+		-->
+			<appender-ref ref="log" >
+				<ThreadContextMapFilter onMatch="DENY" onMismatch="ACCEPT">
+					<KeyValuePair key="LOG_CATEGORY" value="SCAN_CHECK" />
+				</ThreadContextMapFilter>
+			</appender-ref>
+			<appender-ref ref="scanCheckLog" >
+				<ThreadContextMapFilter onMatch="ACCEPT" onMismatch="DENY">
+					<KeyValuePair key="LOG_CATEGORY" value="SCAN_CHECK" />
+				</ThreadContextMapFilter>
+			</appender-ref>
+			<appender-ref ref="errLog" />
+		</root>
+	</Loggers>
+</Configuration>

@@ -1,0 +1,11 @@
+# 測試環境
+db.properties=cfg//db.properties
+properties.folder=cfg//
+
+nmip.local.in.path=/u01/users/atslogap/atslogBatch/downloadFolder/nmip/in/
+nmip.local.temp.path=/u01/users/atslogap/atslogBatch/downloadFolder/nmip/temp/
+nmip.local.out.path=/u01/users/atslogap/atslogBatch/downloadFolder/nmip/out/
+
+nmip.NeedNmip=TRUE
+nmip.encryptSh=encrypt.sh
+nmip.decryptSh=decrypt.sh

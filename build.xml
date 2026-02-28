@@ -1,169 +1,83 @@
-<?xml version="1.0" encoding="BIG5"?>
-<project basedir="." default="help" name="LogSearch">
-    <property environment="env"/>
-	<!-- build.properties必須先載入 -->
-	<property file="build.properties"/>
-	<import file="nccc_build.xml" optional="true"/>
-	<import file="library.xml" optional="true"/>
-	<path id="classpath.runtime">
-        <fileset dir="${lib.runtime.dir}" includes="*.jar"/>
-        <pathelement location="${web.classes.dir}"/>
+<?xml version="1.0" encoding="big5"?>
+<project basedir="." default="help" name="atsLogBatch">
+
+	<property name="build.dir" value="./dest" />
+	<property name="src.dir" value="./src" />
+	<property name="cfg.dir" value="./cfg" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="jar.dir" value="${build.dir}/jar" />
+	<property name="src.shell.dir" value="./shell" />
+
+	<path id="classpath.compile">
+		<fileset dir="./lib" includes="*.jar" />
 	</path>
-    <path id="classpath.compile">
-        <fileset dir="${lib.compile.dir}" includes="*.jar"/>
-		<path refid="classpath.runtime"/>
-    </path>
-	<path id="classpath.test">
-		<fileset dir="${lib.test.dir}" includes="*.jar"/>
-		<path refid="classpath.compile"/>
-		<path refid="classpath.runtime"/>
+	<target name="help">
+		<echo level="info" message="===================================================================" />
+		<echo level="info" message="NCCC ATSLOG Batch ANT build file." />
+		<echo level="info" message="===================================================================" />
+		<echo level="info" message=" ant [target] " />
+		<echo level="info" message="Build file usage :" />
+		<echo level="info" message="ant jar          說明: 批次程式包裝成 jar檔    " />
+		<echo level="info" message=" jar-test      : 建置並包裝中心測試環境使用(   jar File)" />
+		<echo level="info" message=" jar-prod      : 建置並包裝中心正式環境使用(   jar File)" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="compile" description="Compile Java Source Files.">
+		<mkdir dir="${classes.dir}" />
+		<property name="files" value="**/*.java" />
+		<javac destdir="${classes.dir}" srcdir="${src.dir}" includes="${files}" debug="true" source="1.8" target="1.8" fork="true" memoryInitialSize="128m" memoryMaximumSize="512m">
+			<classpath refid="classpath.compile" />
+			<compilerarg line="-encoding UTF-8" />
+		</javac>
+
+		<copy file="${logFile}" tofile="${classes.dir}/log4j2.xml" overwrite="true" verbose="true" />
+		<copy file="${logFile}" tofile="${cfg.dir}/log4j2.xml" overwrite="true" verbose="true" />
+		<copy file="${projInit}" tofile="${cfg.dir}/proj.init" overwrite="true" verbose="true" />
+
+	</target>
+	<path id="myClassPath">
+		<fileset dir="./lib" includes="**/*.jar" />
 	</path>
-    <target name="help">
-        <echo level="info" message="==================================================================="/>
-        <echo level="info" message="${proj.title} build 檔案."/>
-        <echo level="info" message="==================================================================="/>
-        <echo level="info" message=" Build file usage :"/>
-        <echo level="info" message=" ant [target] "/>
-        <echo level="info" message=""/>
-        <echo level="info" message=" 其中target可為以下之值, 若未指定, 預設為'help'"/>
-        <echo level="info" message=" ear-test : 重新建置並包裝中心測試環境使用之Ear檔案"/>
-        <echo level="info" message=" ear-prod : 重新建置並包裝中心正式環境使用之Ear檔案"/>
-        <echo level="info" message=" ear-estm-test : 重新建置(對ESTM 系統連外)並包裝中心測試環境使用之Ear檔案"/>
-        <echo level="info" message=" ear-estm-prod : 重新建置(對ESTM 系統連外)並包裝中心正式環境使用之Ear檔案"/>
-    </target>
-	
-	<!-- 以下target已在nccc_build中覆寫, 不可再重覆使用 -->
-	<!--
-	<target name="-before-run-test"/>
-	-->
-	<!--
-	  - 以下為project中可改寫使用之空白target, 可依實際需求之動作將所需功能加入.
-	  -->
-	<target name="-initial-build-specific-property">
-		<if>
-			<istrue value="${build.local}"/>
-			<then>
-			</then>
-		</if>
-		<if>
-			<istrue value="${build.test}"/>
-			<then>
-			</then>
-		</if>
-		<if>
-			<istrue value="${build.prod}"/>
-			<then>
-			</then>
-		</if>
+	<target name="_jar" depends="compile">
+		<pathconvert property="mf.classpath" pathsep=" ">
+			<path refid="myClassPath" />
+			<flattenmapper />
+		</pathconvert>
+		<mkdir dir="${jar.dir}" />
+
+		<jar destfile="${jar.dir}\atsLog_BTH.jar" basedir="${classes.dir}" excludes="**/*.bak">
+			<manifest>
+				<attribute name="Main-Class" value="proj.nccc.atsLog.batch.BatchBaseMain" />
+				<attribute name="Class-Path" value="${mf.classpath} " />
+			</manifest>
+		</jar>
+		<!-- <delete dir="${classes.dir}" />  -->
 	</target>
-	<target name="-before-clean"/>
-	<target name="-after-clean"/>
-	<target name="-before-compile-all"/>
-	<target name="-after-compile-all"/>
-	<target name="-before-compile-selected"/>
-	<target name="-after-compile-selected"/>
-	<target name="-before-copy-java-source"/>
-	<target name="-after-copy-java-source"/>
-	<target name="-before-copy-resource"/>
-	<target name="-after-copy-resource"/>
-	<target name="-before-copy-conf"/>
-	<target name="-after-copy-conf"/>
-	<target name="-before-copy-library"/>
-	<target name="-after-copy-library"/>
-	<target name="-before-copy-all"/>
-	
-	<target name="_check-string-exists">
-		<if>
-			<contains string="${stringContent}" substring="${substring}"/>
-			<else>
-				<fail message="${fileName}中 '${substring}' 未設定, 可能是原始設定檔不正確, 請重新檢查."/>
-			</else>
-		</if>
+
+	<target name="jar-test" depends="property-setup-test, clean, _jar" description="UAT env">
 	</target>
-	<target name="-after-copy-all">
-		<!-- replace之前, 先檢查對應的變數 -->
-		<loadfile property="appConfigContent" failonerror="true" srcfile="${web.conf.dir}/${app.conf.file}"/>
-		<foreach target="_check-string-exists" delimiter="," param="substring"
-			list="@{skipLdap}@">
-			<param name="stringContent" value="${appConfigContent}"/>
-			<param name="fileName" value="${app.conf.file}"/>
-		</foreach>
-		<replace file="${web.conf.dir}/${app.conf.file}" token="@{skipLdap}@" value="${skipLdap}" encoding="${app.conf.encoding}"/>
-		
-		<!--
-		<loadfile property="projContent" failonerror="true" srcfile="${web.conf.dir}/${proj.conf.file}"/>
-		<foreach target="_check-string-exists" delimiter="," param="substring"
-			list="@{batchQuery.folder}@,@{batchQuery.absolutePath}@">
-			<param name="stringContent" value="${projContent}"/>
-			<param name="fileName" value="${proj.conf.file}"/>
-		</foreach>
-		<replace file="${web.conf.dir}/${proj.conf.file}" token="@{batchQuery.folder}@" value="${batchQuery.folder}"/>
-		<replace file="${web.conf.dir}/${proj.conf.file}" token="@{batchQuery.absolutePath}@" value="${batchQuery.absolutePath}"/>
-		-->
-		
-		<loadfile property="log4jContent" failonerror="true" srcfile="${web.classes.dir}/${log.log4j.conf}"/>
-		<foreach target="_check-string-exists" delimiter="," param="substring"
-			list="@{projName}@,@{logFile}@,@{logLevel}@,@{sqlLogLevel}@,@{authLevel}@,@{abstractQueryLevel}@">
-			<param name="stringContent" value="${log4jContent}"/>
-			<param name="fileName" value="${log.log4j.conf}"/>
-		</foreach>
-		<replace file="${web.classes.dir}/${log.log4j.conf}" token="@{projName}@" value="${proj.name}"/>
-		<replace file="${web.classes.dir}/${log.log4j.conf}" token="@{logFile}@" value="${logFile}"/>
-		<replace file="${web.classes.dir}/${log.log4j.conf}" token="@{logLevel}@" value="${logLevel}"/>
-		<replace file="${web.classes.dir}/${log.log4j.conf}" token="@{sqlLogLevel}@" value="${sqlLogLevel}"/>
-		<replace file="${web.classes.dir}/${log.log4j.conf}" token="@{authLevel}@" value="${authLevel}"/>
-		<replace file="${web.classes.dir}/${log.log4j.conf}" token="@{abstractQueryLevel}@" value="${abstractQueryLevel}"/>
+	<target name="jar-prod" depends="property-setup-prod, clean, _jar" description="PROD env">
 	</target>
-	<target name="-after-run-test"/>
-	
-	<target name="-before-copy-web-resource">
-		<!-- 檢查所需參數是否存在 -->		
-		<fail unless="web.xml" message="property 'web.xml' 未設定."/>
-		<fail unless="skipLdap" message="property 'skipLdap' 未設定."/>
-		<fail unless="logFile" message="property 'logFile' 未設定."/>
-		<fail unless="logLevel" message="property 'logLevel' 未設定."/>
-		<fail unless="sqlLogLevel" message="property 'sqlLogLevel' 未設定."/>
-		<fail unless="authLevel" message="property 'authLevel' 未設定."/>
-		<fail unless="abstractQueryLevel" message="property 'abstractQueryLevel' 未設定."/>
+
+	<target name="property-setup-test">
+		<property name="logFile" value="cfg/log4j2.xml.test" />
+		<echo level="info" message="logFile : ${logFile}" />
+		<property name="projInit" value="cfg/proj.init.uat" />
+		<echo level="info" message="projInit : ${projInit}" />
+		<copy file="${src.shell.dir}/hsmEnv.sh.test" tofile="${src.shell.dir}/hsmEnv.sh" overwrite="true" verbose="true" />
 	</target>
-	<target name="-after-copy-web-resource"/>
-	<target name="-before-build-project"/>
-	
-	<target name="-after-build-project"/>
-	<target name="-before-rebuild-project"/>
-	<target name="-after-rebuild-project"/>
-	<target name="-before-war"/>
-	<target name="-after-war"/>
-	<target name="-before-copy-ear-conf"/>
-	<target name="-after-copy-ear-conf">
-		<loadfile property="applicationContent" failonerror="true" srcfile="${dist.dir}/application.xml"/>
-		<foreach target="_check-string-exists" delimiter="," param="substring"
-			list="@{projName}@,@{moduleName}@">
-			<param name="stringContent" value="${applicationContent}"/>
-			<param name="fileName" value="application.xml"/>
-		</foreach>
-		<if>
-			<istrue value="${build.portal}"/>
-			<then>
-				<property name="projName" value="${proj.name}"/>
-				<property name="moduleName" value="${proj.name}"/>
-				<property name="earFileName" value="${proj.name}"/>
-				<replace file="${dist.dir}/application.xml" token="@{projName}@" value="${projName}"/>
-				<replace file="${dist.dir}/application.xml" token="@{moduleName}@" value="${web.context.root}"/>
-			</then>
-		</if>
-		<if>
-			<istrue value="${build.estate}"/>
-			<then>
-				<property name="projName" value="${estate.proj.name}"/>
-				<property name="moduleName" value="${estate.proj.name}"/>
-				<property name="earFileName" value="${estate.proj.name}"/>
-				<replace file="${dist.dir}/application.xml" token="@{projName}@" value="${projName}"/>
-				<replace file="${dist.dir}/application.xml" token="@{moduleName}@" value="${estate.web.context.root}"/>
-			</then>
-		</if>
+	<target name="property-setup-prod">
+		<property name="logFile" value="cfg/log4j2.xml.prod" />
+		<echo level="info" message="logFile : ${logFile}" />
+		<echo level="info" message="copy proj.ini for production" />
+		<property name="projInit" value="cfg/proj.init.prod" />
+		<echo level="info" message="projInit : ${projInit}" />
+		<copy file="${src.shell.dir}/hsmEnv.sh.prod" tofile="${src.shell.dir}/hsmEnv.sh" overwrite="true" verbose="true" />
+
 	</target>
-	<target name="-before-ear"/>
-	<target name="-after-ear"/>
 
 </project>
