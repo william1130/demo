@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ISO8583-config SYSTEM "iso8583.dtd">
+<ISO8583-config encoding="BIG5" desc="電子票證設定檔" type="BINARY">
+	<header length="12" ref="default">SPI000000000</header>
+	<parse id="default" desc="通用規格">
+		<field num="3" type="NUMERIC" length="6" desc="Processing Code" />
+		<field num="4" type="AMOUNT" desc="Amount, Transaction" />
+		<field num="11" type="NUMERIC" length="6" desc="System Trace Audit Number" />
+		<field num="12" type="TIME" desc="Time, Local Transaction" />
+		<field num="13" type="DATE4" desc="Date, Local Transaction" />
+		<field num="32" type="NUMERIC" length="4" desc="Acquiring Institution Identification Code" />
+		<field num="35" type="LLVAR" desc="卡片基本資料" />
+		<field num="38" type="ALPHA" length="6" desc="Authorization Identification Response" />
+		<field num="39" type="ALPHA" length="2" desc="Response Code" />
+		<field num="41" type="ALPHA" length="8" desc="Card Acceptor Terminal Identification" />
+		<field num="42" type="ALPHA" length="15" desc="Card Acceptor Identification Code" />
+		<field num="56" type="LLLTABLES" desc="Reserved – Private Data" />
+	</parse>
+	<table>
+		<table-parse id="EZ01" desc="悠遊卡交易資料">
+			<table-field num="1" type="LBINARY" desc="EZ Card Transaction Data" />
+		</table-parse>
+		<table-parse id="IP00" desc="一卡通交易主機資料">
+            <table-field num="1" type="ALPHA" length="2" desc="本交易對應一卡通之主機" />
+        </table-parse>
+        <table-parse id="IP01" desc="一卡通交易資料">
+            <table-field num="1" type="LBINARY" desc="iPass Card Transaction Data" />
+        </table-parse>
+        <table-parse id="IC01" desc="愛金卡交易資料">
+            <table-field num="1" type="LBINARY" desc="愛金卡交易資料" />
+        </table-parse>
+        <table-parse id="HC01" desc="遠鑫卡交易資料">
+            <table-field num="1" type="LBINARY" desc="遠鑫卡交易資料" />
+        </table-parse>
+        <table-parse id="SW01" desc="電子票證主機回應碼">
+            <table-field num="1" type="LBINARY" desc="電子票證主機回應碼" />
+        </table-parse>
+        <!-- M2022086 -->
+        <table-parse id="LP00" desc="LINE Pay Header 資料">
+            <table-field num="1" type="LBINARY" desc="LINE Pay Header 資料" />
+        </table-parse>
+        <table-parse id="LP01" desc="LINE Pay交易資料">
+            <table-field num="1" type="LBINARY" desc="LINE Pay交易資料" />
+        </table-parse>
+        <table-parse id="EP00" desc="悠遊付 Header 資料">
+            <table-field num="1" type="LBINARY" desc="悠遊付 Header Data" />
+        </table-parse>
+        <table-parse id="EP01" desc="悠遊付交易資料">
+            <table-field num="1" type="LBINARY" desc="悠遊付 Transaction Data" />
+        </table-parse>
+        <table-parse id="PX00" desc="全支付(PX Pay)Header 資料">
+            <table-field num="1" type="LBINARY" desc="全支付(PX Pay)Header 資料" />
+        </table-parse>
+        <table-parse id="PX01" desc="全支付(PX Pay)交易資料">
+            <table-field num="1" type="LBINARY" desc="全支付(PX Pay)交易資料" />
+        </table-parse>
+        <table-parse id="PP01" desc="全盈+支付(PlusPay)交易資料">
+            <table-field num="1" type="LBINARY" desc="全盈+支付(PlusPay)交易資料" />
+        </table-parse>
+        <table-parse id="PI01" desc="Pi錢包交易資料">
+            <table-field num="1" type="LBINARY" desc="Pi錢包交易資料" />
+        </table-parse>
+        <table-parse id="CP00" desc="iCashPay Header資料">
+            <table-field num="1" type="LBINARY" desc="iCashPay Header資料" />
+        </table-parse>
+        <table-parse id="CP01" desc="iCashPay交易資料">
+            <table-field num="1" type="LBINARY" desc="iCashPay交易資料" />
+        </table-parse>
+        <!-- M2022086 -->
+	</table>
+</ISO8583-config>

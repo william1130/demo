@@ -1,0 +1,84 @@
+<!ELEMENT ISO8583-config ( header*, parse+, table*, chip*, token*, b24-tlv* ) >
+<!ATTLIST ISO8583-config encoding NMTOKEN #IMPLIED >
+<!ATTLIST ISO8583-config desc CDATA #IMPLIED >
+<!ATTLIST ISO8583-config type NMTOKEN #IMPLIED >
+<!ATTLIST ISO8583-config dataOnly NMTOKEN #IMPLIED >
+
+<!ELEMENT header ( #PCDATA ) >
+<!ATTLIST header length NMTOKEN #REQUIRED >
+<!ATTLIST header ref CDATA #REQUIRED >
+
+<!ELEMENT parse ( field+ ) >
+<!ATTLIST parse id NMTOKEN #REQUIRED >
+<!ATTLIST parse desc CDATA #IMPLIED >
+<!ATTLIST parse mti NMTOKEN #IMPLIED >
+
+<!ELEMENT field ( parse* , field*, redefine* ) >
+<!ATTLIST field num NMTOKEN #REQUIRED >
+<!ATTLIST field length NMTOKEN #IMPLIED >
+<!ATTLIST field type ( ALPHA | NUMERIC | AMOUNT | DATE10 | DATE4 | DATE_EXP | TIME | LLVAR | LLLVAR | BINARY | CHINESE | LLBIN | LLLBIN | LLZ | LLLTABLES | LLLCHIP | LLLTOKENS | LLLLTOKENS | POSKITZTAG | SMARTPAYCHIP | SMARTPAYTAG | REDEF | LLLBITMAPVAR | ZIP | B24TLV | EBCDIC | VAR | LLBINHEX | LLLBINHEX ) #REQUIRED >
+<!ATTLIST field alt NMTOKEN #IMPLIED >
+<!ATTLIST field desc CDATA #IMPLIED >
+<!ATTLIST field ref CDATA #IMPLIED >
+
+<!ELEMENT redefine ( define* ) >
+<!ATTLIST redefine default-ref NMTOKEN #IMPLIED >
+
+<!ELEMENT define ( #PCDATA ) >
+<!ATTLIST define ref CDATA #REQUIRED >
+<!ATTLIST define selector-expression CDATA #REQUIRED >
+
+<!ELEMENT table ( table-parse+ ) >
+<!ELEMENT table-parse ( table-field+ ) >
+<!ATTLIST table-parse id NMTOKEN #REQUIRED >
+<!ATTLIST table-parse desc CDATA #IMPLIED >
+<!ATTLIST table-parse mti NMTOKEN #IMPLIED >
+<!ATTLIST table-parse length-type NMTOKEN #IMPLIED >
+
+<!ELEMENT table-field ( #PCDATA ) >
+<!ATTLIST table-field num NMTOKEN #REQUIRED >
+<!ATTLIST table-field length NMTOKEN #IMPLIED >
+<!ATTLIST table-field type ( ALPHA | NUMERIC | AMOUNT | DATE10 | DATE4 | DATE_EXP | TIME | LLVAR | LLLVAR | BINARY | CHINESE | LLBIN | LLLBIN | LLZ | CHECKSUM | LBINARY | LVAR | ZIP | VAR | B24TLV ) #REQUIRED >
+<!ATTLIST table-field alt NMTOKEN #IMPLIED >
+<!ATTLIST table-field desc CDATA #IMPLIED >
+<!ATTLIST table-field ref CDATA #IMPLIED >
+
+<!ELEMENT chip ( chip-field+ ) >
+<!ATTLIST chip dublebytestag CDATA #REQUIRED >
+<!ATTLIST chip triplebytestag CDATA #IMPLIED >
+
+<!ELEMENT chip-field ( #PCDATA ) >
+<!ATTLIST chip-field tag NMTOKEN #REQUIRED >
+<!ATTLIST chip-field length NMTOKEN #REQUIRED >
+<!ATTLIST chip-field desc CDATA #IMPLIED >
+
+<!ELEMENT token ( token-parse+ ) >
+<!ELEMENT token-parse ( token-field+ ) >
+<!ATTLIST token-parse id CDATA #REQUIRED >
+<!ATTLIST token-parse desc CDATA #IMPLIED >
+<!ATTLIST token-parse mti NMTOKEN #IMPLIED >
+<!ATTLIST token-parse fill-in CDATA #IMPLIED preferred (none | odd | even) "none" >
+<!ATTLIST token-parse padding-str CDATA #IMPLIED >
+
+<!ELEMENT token-field ( token-redefine* ) >
+<!ATTLIST token-field num NMTOKEN #REQUIRED >
+<!ATTLIST token-field length NMTOKEN #IMPLIED >
+<!ATTLIST token-field type ( ALPHA | NUMERIC | AMOUNT | DATE10 | DATE4 | DATE_EXP | TIME | LLVAR | LLLVAR | BINARY | LLBIN | LLLBIN | LLZ | LVAR | REDEF | B24TLV | VAR) #REQUIRED >
+<!ATTLIST token-field alt NMTOKEN #IMPLIED >
+<!ATTLIST token-field desc CDATA #IMPLIED >
+<!ATTLIST token-field ref CDATA #IMPLIED >
+
+<!ELEMENT token-redefine ( token-define* ) >
+<!ATTLIST token-redefine default-ref NMTOKEN #IMPLIED >
+
+<!ELEMENT token-define ( #PCDATA ) >
+<!ATTLIST token-define ref CDATA #REQUIRED >
+<!ATTLIST token-define selector-expression CDATA #REQUIRED >
+
+
+<!ELEMENT b24-tlv ( b24-tlv-field+ ) >
+
+<!ELEMENT b24-tlv-field ( #PCDATA ) >
+<!ATTLIST b24-tlv-field tag NMTOKEN #REQUIRED >
+<!ATTLIST b24-tlv-field type ( ALPHA | NUMERIC | AMOUNT | DATE10 | DATE4 | DATE_EXP | TIME | LLVAR | LLLVAR | BINARY | LLBIN | LLLBIN | LLZ | LVAR | REDEF | B24TLV | VAR) #REQUIRED >
+<!ATTLIST b24-tlv-field desc CDATA #IMPLIED >

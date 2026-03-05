@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="BIG5"?>
+<project basedir="." default="ear-prod" name="NCCC Base Build File for Store">
+	<import file="web_base_build.xml"/>
+    <property file="nccc_build.properties"/>
+	<!-- 在build前初始化property, 依參數決定呼叫哪一個target -->
+	<target name="-initial-build-project-property" depends="-initial-build-specific-property">
+		
+		<echo message="-initial-build-project-property : build.local  : ${build.local} " level="info"/>
+		<echo message="-initial-build-project-property : build.test   : ${build.test} " level="info"/>
+		<echo message="-initial-build-project-property : build.prod   : ${build.prod} " level="info"/>
+		<echo message="-initial-build-project-property : build.estate : ${build.estate} " level="info"/>
+		
+		
+		<if>
+			<istrue value="${build.local}"/>
+			<then>
+				<echo message="replace for local value " level="info"/>
+				<property name="logFile" value="${local.log.file}"/>
+				<property name="web.xml" value="${src.conf.dir}/${web.xml.local}"/>
+			</then>
+		</if>
+		<if>
+			<istrue value="${build.test}"/>
+			<then>
+				<echo message="replace for test value " level="info"/>
+				<property name="logFile" value="${testing.log.file}"/>
+				<property name="web.xml" value="${src.conf.dir}/${web.xml.nccc}"/>				
+			</then>
+		</if>
+		<if>
+			<istrue value="${build.prod}"/>
+			<then>
+				<echo message="replace for prod value " level="info"/>
+				<property name="logFile" value="${production.log.file}"/>
+				<property name="web.xml" value="${src.conf.dir}/${web.xml.nccc}"/>
+			</then>
+		</if>
+		
+		<!-- build ESTM 需取代 -->
+		<!--
+		<if>
+			<istrue value="${build.estate}"/>
+			<then>
+				<echo message="replace for estate value : ${estate.web.xml.nccc} " level="info"/>
+				<property name="logFile" value="${production.log.file}"/>
+				<property name="web.xml" value="@{src.conf.dir}/@{estate.web.xml.nccc}"/>
+			</then>
+		</if>
+		-->
+		
+		<property name="web.xml.path" value="${web.xml}"/>
+		<echo message="-initial-build-project-property: web.xml path : ${web.xml.path} " level="info"/>
+	</target>
+	<!-- placeholder, for extension used. -->
+	<target name="-initial-build-specific-property"/>
+	
+	<target name="-before-run-test" depends="_do-local-property-setup">
+		<property name="build.local" value="true"/>
+	</target>
+	
+	<target name="build-local" depends="_do-local-property-setup" description="建置本機環境之專案">
+		<property name="build.local" value="true"/>
+		<property name="compress.javascript" value="false"/>
+		<runtarget target="build-project"/>
+	</target>
+	<target name="rebuild-local" depends="_do-local-property-setup"	description="重新建置本機環境之專案">
+		<property name="build.local" value="true"/>
+		<property name="compress.javascript" value="false"/>
+		<runtarget target="rebuild-project"/>
+	</target>
+	<target name="ear-local" depends="_do-local-property-setup"	description="重新建置並包裝本機環境使用之Ear檔案">
+		<property name="build.local" value="true"/>
+		<property name="compress.javascript" value="true"/>
+		<runtarget target="ear"/>
+	</target>
+	<target name="_do-local-property-setup">
+		<property name="skipLdap" value="true"/>
+		<property name="logLevel" value="DEBUG"/>
+		<property name="sqlLogLevel" value="DEBUG"/>
+		<property name="authLevel" value="INFO"/>
+		<property name="abstractQueryLevel" value="DEBUG"/>
+	</target>
+	
+	<target name="ear-test" depends="_do-nccc-property-setup" description="重新建置並包裝中心測試環境使用之Ear檔案">
+		<property name="build.test" value="true"/>
+		<property name="build.portal" value="true"/>
+		<property name="compress.javascript" value="true"/>
+		<runtarget target="ear"/>
+	</target>
+	<target name="ear-prod" depends="_do-nccc-property-setup" description="重新建置並包裝中心正式環境使用之Ear檔案">
+		<property name="build.prod" value="true"/>
+		<property name="build.portal" value="true"/>
+		<property name="compress.javascript" value="true"/>
+		<runtarget target="ear"/>
+	</target>
+	
+	<target name="ear-estm-test" depends="_do-nccc-property-setup" description="重新建置並包裝(ESTM)中心測試環境使用之Ear檔案">
+		<property name="build.test" value="true"/>
+		<property name="build.estate" value="true"/>
+		<property name="compress.javascript" value="true"/>
+		<runtarget target="ear"/>
+	</target>
+	<target name="ear-estm-prod" depends="_do-nccc-property-setup" description="重新建置並包裝(ESTM)中心正式環境使用之Ear檔案">
+		<property name="build.prod" value="true"/>
+		<property name="build.estate" value="true"/>
+		<property name="compress.javascript" value="true"/>
+		<runtarget target="ear"/>
+	</target>
+	
+	
+	<target name="_do-nccc-property-setup">
+		<!-- 若已設定過則不再設定 -->
+		<if>
+			<istrue value="${nccc.property.setup}"/>
+			<else>
+				<property name="skipLdap" value="false"/>
+				<input addproperty="logLevel" message="Log Level?" defaultvalue="DEBUG" validargs="TRACE,DEBUG,INFO,WARN,ERROR"/>
+				<input addproperty="sqlLogLevel" message="SQL Log Level?" defaultvalue="INFO" validargs="TRACE,DEBUG,INFO,WARN,ERROR"/>
+				<property name="authLevel" value="WARN"/>
+				<property name="abstractQueryLevel" value="DEBUG"/>
+				<property name="nccc.property.setup" value="true"/>
+			</else>
+		</if>
+	</target>
+	
+	<target name="_do-ftp">
+        <available property="ear.present" file="${dist.dir}/${proj.name}.ear" type="file"/>
+        <fail message="${proj.name}.ear 檔案不存在!! 請先執行ear." unless="ear.present"/>
+        <echo message="開始傳送檔案 ${dist.dir}/${proj.name}.ear 至F15K 的 ${ftp.dest.dir} 目錄下"/>
+        <ftp server="${ftp.server}" action="mkdir" userid="${ftp.userid}" password="${ftp.mima}" verbose="yes" 
+            remotedir="${ftp.dest.dir}"/>
+        <ftp server="${ftp.server}" userid="${ftp.userid}" password="${ftp.mima}" verbose="yes" newer="true" timediffauto="true"
+            remotedir="${ftp.dest.dir}">
+            <fileset dir="${dist.dir}" includes="${proj.name}.ear"/>
+        </ftp>
+	</target>
+    <target name="ftp-test" description="傳送測試環境之EAR檔案至中心測試目錄">
+		<property name="ftp.dest.dir" value="${ftp.testing.dir}"/>
+		<runtarget target="_do-ftp"/>
+    </target>
+    <target name="ftp-prod" description="傳送正式環境之EAR檔案至中心正式目錄">
+		<property name="ftp.dest.dir" value="${ftp.production.dir}"/>
+		<runtarget target="_do-ftp"/>
+    </target>
+	
+	<target name="release-test"
+		description="Release中心測試環境使用之Ear檔案(重新建置並傳送)">
+		<antcallback target="_get-new-tag-name" return="new.tag.name">
+			<param name="new.tag.prefix" value="test"/>
+		</antcallback>
+		<!-- 將nccc property的設定搬到前面, 讓使用者的輸入動作集中完成 -->
+		<runtarget target="_do-nccc-property-setup"/>
+		<runtarget target="tag-project-with-check"/>
+		<runtarget target="ear-test"/>
+		<runtarget target="ftp-test"/>
+	</target>
+	<target name="release-prod"
+		description="Release中心正式環境使用之Ear檔案(重新建置並傳送), 並加入tag的info">
+		<antcallback target="_get-new-tag-name" return="new.tag.name">
+			<param name="new.tag.prefix" value="release"/>
+		</antcallback>
+		<!-- 將nccc property的設定搬到前面, 讓使用者的輸入動作集中完成 -->
+		<runtarget target="_do-nccc-property-setup"/>
+		<trycatch property="exception">
+			<try>
+				<var name="keep.cvs.pass.file" value="true"/>
+				<runtarget target="tag-project-with-check"/>
+				<property name="cvs.tag.file" value="${proj.name}_tag.version"/>
+				<antcallback target="_do-record-cvs-tag" return="new.version.file.created"/>
+				<antcall target="_do-check-in-file">
+					<param name="cvs.check.in.file" value="${cvs.tag.file}"/>
+					<param name="add.file.first" value="${new.version.file.created}"/>
+				</antcall>
+			</try>
+			<finally>
+				<var name="keep.cvs.pass.file" value="false"/>
+				<runtarget target="_do-cvs-clean-up"/>
+			</finally>
+		</trycatch>
+		<fail message="${exception}" if="exception"/>
+		<runtarget target="ear-prod"/>
+		<runtarget target="ftp-prod"/>
+	</target>
+</project>

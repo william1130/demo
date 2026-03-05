@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ISO8583-config SYSTEM "iso8583.dtd">
+<ISO8583-config encoding="BIG5" desc="ISO8583 AE設定檔" type="BINARY">
+	<header length="5" ref="default">TPDU</header>
+	<parse id="default" desc="通用規格">
+		<field num="2" type="LLZ" desc="PAN" alt="posfix:f" />
+		<field num="3" type="NUMERIC" length="6" desc="Processing Code" />
+		<field num="4" type="AMOUNT" desc="Amount, Transaction" />
+		<field num="11" type="NUMERIC" length="6" desc="System Trace Audit Number" />
+		<field num="12" type="TIME" desc="Time, Local Transaction" />
+		<field num="13" type="DATE4" desc="Date, Local Transaction" />
+		<field num="14" type="NUMERIC" length="4" desc="Date, Expired" />
+		<field num="15" type="DATE4" desc="Date, Local Transaction2" />
+		<field num="22" type="NUMERIC" length="4" desc="POS Entry Mode" />
+		<field num="24" type="NUMERIC" length="4" desc="Network International Identifier" />
+		<field num="25" type="NUMERIC" length="2" desc="POS Condition Code" />
+		<field num="35" type="LLZ" desc="Track 2 Data" alt="posfix:f" />
+		<field num="37" type="ALPHA" length="12" desc="Retrieval Reference Number" />
+		<field num="38" type="ALPHA" length="6" desc="Authorization Identification Response" />
+		<field num="39" type="ALPHA" length="2" desc="Response Code" />
+		<field num="41" type="ALPHA" length="8" desc="Card Acceptor Terminal Identification" />
+		<field num="42" type="ALPHA" length="15" desc="Card Acceptor Identification Code" />
+		<field num="44" type="LLVAR" desc="Additional Data – Resp data" />
+		<field num="45" type="LLVAR" desc="Track 1" />
+		<field num="48" type="LLLVAR" desc="Additional Data – Private Use" />
+		<field num="52" type="BINARY" length="8" desc="Pinblock Data" />
+		<field num="54" type="LLLVAR" desc="Additional Amount" />
+		<field num="55" type="LLLVAR" desc="EMV Chip Data" />
+		<field num="60" type="LLLVAR" desc="Reserved – Private Data" ref="f60" /> 
+		<field num="61" type="LLLVAR" desc="Reserved – Private Data" />
+		<field num="62" type="LLLVAR" desc="Reserved – Private Data" />
+		<field num="63" type="LLLVAR" desc="Reserved – Private Data"  />
+	</parse>
+	<parse id="f60" desc="Batch Totals for Close Batch" mti="0320">
+		<field num="1" type="ALPHA" length="4" desc="Message type" />
+		<field num="2" type="ALPHA" length="6" desc="STAN" />
+		<field num="3" type="ALPHA" length="12" desc="Reserved for future use" />
+	</parse>
+	<parse id="f60" desc="Batch Totals for Close Batch" mti="0500">
+		<field num="1" type="ALPHA" length="6" desc="Message type" />
+	</parse>
+</ISO8583-config>

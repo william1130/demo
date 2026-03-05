@@ -1,0 +1,864 @@
+/*
+ * ==============================================================================================
+ * $Id$
+ * ==============================================================================================
+ */
+* {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+/*
+.ieVersion * {
+	font-size: 0.96em;
+}
+.geckoVersion * {
+	font-size: 0.96em;
+}
+*/
+body {
+	background-color: #EDEDFD;
+	text-align: center;
+	color: #003388;
+	width: 100%;
+	height: 100%;
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+}
+
+/* 若要設定區塊的寬度為100%時, 可套用本style */
+.wideWidth {
+	width: 100% !important;
+}
+
+/* 若要設定區塊的寬度為自動調整時, 可套用本style */
+.autoWidth {
+	width: auto !important;
+}
+
+th {
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+fieldset {
+	margin-top: 0.6em;
+	margin-left: 1em;
+	margin-right: 1em;
+	margin-bottom: 1em;
+}
+
+/* 在folding內時, left margin要設定為0. */
+.foldingBlock fieldset {
+	margin-left: 0;
+}
+
+legend {
+	margin-left: 0.7em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
+/* 在IE裡, 因為<form>在顯示時會佔畫面空間, 所以必須將其margin設為0. */
+body.ieVersion form {
+	margin: 0;
+}
+
+/* 若要讓區塊預設為隱藏時, 可設定本style */
+.invisible {
+	display: none !important;
+}
+
+/* 若要讓原本為隱藏的區塊改為顯示時, 可設定本style */
+.visible {
+	display: block !important;
+}
+
+#mainContentBlock {
+	margin: 0;
+	padding: 5px 0px 0px 0px;
+	width: 56em;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+}
+
+.titleTable {
+	width: 100%;
+}
+
+#progHeader {
+	width: 100%;
+}
+
+body.ieVersion #progHeader {
+	/*margin-bottom: 0.5em;*/
+	padding-bottom: 0.5em;
+}
+
+body.geckoVersion #progHeader, body.webKitVersion #progHeader {
+	padding-bottom: 2em;
+}
+
+#progTitle {
+	position: static;
+	background-color: #EEEECC;
+	font-size: 1.6em;
+	font-family: "DFKai-SB", "標楷體", Verdana, Arial, Helvetica;
+	font-weight: bold;
+	color: #8888DD;
+	letter-spacing: 0.3em;
+	white-space: nowrap;
+	margin-bottom: 0.1em;
+	width: 22em;
+	/*z-index: 1;*/
+	/* margin-left及margin-right設為auto, 在firefox上block才會置中. */
+	margin-left: auto;
+	margin-right: auto;
+	/*
+	text-align: center;
+	word-spacing: 2em;
+	vertical-align: middle;
+	line-height: 35px;
+	border: groove 3px #BBBBFF;
+	*/
+}
+
+#progNo {
+	position: relative;
+	background-color: white;
+	font-size: 1em;
+	color: black;
+	width: 10em;
+	float: right;
+}
+
+#progHelp, #progEntry {
+	position: relative;
+	float: right;
+	/* 加入此設定, 以便與progNo有間隔 */
+	margin-left: 0.1em;
+}
+
+.require {
+	color: Brown;
+	font-weight: bold;
+	text-align: right;
+	padding-right: 0.6em;
+    white-space: nowrap;
+}
+
+.requireAlignL {
+	color: Brown;
+	font-weight: bold;
+	text-align: left;
+	padding-right: 0.6em;
+    white-space: nowrap;
+}
+
+.requireAlignC {
+	color: Brown;
+	font-weight: bold;
+	text-align: center;
+	padding-right: 0.6em;
+    white-space: nowrap;
+}
+
+.fieldBold {
+	color: steelblue;
+	font-weight: bold;
+	text-align: left;
+	padding-right: 0.6em;
+    white-space: nowrap;
+}
+
+/* 資料前後狀態不同 */
+.different {
+	color: brown;
+	background-color: #FFD4D1;
+	font-weight: bold;
+}
+
+/* 必要欄位前要加＊, 但IE無法正常顯示 */
+/*
+body.geckoVersion .require:before {
+	content: "＊";
+}
+*/
+
+.optional {
+	/*
+	font-weight: bold;
+	color: #000000;
+	background-color: #EEDDFF;
+	*/
+	color: steelblue;
+	text-align: right;
+	padding-right: 0.6em;
+	white-space: nowrap;
+}
+
+.field {
+	color: FireBrick;
+	text-align: right;
+	padding-right: 0.6em;
+	white-space: nowrap;
+}
+
+.fieldAlignL {
+	color: FireBrick;
+	text-align: left;
+	padding-right: 0.6em;
+	white-space: nowrap;
+}
+
+.fieldAlignC {
+	color: FireBrick;
+	text-align: center;
+	padding-right: 0.6em;
+	white-space: nowrap;
+}
+
+/* 資料前後狀態不同 */
+.different {
+	color: brown;
+	background-color: #FFD4D1;
+	font-weight: bold;
+}
+
+#criteriaBlock {
+	position: relative;
+	background-color: #EEEECC;
+	margin: 0;
+	padding: 0;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+body.geckoVersion #criteriaBlock table, body.webKitVersion #criteriaBlock table, body.operaVersion #criteriaBlock table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#criteriaBlock td.require {
+	background-color: inherit;
+}
+#criteriaBlock td.optional {
+	background-color: inherit;
+}
+#criteriaBlock td.buttonCell {
+	background-color: inherit;
+	text-align: center;
+}
+#criteriaBlock legend {
+	font-weight: bold;
+	color: red;
+}
+
+#inputBlock, #inputBlock1 {
+	position: relative;
+	background-color: #EEEECC;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.roundedBlock {
+	-moz-border-radius: 8px;
+	padding-top: 3px !important;
+	padding-bottom: 3px !important;
+}
+
+#inputBlock table, #inputBlock1 table {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+}
+#inputBlock legend, #inputBlock1 legend {
+	color: blue;
+}
+
+#confirmBlock {
+	position: relative;
+	background-color: #CCEECC;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#confirmBlock table {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+}
+#confirmBlock legend {
+	color: blue;
+}
+
+#dataBlock, #dataBlock1, #dataBlock2, #dataBlock3 {
+	position: relative;
+	background-color: #DDDDFF;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+#dataBlock table, #dataBlock1 table, #dataBlock2 table, #dataBlock3 table {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+}
+#dataBlock legend, #dataBlock1 legend, #dataBlock2 legend, #dataBlock3 legend {
+	color: blue;
+}
+
+#ajaxResultBlock, .userTaskBlock {
+	display: none;
+	/* 若設定為relative, 在IE上, 其他動態顯示出來的block會被其遮住, 即使設定z-index也沒用. */
+	/*position: relative;*/
+	background-color: #DDDDFF;
+	padding: 0;
+	margin-top: 1em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#informationBlock {
+	background-color: #DDDDFF;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#submitMessageCell {
+	text-align: center;
+}
+
+#submitMessageBlock {
+	background-color: mistyrose;
+	width: 25em;
+	text-align: center;
+}
+#submitMessage {
+	color: red;
+	font-weight: bold;
+}
+/* tooltip內容不必顯示在畫面上. */
+.tooltipContent {
+	display : none;
+}
+body.geckoVersion #submitMessageBlock {
+	margin-left: auto;
+	margin-right: auto;
+}
+body.ieVersion #submitMessageBlock {
+	text-align: center;
+}
+
+.exportBlock {
+	text-align: right;
+}
+/* 設定exportBlock中的圖片要顯示pointer, 代表可連結項目. */
+.exportBlock img {
+	cursor: pointer;
+}
+/* 設定tab block的style */
+.tabBlock {
+	/* 若寬及高均以百分比設定時, 在IE上整個tab均會看不見, 所以在此高度直接設定一固定值. */
+	width: 100%;
+	height: 450px;
+}
+
+/* 用於輸入用途的tab block的style */
+#inputTabBlock {
+	position: relative;
+	padding: 0;
+	margin-top: 1em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#inputTabBlock .tabContent {
+	background-color: #EEEECC;
+}
+
+/* 用於輸入用途的tab block的style */
+#dataTabBlock {
+	position: relative;
+	padding: 0;
+	margin-top: 1em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#dataTabBlock .tabContent {
+	background-color: #DDDDFF;
+}
+
+/* 設定用於列表用途的table的style */
+.listTable {
+	/* 因為listTable的cellSpacing固定設為1, 設定此背景色可形成框線的效果, 設為定important, 確保此設定不會被覆蓋 */
+	background-color: #AAAAAA !important;
+	width: 100%;
+	empty-cells: show
+}
+.listTable th {
+	font-weight: bold;
+	color: #FFFFF0;
+	background-color: #6699CC;
+	text-align: center;
+	border: solid 1px #666666;
+}
+/* 設定tr的背景, 避免listTable中部份row沒有設定class時, 其背景色會套用到listTable的背景 */
+.listTable tr {
+	background-color: #EEEECC;
+}
+
+.listTable td {
+	border: 1px solid #FFFFFF;
+}
+
+.ieVersion .listTable td {
+	border: none;
+}
+
+.button {
+	background-color: #5935AA;
+	color: #FFFFCC;
+	font-weight: normal;
+	padding-top: 0.2em;
+	padding-right: 0;
+	border-top: 2px outset #CCCCEE;
+	border-left: 2px outset #CCCCEE;
+	border-right: 2px outset #333333;
+	border-bottom: 2px outset #333333;
+	text-align: center;
+	letter-spacing: 0.3em;
+	cursor: pointer;
+}
+.disabledButton {
+	background-color: #9D79FF;
+	color: grey;
+	font-weight: normal;
+	padding-top: 0.2em;
+	padding-right: 0px;
+	border-top: 2px outset #CCCCEE;
+	border-left: 2px outset #CCCCEE;
+	border-right: 2px outset #333333;
+	border-bottom: 2px outset #333333;
+	text-align: center;
+	letter-spacing: 0.3em;
+	cursor: wait;
+}
+body.geckoVersion .button {
+	padding-top: 0.1em;
+}
+.buttonCell {
+	text-align: center;
+}
+.evenRow {
+	background-color: #DDDDFF !important;
+}
+.oddRow {
+	background-color: #FFFFDD !important;
+}
+.summaryRow {
+	background-color: white;
+}
+.rowSeparator {
+	background-color: #AFAFEE;
+	text-align: center;
+	font-weight: bold;
+}
+.group {
+	background-color: #EEEEEE;
+	text-align: center;
+	font-weight: bold;
+}
+.subGroup {
+	background-color: white;
+	text-align: center;
+}
+/* 有提示或tip的區塊所使用的style. */
+.hint {
+	background-color: #ffff99;
+}
+
+/* 序號 */
+.seqNo {
+	font-weight: bold;
+	text-align: center;
+	width: 2.5em;
+}
+.number {
+	text-align: right;
+	margin-right: 5px;
+}
+.alignCenter {
+	text-align: center !important;
+}
+.boldYes{font-weight:bold;}
+.alignRight {
+	text-align: right !important;
+}
+.alignLeft {
+	text-align: left !important;
+}
+.alignTop {
+	vertical-align: top !important;
+}
+.nowrap {
+	white-space: nowrap;
+}
+.important {
+	color: Red;
+	font-weight: bold;
+}
+/* 查無資料 */
+.noMatchData {
+	color: Red;
+	font-weight: bold;
+	text-align: center;
+}
+/* 備註 */
+.note {
+	color: #FF6666;
+}
+/* 資料前後狀態不同 */
+.different {
+	color: brown;
+	background-color: #FFD4D1;
+	font-weight: bold;
+}
+
+/* 所有圖片預設不顯示邊框 */
+img {
+	border-width: 0px;
+}
+
+/* 設定用來當作連結的image的style */
+.linkImg {
+	cursor: pointer;
+}
+
+.disabledLink {
+	display: none;
+}
+
+/* 排序圖片 */
+.sortingImage {
+	text-align: right;
+	vertical-align: bottom;
+}
+
+/* 日期圖片 */
+.datePickerImage {
+	vertical-align: bottom;
+	width: 19px;
+	height: 19px;
+}
+.datePickerImage:hover  {
+	cursor: pointer;
+}
+
+/* 日期圖片 */
+.copyImage {
+	vertical-align: bottom;
+}
+.copyImage:hover  {
+	cursor: pointer;
+}
+
+
+/* ================= Start of paging style ================= */
+/* 頁面連結區塊 */
+.pagelinks {
+	width: 100%;
+	color: black;
+	font-weight: normal;
+	text-align: center;
+	margin-bottom: 3px;
+}
+
+/* 頁面連結 */
+.pagelinks a:link, .pagelinks a:visited, .pagelinks a:active {
+	font-weight: bold;
+	color: blue;
+	text-decoration: none;
+}
+
+/* 頁面連結 */
+.pagelinks a:hover {
+	color: red;
+}
+
+.pagebanner {
+	text-align: right;
+	margin-bottom: 3px;
+}
+
+.totalPages {
+	text-align: right;
+}
+/* ================= End of paging style ================= */
+
+
+/* ================= Start of table style ================= */
+th.resize-handle-active {
+	cursor: e-resize;
+}
+
+div.resize-handle {
+	cursor: e-resize;
+	width: 2px;
+	border-right: 1px dashed #1E90FF;
+	position:absolute;
+	top:0;
+	left:0;
+}
+/* 代表可排序的欄位 */
+.sortable {
+	color: Khaki !important;
+	cursor: pointer;
+	background: transparent url(../images/sorting.gif) no-repeat right center;
+	padding-right: 10px;
+}
+
+/* 可排序欄位的連結的style */
+.sortable a:hover {
+	color: LightGoldenRodYellow;
+}
+
+/* 可排序欄位的連結的style */
+.sortable a {
+	color: Khaki;
+	text-decoration: none;
+}
+
+/* 已排序之欄位中連結的style */
+.sorted a {
+	color: SteelBlue !important;
+}
+
+/* Ascending排序之style */
+.ascending {
+	color: SteelBlue !important;
+	background: LightGoldenRodYellow url(../images/sorting_down.gif) no-repeat right center !important;
+}
+
+/* Descending排序之style */
+.descending {
+	color: SteelBlue !important;
+	background: LightGoldenRodYellow url(../images/sorting_up.gif) no-repeat right center !important;
+}
+
+/* Fixed header table 外框div的style */
+div.fixedHeadTableBlock {
+	width: 100%;		/* table width will be 99% of this*/
+	overflow: auto;
+	margin: 0 auto;
+}
+
+div.fixedHeadTableBlock .fixedHeadTable {
+	width: 99% !important;		/*100% of container produces horiz. scroll in Mozilla*/
+}
+
+div.fixedHeadTableBlock .fixedHeadTable>tbody {  /* child selector syntax which IE6 and older do not support*/
+	overflow: auto;
+	width: 100%;
+	overflow-x: hidden;
+}
+
+.geckoVersion .fixedHeadTable>tbody td {
+	height : auto; /* 要設定成auto, 否則tbody內容太少時, 每個cell高度會被放大到填滿全部空間 */
+}
+
+/* 針對opera, webkit要設定thead及tbody的display為'block' */
+.operaVersion div.fixedHeadTableBlock .fixedHeadTable>thead, .operaVersion div.fixedHeadTableBlock .fixedHeadTable>tbody {
+	display: block;
+}
+.webKitVersion div.fixedHeadTableBlock .fixedHeadTable>thead, .webKitVersion div.fixedHeadTableBlock .fixedHeadTable>tbody {
+	display: block;
+}
+
+/* IE使用其專屬的expression來處理.  */
+.ieVersion div.fixedHeadTableBlock thead tr	{
+	position:relative;
+	top: expression(offsetParent.scrollTop); /*IE5+ only*/
+}
+
+.ieVersion div.fixedHeadTableBlock table tfoot tr { /*idea of Renato Cherullo to help IE*/
+	position: relative;
+	overflow-x: hidden;
+	top: expression(parentNode.parentNode.offsetHeight >=
+	offsetParent.offsetHeight ? 0 - parentNode.parentNode.offsetHeight + offsetParent.offsetHeight + offsetParent.scrollTop : 0);
+}
+
+/* 在FF上, tbody中最右邊的cell要設定右縮排, 才不會被scrollbar給遮住 */
+.geckoVersion div.fixedHeadTableBlock td:last-child {
+	padding-right: 16px;
+}
+
+@media print {
+	div.fixedHeadTableBlock {overflow: visible;	}
+	table>tbody	{overflow: visible; }
+	td {height: 14pt;} /*adds control for test purposes*/
+	thead td	{font-size: 11pt;	}
+	tfoot td	{
+		text-align: center;
+		font-size: 9pt;
+		border-bottom: solid 1px slategray;
+	}
+
+	thead	{display: table-header-group;	}
+	tfoot	{display: table-footer-group;	}
+	thead th, thead td	{position: static; }
+
+	thead tr	{position: static; } /*prevent problem if print after scrolling table*/
+	table tfoot tr {     position: static;    }
+}
+/* ================= End of table style ================= */
+
+
+/* ================= Start of error_page.jsp style ================= */
+#errorPageTitle{
+	position: relative;
+	font-family: "DFKai-SB", "標楷體", Verdana, Arial, Helvetica;
+	font-weight: bold;
+	font-size: 2em;
+	width: 20em;
+	color: red;
+	text-align: center;
+	background-color: #EEEEFF;
+	margin-left: auto;
+	margin-right: auto;
+}
+#errorPageMessage {
+	background-color: #EEEEFF;
+	width: 50em;
+	color: red;
+	margin-left: auto;
+	margin-right: auto;
+}
+#errorPageMessage fieldset {
+	text-align: left;
+	color: red;
+	margin-top: 0.6em;
+	margin-left: 1em;
+	margin-right: 1em;
+	margin-bottom: 1em;
+}
+#errorPageMessage legend {
+	font-weight: bold;
+	color: red;
+}
+#errorPageMessage fieldset.stackTrace {
+	color: brown;
+}
+/* ================= End of error_page.jsp style ================= */
+
+/* ================= Start of message.jsp style ================= */
+#dummyMessageBlock {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0;
+}
+#messageBlock {
+	/*width: 60em;*/
+	max-width: 60em;
+	background-color: #DDDDFF;
+	margin: 0;
+	padding: 0;
+	margin-left: auto;
+	margin-right: auto;
+}
+#messageBlock ul {
+	list-style-type: circle;
+}
+#messageBlock .messageTable {
+	color: #003399;
+	margin-left: auto;
+	margin-right: auto;
+	/* 因為errorMessageTable可能會出現在ajaxResultBlockContent中, 因此style會被該設定影響, 所以必須設定以下屬性. */
+	background-color: #DDDDFF;
+}
+#messageBlock .messageTable th{
+	color: #003399;
+	/* 因為errorMessageTable可能會出現在ajaxResultBlockContent中, 因此style會被該設定影響, 所以必須設定以下屬性. */
+	font-weight: bold;
+	background-color: #DDDDFF;
+	border-width: 0;
+}
+#errorMessageBlock {
+	/*width: 60em;*/
+	max-width: 60em;
+	background-color: #FFDDDD !important;
+	margin: 0;
+	padding: 0;
+	margin-left: auto;
+	margin-right: auto;
+}
+#errorMessageBlock ul {
+	list-style-type: circle;
+}
+#errorMessageBlock .errorMessageTable {
+	color: #CC0000;
+	margin-left: auto;
+	margin-right: auto;
+	/* 因為errorMessageTable可能會出現在ajaxResultBlockContent中, 因此style會被該設定影響, 所以必須設定以下屬性. */
+	background-color: #FFDDDD;
+}
+#errorMessageBlock .errorMessageTable th {
+	color: red;
+	/* 因為errorMessageTable可能會出現在ajaxResultBlockContent中, 因此style會被該設定影響, 所以必須設定以下屬性. */
+	font-weight: bold;
+	background-color: #FFDDDD;
+	border-width: 0;
+}
+#extraMessageBlock {
+	/*width: 60em;*/
+	max-width: 60em;
+	background-color: #DDFFDD;
+	margin: 0;
+	padding: 0;
+	margin-left: auto;
+	margin-right: auto;
+}
+#extraMessageBlock ul {
+	list-style-type: circle;
+}
+#extraMessageBlock .extraMessageTable {
+	color: #003399;
+	margin-left: auto;
+	margin-right: auto;
+	/* 因為errorMessageTable可能會出現在ajaxResultBlockContent中, 因此style會被該設定影響, 所以必須設定以下屬性. */
+	background-color: #DDFFDD;
+}
+#extraMessageBlock .extraMessageTable th{
+	color: #003399;
+	/* 因為errorMessageTable可能會出現在ajaxResultBlockContent中, 因此style會被該設定影響, 所以必須設定以下屬性. */
+	font-weight: bold;
+	background-color: #DDFFDD;
+	border-width: 0;
+}
+/* ================= End of message.jsp style ================= */
+#loading {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(192, 192, 192, 0.5);
+    background-image: url("../images/MnyxU.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#page {
+    display: none;
+}
+
+/* ================= 待辦事項style ================= */
+#toBeApprove{width:150px;margin:10px auto;}
+#toBeApprove a{color:white;display:block;width:150px;height:auto;text-align:center;text-decoration:none;}
+#toBeApprove a:hover{top:1px;left:1px;position:relative;}

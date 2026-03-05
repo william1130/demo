@@ -1,0 +1,12 @@
+<aplog image-length="4000" statement-length="4000" value-separator="TAB" enable="true">
+	<!-- <ap-log-manager-factory impl-class="com.dxc.nccc.aplog.temp.ApLogManagerFactoryImpl">
+		<param name="fileFolder" value="d:/aplog"/> 		<param name="timePattern" value="yyyyMMddHH"/>-->
+	<ignore-tables-for-update table-list="LOG_FUNCTION_STATS"/> 
+	<ap-log-manager-factory impl-class="com.dxc.nccc.aplog.edstw.ApLogManagerFactoryImpl">		
+		<param name="masterClassName" value="com.dxc.nccc.aplog.edstw.persist.LogMasterImpl"/>
+		<param name="detailClassName" value="com.dxc.nccc.aplog.edstw.persist.LogDetailImpl"/>
+		<param name="logFunctionStateTableName" value="LOG_FUNCTION_STATS"/>
+		<param name="logFunctionStateProcKey" value="proc.logFunctionState"/>
+		<param name="logFunctionStateQSKey" value="query.logFunctionState"/>		
+	</ap-log-manager-factory>
+</aplog>

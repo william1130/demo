@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 6.0//EN" "https://struts.apache.org/dtds/struts-6.0.dtd">
+
+<struts>
+	<package name="ae" namespace="/trans" extends="proj-default">
+		<action name="toQueryAETransLog">
+			<result>/trans/queryAETransLog.jsp</result>
+		</action>
+		<action name="checkingAEShowCardNo">
+			<result>/trans/checking.jsp</result>
+		</action>
+		<action name="checkingAEShowISO">
+			<result>/trans/checking.jsp</result>
+		</action>
+		<action name="queryAETransLog" method="queryAETransLog" class="proj.nccc.logsearch.struts.AETransLogActions">
+			<result name="input">/trans/queryAETransLog.jsp</result>
+			<result name="Result">/trans/queryAETransLogList.jsp</result>
+			<result name="Fail">/trans/queryAETransLogList.jsp</result>
+			<result name="Success">/trans/queryAETransLogList.jsp</result>
+		</action>
+		<action name="queryAETransLogRpt" method="queryAETransLogRpt" class="proj.nccc.logsearch.struts.AETransLogActions">
+			<result name="input">/trans/queryAETransLog.jsp</result>
+			<result name="Fail">/trans/queryAETransLog.jsp</result>
+		</action>
+		<action name="queryAETransLogRptAll" method="queryAETransLogRptAll" class="proj.nccc.logsearch.struts.AETransLogActions">
+			<result name="input">/trans/queryAETransLog.jsp</result>
+			<result name="Fail">/trans/queryAETransLog.jsp</result>
+		</action>
+		<action name="queryAETransLogISO" method="queryAETransLogISO" class="proj.nccc.logsearch.struts.AETransLogActions">
+			<result name="input">/trans/queryAETransLog.jsp</result>
+			<result name="Fail">/trans/queryAETransLogISO.jsp</result>
+			<result name="Success">/trans/queryAETransLogISO.jsp</result>
+		</action>
+		<action name="queryAETransLogIC" method="queryAETransLogIC" class="proj.nccc.logsearch.struts.AETransLogActions">
+			<result name="input">/trans/queryAETransLogIC.jsp</result>
+			<result name="Fail">/trans/queryAETransLogIC.jsp</result>
+			<result name="Success">/trans/queryAETransLogIC.jsp</result>
+		</action>
+		<action name="parseAEFixedCode" method="parseFixedCode" class="proj.nccc.logsearch.struts.ParseCodeActions">
+			<result name="CardholderIDMethod">/parseCode/CardholderIDMethod.html</result>
+			<result name="CardholderPresentIndicator">/parseCode/CardholderPresentIndicator.html</result>
+			<result name="CardPresentIndicator">/parseCode/CardPresentIndicator.html</result>
+			<result name="CATIndicator">/parseCode/CATIndicator.html</result>
+			<result name="EDCPOSEntryMode">/parseCode/EDCPOSEntryMode.html</result>
+			<result name="ExchangeMode">/parseCode/ExchangeMode.html</result>
+			<result name="ProcessingCode">/parseCode/ProcessingCode.html</result>
+			<result name="FiscConditionCode">/parseCode/FiscConditionCode.html</result>
+			<result name="MTI">/parseCode/MTI.html</result>
+			<result name="TerminalInputCapabilityIndicator">/parseCode/TerminalInputCapabilityIndicator.html</result>
+			<result name="TransactionStatusIndicator">/parseCode/TransactionStatusIndicator.html</result>
+			<result name="TransactionSecurityIndicator">/parseCode/TransactionSecurityIndicator.html</result>
+			<result name="TerminalAttendedIndicator">/parseCode/TerminalAttendedIndicator.html</result>
+		</action>
+		<action name="parseAEISOCode" method="parseAEISOCode" class="proj.nccc.logsearch.struts.ParseCodeActions">
+			<result name="input">/parseCode/parseISOCode.jsp</result>
+			<result name="Fail">/parseCode/parseISOCode.jsp</result>
+			<result name="Success">/parseCode/parseISOCode.jsp</result>
+		</action>
+		<action name="parseAEICCode" method="parseICCode" class="proj.nccc.logsearch.struts.ParseCodeActions">
+			<result name="input">/parseCode/parseICCode.jsp</result>
+			<result name="Fail">/parseCode/parseICCode.jsp</result>
+			<result name="Normal">/parseCode/parseICCode.jsp</result>
+			<result name="Mutil">/parseCode/parseICCodeMutil.jsp</result>
+		</action>
+		<action name="toTransformCPCNo">
+			<result>/trans/transformCPCNo.jsp</result>
+		</action>
+		<action name="transformCPCNo" method="transformCPCNo" class="proj.nccc.logsearch.struts.AETransLogActions">
+			<result name="input">/trans/transformCPCNo.jsp</result>
+			<result name="Fail">/trans/transformCPCNoResult.jsp</result>
+			<result name="Success">/trans/transformCPCNoResult.jsp</result>
+		</action>
+	</package>
+</struts>
+

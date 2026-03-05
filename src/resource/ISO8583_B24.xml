@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ISO8583-config SYSTEM "iso8583.dtd">
+<ISO8583-config encoding="BIG5" desc="B24設定檔" type="STRING">
+	<header length="12" ref="default">ISO000000000</header>
+	<parse id="default" desc="Base 24">
+		<field num="3" type="NUMERIC" length="6" desc="Processing Code" />
+		<field num="4" type="AMOUNT" desc="Amount, Transaction" />
+		<field num="7" type="NUMERIC" length="10" desc="Transmission Date and Time" />
+		<field num="11" type="NUMERIC" length="6" desc="System Trace Audit Number" />
+		<field num="12" type="TIME" desc="Time, Local Transaction" />
+		<field num="13" type="DATE4" desc="Date, Local Transaction" />
+		<field num="15" type="DATE4" desc="Settlement Date" />
+		<field num="17" type="DATE4" desc="Capture Date" />
+		<field num="18" type="NUMERIC" length="4" desc="Merchant Category Code" />
+		<field num="22" type="NUMERIC" length="3" desc="POS Entry Mode" />
+		<field num="25" type="NUMERIC" length="2" desc="POS Condition Code" />
+		<field num="28" type="ALPHA" length="9" desc="Transaction Fee Amount" />
+		<field num="32" type="LLVAR" desc="Acquiring Institution Identification Code" />
+		<field num="35" type="LLVAR" desc="Track 2 Data" />
+		<field num="37" type="ALPHA" length="12" desc="Retrieval Reference Number" />
+		<field num="38" type="ALPHA" length="6" desc="Approve Code" />
+		<field num="39" type="ALPHA" length="2" desc="Response Code" />
+		<field num="41" type="ALPHA" length="16" desc="Card Acceptor Terminal Identification" />
+		<field num="42" type="ALPHA" length="15" desc="Card Acceptor Identification Code" />
+		<field num="43" type="ALPHA" length="40" desc="Card Acceptor Name/Location" />
+		<field num="44" type="NUMERIC" length="27" desc="Additional Response Data" />
+		<field num="48" type="LLLVAR" desc="Additional data(48)" />
+		<field num="49" type="NUMERIC" length="3" desc="Transaction Currency Code" />
+		<field num="50" type="NUMERIC" length="3" desc="Settlement currency code" />
+		<field num="52" type="ALPHA" length="16" desc="Pinblock Data" />
+		<field num="53" type="NUMERIC" length="16" desc="Security Related Control Information" />
+		<field num="57" type="LLLLTOKENS" desc="POS Additional Data(57)" />
+		<field num="60" type="LLLVAR" desc="POS terminal data/From Host Maintenance (FHM) Data" />
+		<field num="61" type="LLLVAR" desc="Card Issuer-Category-Response Code" />
+		<field num="62" type="ALPHA" length="13" desc="Postal Code" />
+		<field num="63" type="LLLTOKENS" desc="POS Additional Data(63)" />
+		<field num="66" type="NUMERIC" length="1" desc="Settlement Code" />
+		<field num="70" type="NUMERIC" length="3" desc="Network Management Information Code" />
+		<field num="73" type="ALPHA" length="6" desc="Action Date" />
+		<field num="74" type="NUMERIC" length="10" desc="Number Credits" />
+		<field num="75" type="NUMERIC" length="10" desc="Reversal Number Credits" />
+		<field num="76" type="NUMERIC" length="10" desc="Number Debits" />
+		<field num="77" type="NUMERIC" length="10" desc="Reversal Number Debits" />
+		<field num="78" type="NUMERIC" length="10" desc="Number Transfer" />
+		<field num="79" type="NUMERIC" length="10" desc="Reversal Number Transfer" />
+		<field num="80" type="NUMERIC" length="10" desc="Number Inquiries" />
+		<field num="81" type="NUMERIC" length="10" desc="Number Authorizations" />
+		<field num="86" type="NUMERIC" length="16" desc="Amount Credits" />
+		<field num="87" type="NUMERIC" length="16" desc="Reversal Amount Credits" />
+		<field num="88" type="NUMERIC" length="16" desc="Amount Debits" />
+		<field num="89" type="NUMERIC" length="16" desc="Reversal Amount Debits" />
+		<field num="90" type="ALPHA" length="42" desc="Original Data Elements" />
+		<field num="91" type="ALPHA" length="1" desc="File Update Code" />
+		<field num="95" type="ALPHA" length="42" desc="Replacement Amount" />
+		<field num="97" type="ALPHA" length="17" desc="Net Settlement Credit (or Debit) Amount" />
+		<field num="99" type="LLVAR" desc="Settlement Institution Identification Code" />
+		<field num="101" type="LLVAR" desc="File Name" />
+		<field num="120" type="LLLVAR" desc="" />
+		<field num="122" type="LLVAR" desc="From Host Maintenance Information" />
+		<field num="123" type="LLLVAR" desc="Cryptographic Service Message" />
+		<field num="126" type="LLLTOKENS" desc="ATM Additional Data" />
+		<field num="127" type="LLLVAR" desc="POS User Data" ref="f127" />
+	</parse>
+	
+	<parse id="f127">
+		<field num="1" type="REDEF">
+			<redefine default-ref="f127_default_detail">
+            	<define ref="f127_tcard_detail" selector-expression="buf.length == 74" />
+            </redefine>
+		</field>
+	</parse>
+
+	<parse id="f127_default_detail">
+		<field num="1" type="ALPHA" length="38" desc="空白(1)" />
+		<field num="2" type="ALPHA" length="2" desc="EDC交易功能碼" />
+		<field num="3" type="ALPHA" length="11" desc="空白(3)" />
+		<field num="4" type="ALPHA" length="6" desc="1. 銀聯卡交易 System Trace Audit Number。2. 語音開卡交易: 信用卡開卡密碼。" />
+		<field num="5" type="ALPHA" length="10" desc="身份證字號" />
+		<field num="6" type="ALPHA" length="4" desc='1. 固定值"C" 2. 信用卡語音繳款密碼。' />
+		<field num="7" type="ALPHA" length="3" desc="空白(7)" />
+		<field num="8" type="ALPHA" length="4" desc="銀聯卡交易Settlement Date" />
+		<field num="9" type="ALPHA" length="4" desc="銀聯卡交易日期" />
+		<field num="10" type="ALPHA" length="6" desc="銀聯卡交易時間" />
+		<field num="11" type="ALPHA" length="12" desc="銀聯卡RRN" />
+	</parse>
+	<parse id="f127_tcard_detail">
+		<field num="1" type="ALPHA" length="38" desc="空白(1)" />
+		<field num="2" type="ALPHA" length="2" desc="EDC交易功能碼" />
+		<field num="3" type="ALPHA" length="17" desc="空白(3)" />
+		<field num="4" type="ALPHA" length="10" desc="身份識別碼" />
+		<field num="5" type="ALPHA" length="5" desc="空白(5)" />
+		<field num="6" type="ALPHA" length="2" desc="小額交易" />
+	</parse>
+	 
+	 
+	<token>
+		<token-parse id=":)" desc="Token :)">
+			<token-field num="1" type="ALPHA" length="12" desc="國外交易用RRN" />
+		</token-parse>
+		<token-parse id="04" desc="Token 04">
+			<token-field num="1" type="ALPHA" length="1" desc="Error-flg" />
+			<token-field num="2" type="ALPHA" length="11" desc="Filler(2)" />
+			<token-field num="3" type="ALPHA" length="1" desc="Crd-very-flg" />
+			<token-field num="4" type="ALPHA" length="5" desc="Filler(4)" />
+			<token-field num="5" type="ALPHA" length="1" desc="Complete-tk2-data" />
+			<token-field num="6" type="ALPHA" length="1" desc="Filler(6)" />
+		</token-parse>
+		<token-parse id="06" desc="ATM online PIN change token">
+			<token-field num="1" type="ALPHA" length="1" desc="New-PIN-FRMT" />
+			<token-field num="2" type="ALPHA" length="16" desc="New-PIN-OFST" />
+			<token-field num="3" type="ALPHA" length="1" desc="PIN-CNT" />
+			<token-field num="4" type="ALPHA" length="2" desc="New-PIN-Size" />
+			<token-field num="5" type="ALPHA" length="16" desc="New-PIN-1" />
+			<token-field num="6" type="ALPHA" length="16" desc="New-PIN-2" />
+			<token-field num="7" type="ALPHA" length="1" desc="NCCC-STAND-ININD" />
+			<token-field num="8" type="ALPHA" length="1" desc="PVV-ON-CARD-FLG" />
+		</token-parse>
+		<token-parse id="17" desc="Token 17">
+			<token-field num="1" type="ALPHA" length="1" desc="Filler(1)" />
+			<token-field num="2" type="ALPHA" length="15" desc="TRAN-ID" />
+			<token-field num="3" type="ALPHA" length="8" desc="Filler(3)" />
+		</token-parse>
+		<token-parse id="20" desc="Token 20">
+			<token-field num="1" type="ALPHA" length="1" desc="Filler(1)" />
+			<token-field num="2" type="ALPHA" length="15" desc="TRACE-ID" />
+			<token-field num="3" type="ALPHA" length="6" desc="Filler(3)" />
+		</token-parse>
+		<token-parse id="25" desc="Surcharge amount token">
+			<token-field num="1" type="ALPHA" length="19" desc="TRAN-FEE" />
+			<token-field num="2" type="ALPHA" length="19" desc="ORIG-FEE" />
+			<token-field num="3" type="ALPHA" length="32" desc="Filler(3)" />
+		</token-parse>
+		<token-parse id="B0" desc="Token B0">
+			<token-field num="1" type="ALPHA" length="3" desc="LGTH" />
+			<token-field num="2" type="ALPHA" length="1" desc="Filler(2)" />
+			<token-field num="3" type="ALPHA" length="4" desc="FIID" />
+			<token-field num="4" type="ALPHA" length="12" desc="Filler(4)" />
+			<token-field num="5" type="NUMERIC" length="3" desc="ADVICE-RSN-CDE" />
+			<token-field num="6" type="ALPHA" length="15" desc="Filler(6)" />
+			<token-field num="7" type="ALPHA" length="30" desc="ON-BEHALF" />
+			<token-field num="8" type="ALPHA" length="17" desc="Filler(8)" />
+			<token-field num="9" type="NUMERIC" length="4" desc="ADVC-DETL-CDE" />
+			<token-field num="10" type="ALPHA" length="6" desc="AUTH-AGENT-IDCDE" />
+			<token-field num="11" type="ALPHA" length="129" desc="Filler(11)" />
+		</token-parse>
+		<token-parse id="B2" desc="Token B2">
+			<token-field num="1" type="ALPHA" length="4" desc="BIT-MAP" />
+			<token-field num="2" type="ALPHA" length="4" desc="USER-FLD1" />
+			<token-field num="3" type="ALPHA" length="2" desc="CRYPTO-INFDATA" />
+			<token-field num="4" type="ALPHA" length="10" desc="TVR" />
+			<token-field num="5" type="ALPHA" length="16" desc="ARQC" />
+			<token-field num="6" type="ALPHA" length="12" desc="AMT-AUTH" />
+			<token-field num="7" type="ALPHA" length="12" desc="AMT-OTHER" />
+			<token-field num="8" type="ALPHA" length="4" desc="AIP" />
+			<token-field num="9" type="ALPHA" length="4" desc="ATC" />
+			<token-field num="10" type="ALPHA" length="3" desc="TERM-CNTRYCDE" />
+			<token-field num="11" type="ALPHA" length="3" desc="TERM-CRNCYCDE" />
+			<token-field num="12" type="ALPHA" length="6" desc="TRAN-DAT" />
+			<token-field num="13" type="ALPHA" length="2" desc="TRAN-TYPE" />
+			<token-field num="14" type="ALPHA" length="8" desc="UNPREDICT-NUM" />
+			<token-field num="15" type="ALPHA" length="4" desc="ISS-APPL-DATALGTH" />
+			<token-field num="16" type="ALPHA" length="64" desc="ISS-APPL-DATA" />
+		</token-parse>
+		<token-parse id="B3" desc="Token B3">
+			<token-field num="1" type="ALPHA" length="4" desc="BIT-MAP" />
+			<token-field num="2" type="ALPHA" length="8" desc="TERM-SER-NUM" />
+			<token-field num="3" type="ALPHA" length="6" desc="TERM-CAP" />
+			<token-field num="4" type="ALPHA" length="6" desc="USR-FLD1" />
+			<token-field num="5" type="ALPHA" length="8" desc="US-FLD2" />
+			<token-field num="6" type="ALPHA" length="2" desc="EMV-TERM-TYP" />
+			<token-field num="7" type="ALPHA" length="4" desc="APPL-VER-NUM" />
+			<token-field num="8" type="ALPHA" length="6" desc="CVM-RSLTS" />
+			<token-field num="9" type="ALPHA" length="4" desc="DF-NAME-LGTH" />
+			<token-field num="10" type="ALPHA" length="32" desc="DF-NAME" />
+		</token-parse>
+		<token-parse id="B4" desc="Token B4">
+			<token-field num="1" type="ALPHA" length="3" desc="PT-SRV-ENTRY-MDE" />
+			<token-field num="2" type="ALPHA" length="1" desc="TERM-ENTRY-CAP" />
+			<token-field num="3" type="ALPHA" length="1" desc="LAST_EMV_STAT" />
+			<token-field num="4" type="ALPHA" length="1" desc="DATA_SUSPECT" />
+			<token-field num="5" type="ALPHA" length="2" desc="APPL-PAN-SEQ-NUM" />
+			<token-field num="6" type="ALPHA" length="6" desc="DEV-INFO or CAM-FLG" />
+			<token-field num="7" type="ALPHA" length="4" desc="RSN-ON-LINE-CDE" />
+			<token-field num="8" type="ALPHA" length="1" desc="ARQC-VERIFY" />
+			<token-field num="9" type="ALPHA" length="1" desc="USR-FLD1" />
+		</token-parse>
+		<token-parse id="B5" desc="Token B5">
+			<token-field num="1" type="ALPHA" length="4" desc="ISS-AUTH-DATA-LGTH" />
+			<token-field num="2" type="ALPHA" length="32" desc="ISS-AUTH-DATA" />
+			<token-field num="3" type="ALPHA" length="6" desc="USER-FLD1" />
+		</token-parse>
+		<token-parse id="B6" desc="Token B6">
+			<token-field num="1" type="LVAR" length="4" desc="ISS-AUTH-DATA" />
+		</token-parse>
+		<token-parse id="BJ" desc="EMV issuer script results">
+			<token-field num="1" type="ALPHA" length="1" desc="NUM-ISS-SCRIPT-RSLTS" />
+			<token-field num="2" type="ALPHA" length="1" desc="FILLER" />
+			<token-field num="3" type="ALPHA" length="80" desc="ISS-SCRIPT-RSLTS-DATA" />
+		</token-parse>
+		<token-parse id="BY" desc="Token BY">
+			<token-field num="1" type="ALPHA" length="52" desc="Filler(1)" />
+			<token-field num="2" type="ALPHA" length="2" desc="CRD-LVL-PROD-IDVAL" />
+			<token-field num="3" type="ALPHA" length="6" desc="Filler(3)" />
+		</token-parse>
+		<token-parse id="C0" desc="Token C0">
+			<token-field num="1" type="ALPHA" length="4" desc="CVD-FLD" />
+			<token-field num="2" type="ALPHA" length="14" desc="Filler(2)" />
+			<token-field num="3" type="ALPHA" length="1" desc="MO/TO or EC flag" />
+			<token-field num="4" type="ALPHA" length="2" desc="Filler(4)" />
+			<token-field num="5" type="ALPHA" length="1" desc="CVD-FLDPRESENT" />
+			<token-field num="6" type="ALPHA" length="1" desc="Filler(6)" />
+			<token-field num="7" type="ALPHA" length="1" desc="UCAF-AUTHNCOLL-IND" />
+			<token-field num="8" type="ALPHA" length="1" desc="Filler(8)" />
+			<token-field num="9" type="ALPHA" length="1" desc="CAVV/AAV Results" />
+		</token-parse>
+		<token-parse id="C4" desc="Token C4">
+			<token-field num="1" type="ALPHA" length="1" desc="Term-Attend-Ind" />
+			<token-field num="2" type="ALPHA" length="1" desc="Filler(2)" />
+			<token-field num="3" type="ALPHA" length="1" desc="Term-Loc-Ind" />
+			<token-field num="4" type="ALPHA" length="1" desc="C/H-Present-Ind" />
+			<token-field num="5" type="ALPHA" length="1" desc="CRD-Present-Ind" />
+			<token-field num="6" type="ALPHA" length="1" desc="CRD-CAPTR-IND" />
+			<token-field num="7" type="ALPHA" length="1" desc="TXN-STAT-IND" />
+			<token-field num="8" type="ALPHA" length="1" desc="TXN-SEC-IND" />
+			<token-field num="9" type="ALPHA" length="1" desc="TXN-SEC-IND" />
+			<token-field num="10" type="ALPHA" length="1" desc="C/H-ACTVT-Ind" />
+			<token-field num="11" type="ALPHA" length="1" desc="Term-Input-CAP-Ind" />
+			<token-field num="12" type="ALPHA" length="1" desc="Filler(12)" />
+		</token-parse>
+		
+		<token-parse id="C5" desc="Token C5">
+			<token-field num="1" type="REDEF">
+				<token-redefine default-ref="C5_reedeem">
+					<token-define ref="C5_installment" selector-expression="buf[90] == 'I'.bytes[0] or buf[90] == 'E'.bytes[0]" />
+				</token-redefine>
+			</token-field>
+		</token-parse>
+		<token-parse id="C5_installment" desc="分期付款交易之Token C5">
+			<token-field num="1" type="ALPHA" length="10" desc="Merchant ID" />
+			<token-field num="2" type="ALPHA" length="6" desc="Store ID" />
+			<token-field num="3" type="ALPHA" length="2" desc="Transaction ID" />
+			<token-field num="4" type="ALPHA" length="11" desc="Reference ID" />
+			<token-field num="5" type="ALPHA" length="6" desc="Goods ID" />
+			<token-field num="6" type="ALPHA" length="10" desc="Personal" />
+			<token-field num="7" type="ALPHA" length="4" desc="PIN" />
+			<token-field num="8" type="ALPHA" length="1" desc="EC-FLAG" />
+			<token-field num="9" type="ALPHA" length="40" desc="Order Num" />
+			<token-field num="10" type="ALPHA" length="1" desc="Installment-Tx-Ind" />
+			<token-field num="11" type="ALPHA" length="2" desc="Installment txn resp-cde" />
+			<token-field num="12" type="ALPHA" length="27" desc="Filler" />
+			<token-field num="13" type="ALPHA" length="2" desc="Period Number" />
+			<token-field num="14" type="ALPHA" length="8" desc="Down-Payment" />
+			<token-field num="15" type="ALPHA" length="8" desc="Installment-Payments" />
+			<token-field num="16" type="ALPHA" length="6" desc="Formality-Fee" />
+		</token-parse>
+		<token-parse id="C5_reedeem" desc="紅利扣抵交易之Token C5">
+			<token-field num="1" type="ALPHA" length="10" desc="Merchant ID" />
+			<token-field num="2" type="ALPHA" length="6" desc="Store ID" />
+			<token-field num="3" type="ALPHA" length="2" desc="Transaction ID" />
+			<token-field num="4" type="ALPHA" length="11" desc="Reference ID" />
+			<token-field num="5" type="ALPHA" length="6" desc="Goods ID" />
+			<token-field num="6" type="ALPHA" length="10" desc="Personal" />
+			<token-field num="7" type="ALPHA" length="4" desc="PIN" />
+			<token-field num="8" type="ALPHA" length="1" desc="EC-FLAG" />
+			<token-field num="9" type="ALPHA" length="2" desc="Settlement Flag" />
+			<token-field num="10" type="ALPHA" length="38" desc="Order Num" />
+			<token-field num="11" type="ALPHA" length="1" desc="Loyalty-Tx-Ind" />
+			<token-field num="12" type="ALPHA" length="2" desc="Loyalty-Tx-Resp-code" />
+			<token-field num="13" type="ALPHA" length="8" desc="Points of Redemption" />
+			<token-field num="14" type="ALPHA" length="1" desc="Sign Point Of Balance" />
+			<token-field num="15" type="ALPHA" length="8" desc="Points of Balance" />
+			<token-field num="16" type="ALPHA" length="10" desc="Paid-Credit-Amount" />
+		</token-parse>
+		
+		<token-parse id="C6" desc="Token C6">
+			<token-field num="1" type="ALPHA" length="40" desc="XID" />
+			<token-field num="2" type="ALPHA" length="40" desc="TRANS-STAIN/CAVV" />
+		</token-parse>
+		<token-parse id="CE" desc="Token CE">
+			<token-field num="1" type="ALPHA" length="2" desc="AUTHN-IND-FLG" />
+			<token-field num="2" type="ALPHA" length="200" desc="AUTHN-IND-DATA" />
+		</token-parse>
+		<token-parse id="CH" desc="Token CH">
+			<token-field num="1" type="ALPHA" length="1" desc="RESP-SRC-RSN-CDE" />
+			<token-field num="2" type="ALPHA" length="18" desc="Filler(2)" />
+			<token-field num="3" type="ALPHA" length="1" desc="RECUR-PMNT-IND" />
+			<token-field num="4" type="ALPHA" length="4" desc="Filler(4)" />
+			<token-field num="5" type="ALPHA" length="3" desc="PMNT-TYP-IND" />
+			<token-field num="6" type="ALPHA" length="1" desc="Filler(6)" />
+			<token-field num="7" type="ALPHA" length="1" desc="CRDHLDR-AUTHN-CAPIND" />
+			<token-field num="8" type="ALPHA" length="4" desc="Filler(8)" />
+			<token-field num="9" type="ALPHA" length="1" desc="RVSL-RSN-IND" />
+			<token-field num="10" type="ALPHA" length="2" desc="Filler(10)" />
+			<token-field num="11" type="ALPHA" length="1" desc="AUTH-MSG-IND" />
+			<token-field num="12" type="ALPHA" length="1" desc="TERM-TYP" />
+			<token-field num="13" type="ALPHA" length="2" desc="Filler(13)" />
+		</token-parse>
+		<token-parse id="FA" desc="Token FA">
+			<token-field num="1" type="ALPHA" length="11" desc="PMNT-FACILITATOR-ID" />
+			<token-field num="2" type="ALPHA" length="11" desc="IDPNT-SALES-ORG-ID" />
+			<token-field num="3" type="ALPHA" length="15" desc="SUB-MRCH-ID" />
+			<token-field num="4" type="ALPHA" length="13" desc="Filler" />
+		</token-parse>
+		<token-parse id="S4" desc="Token S4">
+            <token-field num="1" type="ALPHA" length="2" desc="DATASET-ID" />
+            <token-field num="2" type="LVAR" length="4" desc="SUPPL-DATA" alt="byte"/>
+        </token-parse>
+		<token-parse id="S8" desc="Token S8">
+			<token-field num="1" type="ALPHA" length="1" desc="ACCT-NUM-IND" />
+			<token-field num="2" type="ALPHA" length="19" desc="ACCT-NUM" />
+			<token-field num="3" type="ALPHA" length="4" desc="EXP-DAT" />
+			<token-field num="4" type="ALPHA" length="2" desc="AC-VERY-RSLT" />
+			<token-field num="5" type="ALPHA" length="2" desc="FRAUD-CHK-RSLT" />
+			<token-field num="6" type="ALPHA" length="2" desc="Filler"  />
+		</token-parse>
+		<token-parse id="Q5" desc="Token Q5" fill-in="even">
+			<token-field num="1" type="ALPHA" length="32" desc="CARD-PROD-IDENINFO" />
+			<token-field num="2" type="LVAR" length="3"  desc="COUPON-WRITE-OFF-INFO" />
+		</token-parse>
+			
+		<token-parse id="Q6" desc="Token Q6">
+			<token-field num="1" type="REDEF">
+				<token-redefine default-ref="Q6_DEF">
+					<token-define ref="Q6_A" selector-expression="buf[25] == 'A'.bytes[0]" />
+					<token-define ref="Q6_E" selector-expression="buf[25] == 'E'.bytes[0]" />
+					<token-define ref="Q6_R" selector-expression="buf[25] == 'R'.bytes[0]" />
+					<token-define ref="Q6_S" selector-expression="buf[25] == 'S'.bytes[0]" />
+				</token-redefine>
+			</token-field>
+		</token-parse>
+		
+		<token-parse id="Q6_DEF" desc="Token Q6">
+			<token-field num="1" type="ALPHA" length="2" desc="TXN-CHNL-TYP" />
+			<token-field num="2" type="ALPHA" length="1" desc="TXN-INIT-MTHD" />
+			<token-field num="3" type="ALPHA" length="2" desc="CHN-CUST-ID-TYP" />
+			<token-field num="4" type="ALPHA" length="20" desc="CHN-CUST-ID" />
+			<token-field num="5" type="ALPHA" length="1" desc="TXN-IND" />
+		</token-parse>
+		
+		<token-parse id="Q6_A" desc="Token Q6 - Account Verification">
+			<token-field num="1" type="ALPHA" length="2" desc="TXN-CHNL-TYP" />
+			<token-field num="2" type="ALPHA" length="1" desc="TXN-INIT-MTHD" />
+			<token-field num="3" type="ALPHA" length="2" desc="CHN-CUST-ID-TYP" />
+			<token-field num="4" type="ALPHA" length="20" desc="CHN-CUST-ID" />
+			<token-field num="5" type="ALPHA" length="1" desc="TXN-IND" />
+			<token-field num="6" type="ALPHA" length="2" desc="TXN-RELV-TAG" />
+			<token-field num="7" type="ALPHA" length="40" desc="ORD-NUM" />
+			<token-field num="8" type="ALPHA" length="3" desc="CRD-STAT" />
+			<token-field num="9" type="ALPHA" length="20" desc="MOB-PHONE-NBR" />			
+		</token-parse>
+		
+		<token-parse id="Q6_E" desc="Token Q6 - Ecommerce">
+			<token-field num="1" type="ALPHA" length="2" desc="TXN-CHNL-TYP" />
+			<token-field num="2" type="ALPHA" length="1" desc="TXN-INIT-MTHD" />
+			<token-field num="3" type="ALPHA" length="2" desc="CHN-CUST-ID-TYP" />
+			<token-field num="4" type="ALPHA" length="20" desc="CHN-CUST-ID" />
+			<token-field num="5" type="ALPHA" length="1" desc="TXN-IND" />
+			<token-field num="6" type="ALPHA" length="2" desc="E-COM-IND" />
+			<token-field num="7" type="ALPHA" length="15" desc="SCND-MRCH-ID" />
+			<token-field num="8" type="ALPHA" length="40" desc="SCND-MRCH-NAMADDR" />
+		</token-parse>
+		
+		<token-parse id="Q6_R" desc="Token Q6 - Recurring">
+			<token-field num="1" type="ALPHA" length="2" desc="TXN-CHNL-TYP" />
+			<token-field num="2" type="ALPHA" length="1" desc="TXN-INIT-MTHD" />
+			<token-field num="3" type="ALPHA" length="2" desc="CHN-CUST-ID-TYP" />
+			<token-field num="4" type="ALPHA" length="20" desc="CHN-CUST-ID" />
+			<token-field num="5" type="ALPHA" length="1" desc="TXN-IND" />
+			<token-field num="6" type="ALPHA" length="2" desc="USER-ID-CAT" />
+			<token-field num="7" type="ALPHA" length="40" desc="USER-ID-PMNTITEM" />
+			<token-field num="8" type="ALPHA" length="4" desc="RGN-CDE" />
+			<token-field num="9" type="ALPHA" length="4" desc="ADDL-RGN-CDE" />
+			<token-field num="10" type="ALPHA" length="1" desc="PMNT-MTHD-TAG" />
+			<token-field num="11" type="ALPHA" length="2" desc="MTHD-TYP" />
+			<token-field num="12" type="ALPHA" length="40" desc="PMNT-MTHD-NUM" />
+			<token-field num="13" type="ALPHA" length="3" desc="TIME-SPAN" />
+			<token-field num="14" type="ALPHA" length="12" desc="MAX-MNTD-AMT " />
+			<token-field num="15" type="ALPHA" length="12" desc="MIN-MNTD-AMT" />
+			<token-field num="16" type="ALPHA" length="17" desc="PMNT-PER" />
+		</token-parse>
+		
+		<token-parse id="Q6_S" desc="Token Q6 - Stand-in">
+			<token-field num="1" type="ALPHA" length="2" desc="TXN-CHNL-TYP" />
+			<token-field num="2" type="ALPHA" length="1" desc="TXN-INIT-MTHD" />
+			<token-field num="3" type="ALPHA" length="2" desc="CHN-CUST-ID-TYP" />
+			<token-field num="4" type="ALPHA" length="20" desc="CHN-CUST-ID" />
+			<token-field num="5" type="ALPHA" length="1" desc="TXN-IND" />
+			<token-field num="6" type="ALPHA" length="4" desc="STIP-ORIG-MTI" />
+			<token-field num="7" type="ALPHA" length="6" desc="STIP-ORIG-TXNCDE" />
+			<token-field num="8" type="ALPHA" length="2" desc="STIP-ORIG-PTSVC-CDE" />
+			<token-field num="9" type="ALPHA" length="1" desc="STIP-VIP-IND" />
+			<token-field num="10" type="ALPHA" length="2" desc="STIP-FAIL-RSN" />
+			<token-field num="11" type="ALPHA" length="11" desc="STIP-IIN" />	
+		</token-parse>
+		
+		<token-parse id="Q8" desc="Token Q8" fill-in="even" >
+			<token-field num="1" type="VAR" desc="B24 TLV Fields" />
+		</token-parse>
+				
+		<token-parse id="Q9" desc="Token Q9">
+			<token-field num="1" type="REDEF">
+				<token-redefine default-ref="Q9_DFS_TWIN">
+					<token-define ref="Q9_VISA" selector-expression="buf[0] == 'V'.bytes[0]" />
+					<token-define ref="Q9_BNET" selector-expression="buf[0] == 'B'.bytes[0]" />
+					<token-define ref="Q9_JCBI" selector-expression="buf[0] == 'J'.bytes[0]" />
+				</token-redefine>
+			</token-field>
+		</token-parse>
+		
+		<token-parse id="Q9_VISA" desc="VISA Token Q9">
+			<token-field num="1" type="ALPHA" length="4" desc="FIID" />
+			<token-field num="2" type="ALPHA" length="2" desc="DEV-TYP" />
+			<token-field num="3" type="ALPHA" length="1" desc="CHIP-TXN-IND" />
+			<token-field num="4" type="ALPHA" length="4" desc="MSG-RSN-CDE" />
+			<token-field num="5" type="ALPHA" length="1" desc="PRTL-AUTH-IND" />
+			<token-field num="6" type="ALPHA" length="4" desc="STIP-CDE" />
+			<token-field num="7" type="ALPHA" length="10" desc="MRCH-VRFCN-VAL" />
+			<token-field num="8" type="ALPHA" length="2" desc="BUS-APPL-ID" />
+			<token-field num="9" type="ALPHA" length="6" desc="TRACE-NUM" />
+			<token-field num="10" type="ALPHA" length="12" desc="REF-NUM" />
+			<token-field num="11" type="ALPHA" length="2" desc="Card Verification Method at Device" />
+			<token-field num="12" type="ALPHA" length="2" desc="Filler" />
+		</token-parse>
+		
+		<token-parse id="Q9_BNET" desc="MasterCard Token Q9">
+			<token-field num="1" type="ALPHA" length="4" desc="FIID" />
+			<token-field num="2" type="ALPHA" length="2" desc="DEV-TYP" />
+			<token-field num="3" type="ALPHA" length="3" desc="ADVICE-RSN-CDE" />
+			<token-field num="4" type="ALPHA" length="4" desc="ADVC-DETL-CDE" />
+			<token-field num="5" type="ALPHA" length="6" desc="AUTH-AGENT-ID-CDE" />
+			<token-field num="6" type="ALPHA" length="30" desc="ON-BEHAL" />
+			<token-field num="7" type="ALPHA" length="1" desc="RSN-AAVDOWNGRADE" />
+		</token-parse>
+		
+		<token-parse id="Q9_JCBI" desc="JCB Token Q9">
+			<token-field num="1" type="ALPHA" length="4" desc="FIID" />
+			<token-field num="2" type="ALPHA" length="1" desc="DEV-TYP" />
+			<token-field num="3" type="ALPHA" length="45" desc="Filler" />
+		</token-parse>
+		
+		<token-parse id="Q9_DFS_TWIN" desc="DFS/TWIN Token Q9">
+			<token-field num="1" type="ALPHA" length="4" desc="FIID" />
+			<token-field num="2" type="ALPHA" length="3" desc="FUNC-CDE" />
+			<token-field num="3" type="ALPHA" length="6" desc="STAN" />
+			<token-field num="4" type="ALPHA" length="37" desc="Filler" />
+		</token-parse>
+		
+		<token-parse id="QA" desc="Token QA">
+			<token-field num="1" type="REDEF">
+				<token-redefine >
+					<token-define ref="QA_VISA" selector-expression="buf[5] == 'V'.bytes[0]" />
+					<token-define ref="QA_MASTER" selector-expression="buf[5] == 'B'.bytes[0]" />
+				</token-redefine>
+			</token-field>
+		</token-parse>
+		
+		<token-parse id="QR" desc="Token QR">
+			<token-field num="1" type="B24TLV" desc="B24 TLV Fields" />
+		</token-parse>
+	</token>
+	<b24-tlv id="QR">
+		<b24-tlv-field tag="01" type="ALPHA" desc="QRC use case indicator" />
+		<b24-tlv-field tag="02" type="ALPHA" desc="QRC voucher number" />
+		<b24-tlv-field tag="03" type="ALPHA" desc="C2B Payment code" />
+		<b24-tlv-field tag="04" type="ALPHA" desc="APP1 provider IIN" />
+		<b24-tlv-field tag="05" type="ALPHA" desc="APP2 provider IIN" />
+		<b24-tlv-field tag="06" type="ALPHA" desc="BASE24 internal QR flag" />
+		<b24-tlv-field tag="11" type="ALPHA" desc="Additional Data 1" />
+		<b24-tlv-field tag="12" type="ALPHA" desc="Additional Data 2" />
+		<b24-tlv-field tag="13" type="ALPHA" desc="Funding Source" />
+		<b24-tlv-field tag="14" type="ALPHA" desc="Merchant Identifier" />
+	</b24-tlv>
+	
+	<token-parse id="QA_VISA" desc="Token QA_VISA">
+		<token-field num="1" type="B24TLV" desc="Token QA_VISA" />
+	</token-parse>
+	<b24-tlv id="QA_VISA">
+		<b24-tlv-field tag="01" type="ALPHA" desc="NETWORK-ID-1" />
+		<b24-tlv-field tag="02" type="ALPHA" desc="M/C DE48 Subelement 66 Subfield 1" />
+		<b24-tlv-field tag="03" type="ALPHA" desc="M/C DE48 Subelement 66 Subfield 2" />
+	</b24-tlv>
+	
+	<token-parse id="QA_MASTER" desc="Token QA_MASTER">
+		<token-field num="1" type="B24TLV" desc="Token QA_MASTER" />
+	</token-parse>
+	<b24-tlv id="QA_MASTER">
+		<b24-tlv-field tag="01" type="ALPHA" desc="NETWORK-ID-2" />
+	</b24-tlv>
+</ISO8583-config>

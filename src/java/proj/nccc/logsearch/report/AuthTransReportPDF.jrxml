@@ -1,0 +1,1417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AuthTransReportPDF" pageWidth="1805" pageHeight="1190" orientation="Landscape" columnWidth="1777" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="7d31d2f3-6db5-4c92-9015-3f099d30abae">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="proj.nccc.logsearch.report.*"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="BaseFont" isDefault="true" markup="styled" fontName="Kai" fontSize="9" pdfFontName="Kai" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+	<style name="NumberStyle" style="BaseFont" hAlign="Right" markup="styled" isBlankWhenNull="true" isPdfEmbedded="false">
+		<box rightPadding="2"/>
+	</style>
+	<style name="DoubleStyle" style="NumberStyle" markup="styled" pattern="#,##0.00"/>
+	<style name="IntStyle" style="NumberStyle" markup="styled" pattern="#,###"/>
+	<style name="ReportTitle" style="BaseFont" fontSize="16"/>
+	<style name="CenterFont" style="BaseFont" hAlign="Center"/>
+	<parameter name="REPORT_DATE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="FILE_DATE1" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="FILE_DATE2" class="java.lang.String" isForPrompting="false"/>
+	<field name="bankNo" class="java.lang.String"/>
+	<field name="cardNo" class="java.lang.String"/>
+	<field name="transName" class="java.lang.String"/>
+	<field name="merchantNo" class="java.lang.String"/>
+	<field name="terminalNo" class="java.lang.String"/>
+	<field name="purchaseAmt" class="java.lang.String"/>
+	<field name="approvalNo" class="java.lang.String"/>
+	<field name="purchaseDate" class="java.lang.String"/>
+	<field name="purchaseTime" class="java.lang.String"/>
+	<field name="transType" class="java.lang.String"/>
+	<field name="conditionCode" class="java.lang.String"/>
+	<field name="returnHostCode" class="java.lang.String"/>
+	<field name="entryMode" class="java.lang.String"/>
+	<field name="mccCode" class="java.lang.String"/>
+	<field name="acquireId" class="java.lang.String"/>
+	<field name="countryName" class="java.lang.String"/>
+	<field name="loyaltyOriginalPoint" class="java.lang.Double"/>
+	<field name="loyaltyRedemptionPoint" class="java.lang.Double"/>
+	<field name="loyaltyRedemptionAmt" class="java.lang.Double"/>
+	<field name="loyaltyPaidCreditAmt" class="java.lang.Double"/>
+	<field name="installPeriodNum" class="java.lang.Double"/>
+	<field name="installFirstPayment" class="java.lang.Double"/>
+	<field name="installStagesPayment" class="java.lang.Double"/>
+	<field name="installFormalityFee" class="java.lang.Double"/>
+	<field name="mccAmtLimit" class="java.lang.Double"/>
+	<field name="cardClass" class="java.lang.String"/>
+	<field name="limitType" class="java.lang.String"/>
+	<field name="creditLimit" class="java.lang.Double"/>
+	<field name="amtCurrentMonth" class="java.lang.Double"/>
+	<field name="amtLastMonth" class="java.lang.Double"/>
+	<field name="idBillAmt" class="java.lang.Double"/>
+	<field name="maxLimitAmtMonth" class="java.lang.Double"/>
+	<field name="cashAmtCurrentMonth" class="java.lang.Double"/>
+	<field name="idCashAmtLastMonth" class="java.lang.Double"/>
+	<field name="idCashBillAmt" class="java.lang.Double"/>
+	<field name="idCreditLimit" class="java.lang.Double"/>
+	<field name="normalLimitAmtMonth" class="java.lang.Double"/>
+	<field name="normalAmtMonth" class="java.lang.Double"/>
+	<field name="normalAmtLastMonth" class="java.lang.Double"/>
+	<field name="totalLimitAmtMonth" class="java.lang.Double"/>
+	<field name="cashLimitAmtMonth" class="java.lang.Double"/>
+	<field name="cashAmtMonth" class="java.lang.Double"/>
+	<field name="cashAmtLastMonth" class="java.lang.Double"/>
+	<field name="cashBillAmt" class="java.lang.Double"/>
+	<field name="tempCreditLimit" class="java.lang.Double"/>
+	<field name="surchgAmt" class="java.lang.String"/>
+	<variable name="amtSum" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[java.lang.Double.valueOf($F{purchaseAmt})]]></variableExpression>
+	</variable>
+	<background>
+		<band height="5" splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Prevent"/>
+	</title>
+	<pageHeader>
+		<band height="50" splitType="Prevent">
+			<staticText>
+				<reportElement key="staticText-47" style="BaseFont" x="466" y="11" width="710" height="25" uuid="4da31a1a-3936-466f-bd32-897b5fcab324"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai" size="18"/>
+				</textElement>
+				<text><![CDATA[信用卡授權資料查詢]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-75" style="BaseFont" x="7" y="20" width="48" height="15" uuid="edaae1f8-c1af-482e-8fee-fdb917a5bf20"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[報表日期 : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-77" style="BaseFont" x="55" y="20" width="55" height="15" uuid="b6bcd8f9-4fc8-451d-b936-d717e599e39a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{REPORT_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-76" style="BaseFont" x="7" y="34" width="48" height="15" uuid="97c9648d-84a6-466a-8b76-5e8d970bef10"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[頁　　數 :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-78" style="BaseFont" x="54" y="34" width="20" height="15" uuid="1a9c3cbe-bb58-471b-aeb8-02c675d0c493"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-77" style="BaseFont" x="74" y="34" width="10" height="15" uuid="6dcfd959-53a6-40dc-9fc4-dcfeb73ecee1"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-79" style="BaseFont" x="84" y="34" width="26" height="15" uuid="b72f5233-3da4-4dc8-bb11-44923c0c2cfb"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="52" splitType="Prevent">
+			<staticText>
+				<reportElement key="staticText-5" style="BaseFont" x="159" y="4" width="85" height="37" uuid="9b740436-1d3d-4781-b227-b95a0a0b2a43"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[特店代號]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-7" style="BaseFont" x="296" y="4" width="58" height="37" uuid="e596f0d8-3a6e-45f8-95f6-40c4ad94d63d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[消費金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-8" style="BaseFont" x="492" y="4" width="50" height="37" uuid="223aee5a-1f9e-4473-b569-02ae50431c62"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[消費時間]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-10" style="BaseFont" x="626" y="4" width="29" height="37" uuid="8255e69c-9d40-45c5-bdee-ec943e9b7007"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[MCC CODE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-11" style="BaseFont" x="244" y="4" width="52" height="37" uuid="f4a55ab2-da82-476a-873b-fdf12de6450e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[端末機代碼]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-13" style="BaseFont" x="542" y="4" width="20" height="37" uuid="eec48397-c8f0-42d7-b7cc-205af394f5da"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[交易類別]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-20" style="BaseFont" x="2" y="4" width="20" height="37" uuid="71a25688-6b8b-49bc-ba86-e6f737f767b2"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[序號]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-21" style="BaseFont" x="119" y="4" width="40" height="37" uuid="493a192e-750c-442c-8a50-90471b6c5e2b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[交易型態]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-39" style="BaseFont" x="562" y="4" width="14" height="37" uuid="fcd543c7-db3f-4e2c-a3a2-a7ec1d81f817"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[狀況欄]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-40" style="BaseFont" x="576" y="4" width="21" height="37" uuid="f281865a-7264-408a-8f35-32b7c6d2b541"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[主機回覆碼]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-41" style="BaseFont" x="442" y="4" width="50" height="37" uuid="270be041-b1ef-4c40-8373-c8700c5481ee"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[消費日期]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-42" style="BaseFont" x="402" y="4" width="40" height="37" uuid="4ffdd7ea-e036-43b2-b3c0-0ef0bcf79b70"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[授權碼]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-43" style="BaseFont" x="22" y="4" width="97" height="37" uuid="5bd1c158-b050-4659-8b92-ee9b0e572fac"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[卡號]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="BaseFont" x="597" y="4" width="29" height="37" uuid="48e1622b-2f25-4268-a692-14bf9868e8ef"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[Entry Mode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-45" style="BaseFont" x="655" y="4" width="33" height="37" uuid="fd4a913c-11db-47a0-a939-fe3a76daa9cd"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[收單Bin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-46" style="BaseFont" x="688" y="4" width="17" height="37" uuid="be54f725-85c5-49b9-ad2d-394a3b3fa98f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[國別]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-48" style="BaseFont" x="705" y="4" width="50" height="37" uuid="b9eed759-be7b-499c-a23b-0da5b9a6e69b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[原紅利點數]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-49" style="BaseFont" x="755" y="4" width="40" height="37" uuid="f943c7e7-35c0-4f64-8874-3f88f906fb62"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[扣抵點數]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-50" style="BaseFont" x="795" y="4" width="24" height="37" uuid="6f626cb0-cd3e-4db3-bd8e-20d9bbea899f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[扣抵金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-51" style="BaseFont" x="819" y="4" width="49" height="37" uuid="c5c48295-a224-4743-93be-b5dc0d012ae7"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[扣抵後金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-52" style="BaseFont" x="868" y="4" width="20" height="37" uuid="146b4422-4811-4e99-a402-80e88fa39f20"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[分期期數]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-53" style="BaseFont" x="888" y="4" width="40" height="37" uuid="9218355b-3738-4e8a-9566-4871dc046e97"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[首期金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-54" style="BaseFont" x="928" y="4" width="40" height="37" uuid="4c801cfa-69ba-464a-869e-4d1a6333e282"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[每期金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-55" style="BaseFont" x="968" y="4" width="30" height="37" uuid="f1fc446b-5a4f-4b62-817c-617a3f1dcae4"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[手續費]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-56" style="BaseFont" x="998" y="4" width="30" height="37" uuid="58d259af-1793-41a0-ab92-6b3699ad88e6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[行業別次限額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-57" style="BaseFont" x="1028" y="4" width="21" height="37" uuid="b7e4f820-4681-4db5-969e-c20238d48db7"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[卡人等級]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-58" style="BaseFont" x="1049" y="4" width="20" height="37" uuid="818a088c-2379-461b-a710-65fde445352c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[限額類別]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-59" style="BaseFont" x="1069" y="4" width="40" height="37" uuid="fd1c6354-65bb-4890-b78e-d83765f45a6e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[ID信用餘額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-60" style="BaseFont" x="1149" y="4" width="40" height="37" uuid="2bfb7c12-9bc2-4cfd-85fb-5af13cc64eb5"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[ID本月累積總消費金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-61" style="BaseFont" x="1189" y="4" width="40" height="37" uuid="d1c7dc58-57e6-4ffa-ac30-62a55a3debd3"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[ID上月累積總消費金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-62" style="BaseFont" x="1229" y="4" width="40" height="37" uuid="12256f5a-836b-4363-84f8-3316075d0472"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[ID帳務金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-63" style="BaseFont" x="1269" y="4" width="40" height="37" uuid="1a0f9981-912a-400e-b926-3f431fd15acc"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[ID最大總月限額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-64" style="BaseFont" x="1309" y="4" width="40" height="37" uuid="285b4cf3-6e04-4d6c-b387-1a69554c8014"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[ID本月累積預借現金金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-65" style="BaseFont" x="1349" y="4" width="40" height="37" uuid="e676f8c7-0c23-4874-af47-cf5cbf4ea735"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[ID上月累積預借現金金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-66" style="BaseFont" x="1389" y="4" width="40" height="37" uuid="ff9bc67b-9725-4cef-8635-93ae2d5d100b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[ID預借現金帳務金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-67" style="BaseFont" x="1429" y="4" width="40" height="37" uuid="31a075a6-3363-42ba-acf4-40d59b3b457b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[一般消費月限額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-68" style="BaseFont" x="1469" y="4" width="40" height="37" uuid="c82e7b07-4b1f-46bb-bea2-63dbd773d1c8"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[一般消費月累積金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-69" style="BaseFont" x="1509" y="4" width="40" height="37" uuid="b8e3e58d-ea3d-45c7-837e-33153225f203"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[一般消費上月累積金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-70" style="BaseFont" x="1549" y="4" width="40" height="37" uuid="5457ee36-9b2b-489e-beeb-2551c84f49f0"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[總消費月限額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-71" style="BaseFont" x="1589" y="4" width="40" height="37" uuid="07c92f32-b478-448a-80d8-91f0028a2e7c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[預借現金月限額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-72" style="BaseFont" x="1629" y="4" width="40" height="37" uuid="a6f1fd25-46dd-4d12-a52a-17e045961b2b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[預借現金月累積消費金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-73" style="BaseFont" x="1669" y="4" width="40" height="37" uuid="95363afa-8cbc-4c10-8079-40fe10bfdb8c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[預借現金上月累積消費金額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-74" style="BaseFont" x="1709" y="4" width="40" height="37" uuid="5aff1432-91a9-4e57-bac5-f75a229d28cf"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[預借現金帳務金額]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-1" style="BaseFont" x="57" y="46" width="1630" height="1" uuid="0c153e45-c673-4a18-afcf-ab14b0e9a053"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-80" style="BaseFont" x="1109" y="4" width="40" height="37" uuid="f48d0cb0-e43c-4455-8666-ea54e4d23573"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[臨時餘額]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-3" style="BaseFont" x="4" y="46" width="1745" height="1" uuid="fa827e95-e770-4fa8-a897-500f651f6385"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-81" style="BaseFont" x="354" y="4" width="48" height="37" uuid="fbd1e4f5-ac6e-4807-9c09-2dfd728e1099"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Kai"/>
+				</textElement>
+				<text><![CDATA[商店附加費]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Prevent">
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-7" style="BaseFont" x="542" y="1" width="20" height="15" uuid="b5bced1d-5819-476a-907e-6cf25937508b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transType}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-8" style="BaseFont" x="159" y="1" width="85" height="15" uuid="7be119b9-f38d-4b25-954d-4066e243dda3"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{merchantNo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-9" style="BaseFont" x="576" y="1" width="21" height="15" uuid="43b6f4f2-36e5-40f8-a703-e5ecdd6fa197"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{returnHostCode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-15" style="BaseFont" x="562" y="1" width="14" height="15" uuid="039e65cb-2876-49d2-a2f6-6b9574eb1be6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{conditionCode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-25" style="BaseFont" x="597" y="1" width="29" height="15" uuid="fc4ce834-8c19-48a3-9fd8-8d70be03a8e6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entryMode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-26" style="CenterFont" x="2" y="1" width="20" height="15" uuid="6b7684b7-ea7c-4afa-8bbf-2e5e3d36d168"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.valueOf($V{REPORT_COUNT})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-27" style="BaseFont" x="402" y="1" width="40" height="15" uuid="ef06ab75-252d-4b95-a83e-b67627f7ed4a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{approvalNo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-29" style="BaseFont" x="22" y="1" width="97" height="15" isPrintWhenDetailOverflows="true" uuid="ad340463-cf6b-47d2-9a20-f5f35a139924"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cardNo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-42" style="BaseFont" x="626" y="1" width="29" height="15" uuid="02a92e7a-531e-4fd3-9df4-3849640d0f70"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mccCode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-43" style="BaseFont" x="655" y="1" width="33" height="15" uuid="e49e689a-6257-4c93-bea6-d002bcb817a4"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{acquireId}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-44" style="BaseFont" x="492" y="1" width="50" height="15" uuid="d67e0e59-a952-423f-b53a-1a12ef39e10c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{purchaseTime}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-45" style="BaseFont" x="442" y="1" width="50" height="15" uuid="b5b4e337-3616-47d7-92bb-11ce8faeb76e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{purchaseDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-46" style="BaseFont" x="688" y="1" width="17" height="15" uuid="ff146d09-c383-4545-bc63-4ac8ade80a50"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{countryName}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-47" style="BaseFont" x="705" y="1" width="50" height="15" uuid="107290c5-a8a0-4582-9c07-45bdab5005a8"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loyaltyOriginalPoint}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-48" style="BaseFont" x="755" y="1" width="40" height="15" uuid="0c62288f-4cd2-4fac-a93b-7d779a3aa562"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loyaltyRedemptionPoint}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-49" style="BaseFont" x="119" y="1" width="40" height="15" uuid="8b08f30b-0ce2-4265-8ece-9943ff87df54"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-50" style="BaseFont" x="244" y="1" width="52" height="15" uuid="76a5a9c1-b91d-49fa-afb3-d75dedfce258"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{terminalNo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-51" style="BaseFont" x="296" y="1" width="58" height="15" uuid="e10bd434-450b-467e-9b94-cacfab971a7e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{purchaseAmt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-52" style="BaseFont" x="795" y="1" width="24" height="15" uuid="66e1c3a3-e34d-4e9c-b4ed-2203e1963a97"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loyaltyRedemptionAmt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-53" style="BaseFont" x="819" y="1" width="49" height="15" uuid="6b752198-c35a-473b-b58a-1954a29bb091"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loyaltyPaidCreditAmt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-54" style="BaseFont" x="868" y="1" width="20" height="15" uuid="464694c0-fecb-4113-a1fe-daee497f1c93"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{installPeriodNum}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-55" style="BaseFont" x="888" y="1" width="40" height="15" uuid="e73ba197-816c-4be5-8402-5d20763b9b27"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{installFirstPayment}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-56" style="BaseFont" x="928" y="1" width="40" height="15" uuid="69c10bbf-bc40-4946-af2b-7ad8a4267127"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{installStagesPayment}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-57" style="BaseFont" x="968" y="1" width="30" height="15" uuid="150ba63d-d216-40a9-927e-04f7cb8e75c0"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{installFormalityFee}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-58" style="BaseFont" x="998" y="1" width="30" height="15" uuid="22380b46-c00c-4bae-8af1-f7a36bf78cc7"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mccAmtLimit}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-59" style="BaseFont" x="1028" y="1" width="21" height="15" uuid="f2358841-712e-4c39-bb0e-e52e2399da76"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cardClass}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-60" style="BaseFont" x="1049" y="1" width="20" height="15" uuid="3a24877f-00e6-40d9-b18e-83f92141d528"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{limitType}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-61" style="BaseFont" x="1069" y="1" width="40" height="15" uuid="7748e095-9d77-4ce7-9ecb-f96c76ac8d35"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idCreditLimit}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-62" style="BaseFont" x="1149" y="1" width="40" height="15" uuid="a0bf596f-832d-43fb-9e2a-f57420157911"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amtCurrentMonth}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-63" style="BaseFont" x="1189" y="1" width="40" height="15" uuid="3d903e00-2904-440c-86c9-7502a0dde1f9"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amtLastMonth}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-64" style="BaseFont" x="1229" y="1" width="40" height="15" uuid="9dedfb56-5506-4169-8f2b-47de0c5caa07"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idBillAmt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-65" style="BaseFont" x="1269" y="1" width="40" height="15" uuid="b5a9aab9-1bab-4686-af84-77eb21122242"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{maxLimitAmtMonth}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-66" style="BaseFont" x="1309" y="1" width="40" height="15" uuid="45374a32-1338-4ab2-8adc-e7d06a6b202d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cashAmtCurrentMonth}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-67" style="BaseFont" x="1349" y="1" width="40" height="15" uuid="e4d473d7-3013-46b1-8a00-3b8a6e99f6b6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idCashAmtLastMonth}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-68" style="BaseFont" x="1389" y="1" width="40" height="15" uuid="10e45c32-08f1-4f40-b5a8-7ff29f93b3bb"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idCashBillAmt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-69" style="BaseFont" x="1429" y="1" width="40" height="15" uuid="bf93b68f-75d1-489c-ad7a-ea9effedfb23"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{normalLimitAmtMonth}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-70" style="BaseFont" x="1469" y="1" width="40" height="15" uuid="2bb9e457-de0b-4456-8210-56e1821aeca6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{normalAmtMonth}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-71" style="BaseFont" x="1509" y="1" width="40" height="15" uuid="187a6dd1-4e61-43bd-aae0-b0f53a6b3db8"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{normalAmtLastMonth}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-72" style="BaseFont" x="1549" y="1" width="40" height="15" uuid="34ccd6f9-5222-4901-b913-cc8fde61bc71"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalLimitAmtMonth}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-73" style="BaseFont" x="1589" y="1" width="40" height="15" uuid="8b5b6779-258d-443e-adf1-1034c8bd2bf0"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cashLimitAmtMonth}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-74" style="BaseFont" x="1629" y="1" width="40" height="15" uuid="367e7729-a7fb-4f84-8c36-dfd28f09df62"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cashAmtMonth}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-75" style="BaseFont" x="1669" y="1" width="40" height="15" uuid="6f04579b-bd18-43d0-a053-fbf36873a70d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cashAmtLastMonth}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-76" style="BaseFont" x="1709" y="1" width="40" height="15" uuid="10b01187-2352-4fec-b7e4-6749697134da"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cashBillAmt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###" isBlankWhenNull="true">
+				<reportElement key="textField-82" style="BaseFont" x="1109" y="1" width="40" height="15" uuid="f0e499d3-55f6-484c-a8fc-7289dae30081"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Kai"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tempCreditLimit}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-99" style="BaseFont" x="354" y="1" width="48" height="15" uuid="ccf97ab1-b6e6-4e7d-863f-c79366a66422"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font fontName="Kai" size="9" pdfFontName="Kai" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{surchgAmt}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="80" splitType="Stretch">
+			<line>
+				<reportElement key="line-2" style="BaseFont" x="5" y="4" width="1630" height="1" uuid="ab9d474a-52e5-4c9b-a291-c900e280011e"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-78" style="BaseFont" x="6" y="9" width="70" height="17" uuid="7bedbf45-df74-471a-9b80-26b65455dffd"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[總消費金額 :]]></text>
+			</staticText>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-80" style="BaseFont" x="81" y="9" width="60" height="17" uuid="4ecf67bd-0764-42e1-84a5-ad3778ab5e98"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{amtSum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-79" style="BaseFont" x="6" y="29" width="70" height="17" uuid="67311f6a-1f41-475f-bc06-528f88f62dc0"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[總筆數 :]]></text>
+			</staticText>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-81" style="BaseFont" x="81" y="29" width="60" height="17" uuid="d4bae8b4-8677-4ffc-aa41-428532c2bced"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[""+$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Prevent"/>
+	</summary>
+</jasperReport>

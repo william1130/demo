@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 6.0//EN" "https://struts.apache.org/dtds/struts-6.0.dtd">
+
+<struts>
+	<package name="auth" namespace="/auth" extends="proj-default">
+		
+		<!-- 信用卡授權交易資料查詢" -->
+		<action name="toQueryAuthLogByAuthTrans">
+			<result>/auth/SC-UCA-W00145_Q01.jsp</result>
+		</action>
+		<action name="queryAuthLogByAuthTrans" method="queryAuthLogListByCredit" class="proj.nccc.logsearch.struts.AuthLogSupplementActions">
+			<result name="input">/auth/SC-UCA-W00145_Q01.jsp</result>
+			<result name="Fail">/auth/SC-UCA-W00145_QL1.jsp</result>
+			<result name="Success">/auth/SC-UCA-W00145_QL1.jsp</result>
+		</action>
+		<action name="queryAuthLogAuthTransReport" method="queryAuthLogAuthTransReport" class="proj.nccc.logsearch.struts.AuthLogSupplementActions">
+			<result name="input">/auth/SC-UCA-W00145_Q01.jsp</result>
+			<result name="Fail">/auth/SC-UCA-W00145_Q01.jsp</result>
+			<result name="Success">/auth/SC-UCA-W00145_Q01.jsp</result>
+		</action>
+		
+	
+ 		<!-- 授權室授權資料登錄 --> 
+		<action name="toQueryCreateAuthorize" method="doNothing" class="proj.nccc.logsearch.struts.ManualAuthorizerActions">
+			<result name="Success">/auth/SC-UCA-W00144_C01.jsp</result>
+		</action>
+		<action name="queryCreateAuthorize" method="queryAuthorize" class="proj.nccc.logsearch.struts.ManualAuthorizerActions">
+			<result name="input">/auth/SC-UCA-W00144_M01.jsp</result>
+			<result name="Fail">/auth/SC-UCA-W00144_C01.jsp</result>
+			<result name="Success">/auth/SC-UCA-W00144_M01.jsp</result>
+		</action>
+		<action name="mAuthorizerGetApproveNo" method="getApproveNo" class="proj.nccc.logsearch.struts.ManualAuthorizerActions">
+			<result name="input">/auth/SC-UCA-W00144_M01.jsp</result>
+			<result name="Fail">/auth/SC-UCA-W00144_M01.jsp</result>
+			<result name="Success">/auth/SC-UCA-W00144_M01.jsp</result>
+		</action>
+		<action name="goBackHomePf8" method="goHome" class="proj.nccc.logsearch.struts.ManualAuthorizerActions">
+			<result name="input">/auth/SC-UCA-W00144_M01.jsp</result>
+			<result name="Fail">/auth/SC-UCA-W00144_M01.jsp</result>
+			<result name="Success">/auth/SC-UCA-W00144_C01.jsp</result>
+		</action>
+		<action name="mAuthorizerCreateAuthorize" method="createAuthorize" class="proj.nccc.logsearch.struts.ManualAuthorizerActions">
+			<result name="input">/auth/SC-UCA-W00144_C01.jsp</result>
+			<result name="Fail">/auth/SC-UCA-W00144_M01.jsp</result>
+			<result name="Success">/auth/SC-UCA-W00144_C01.jsp</result>
+		</action>
+		<action name="authorizerLogQuery" method="authorizerLogQuery" class="proj.nccc.logsearch.struts.AuthLogSupplementActions">
+			<result name="input">/auth/SC-UCA-W00144_M01.jsp</result>
+			<result name="Fail">/jsp/messages.jsp</result>
+			<result name="Success">/auth/SC-UCA-W00145_QL0.jsp</result>
+		</action>		
+
+	</package>
+</struts>
+

@@ -1,0 +1,6 @@
+若要更新Prado版本, 請注意以下事項:
+
+1.	datepicker.js中用到Date的擴充功能定義於scriptaculous-adapter.js中, 但為符合系統使用之pattern(yyyyMMdd), 該擴充功能已移至common.js中,
+	所以必須將scriptaculous-adapter.js中Date擴充功能的javascript去掉.
+2.	因為DatePicker中產生出來的上個月及下個月的button指定了className為'button', 正好與系統使用的style衝突到, 
+	所以必須將datepicker.js中建立上個月及下個月的button時所指定的className裡面的'button'去除.

@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- locale : 設定locale.若未設定locale, 則以系統預設值. variant : locale的variant. encoding 
+	: 本系統預設之encoding, 系統中需要使用編碼功能時, 會以此為預設值, 若未設定, 預設值為MS950 -->
+<app-config encoding="UTF-8">
+	<application-name>ATS LOG 查詢系統</application-name>
+	<resource-bundles>
+		<!-- app-resource 用來設定系統訊息的resource, 設定後即可使用com.edstw.util.AppMessageBundle. -->
+		<app-resource bundle="app-message" />
+		<!-- web-resource 用來設定web訊息的resource, 設定後即可使用com.edstw.web.util.WebMessageBundle, 
+			且JSTL即會自動以之為預設bundle. 此設定只在web application環境下使用. -->
+		<web-resource bundle="web-message" />
+	</resource-bundles>
+	<user-profile class="proj.nccc.logsearch.user.ProjUserProfile">
+		<user-info class="proj.nccc.logsearch.user.ProjUserInfo"
+			default-user-id="test" default-user-name="Test" />
+		<user-task class="com.edstw.nccc.user.NcccUserTask"
+			max-history-records="4" />
+	</user-profile>
+	<data-sources default-data-source-name="LogSearchJdbcLdssDS">
+		<!-- name : DataSource於系統中所使用之名稱. -->
+		<!-- Oracle -->
+		<data-source name="LogSearchStoreJdbcDS">
+			<jndi-name>jdbc/atslog_store_ds</jndi-name>
+		</data-source>
+		<data-source name="LogSearchR6JdbcDS">
+			<jndi-name>jdbc/atslog_R6_ds</jndi-name>
+		</data-source>
+		<data-source name="LogTransJdbcDS">
+			<jndi-name>jdbc/atslog_trans_ds</jndi-name>
+		</data-source>
+		<data-source name="LogSearchJdbcLdssDS">
+			<jndi-name>jdbc/atslog_ldss_ds</jndi-name>
+		</data-source>
+	</data-sources>
+	<!-- 設定JDBC相關介面的filter, 目前共定義四種filter, 自行實作要覆寫之函式後在此設定即可: 為避免造成系統太大effort, 
+		filter中所做之動作應儘可能簡單. ConnectionFilter StatementFilter PreparedStatementFilter 
+		CallableStatementFilter -->
+	<jdbc-filter>
+		<!-- 各個filter下可設定 <filter class-name=""/> 指定實際之filter, filter之執行順序與設定順序有關, 
+			愈早設定的filer會最晚被執行到. 故設定時需注意. -->
+		<connection-filter>
+			<filter class-name="com.edstw.sql.filter.ConnectionLogger" />
+			<filter class-name="com.dxc.nccc.aplog.edstw.sql.ApLogConnectionFilter"/>
+		</connection-filter>
+		<statement-filter>
+			<filter class-name="com.edstw.sql.filter.StatementLogger" />
+		</statement-filter>
+		<prepared-statement-filter>
+			<filter class-name="com.edstw.sql.filter.PreparedStatementLogger" />
+		</prepared-statement-filter>
+		<callable-statement-filter>
+			<filter class-name="com.edstw.sql.filter.CallableStatementLogger" />
+		</callable-statement-filter>
+	</jdbc-filter>
+	<!-- 設定系統中使用的日期格式 lenient : parsing時是否使用寬鬆的條件, 但lenient即使設定為false, 部份字串在做parsing時仍有可能成功, 
+		例如pattern為'yyyyMMdd'時, '2006029'會parsing成2006/2/9 -->
+	<date-setting lenient="false">
+		<!-- DateString的格式設定 -->
+		<date-string input-pattern="yyyyMMdd" persist-pattern="yyyyMMdd"
+			display-pattern="yyyyMMdd" />
+		<date-time-string input-pattern="yyyyMMdd HH:mm:ss"
+			persist-pattern="yyyyMMdd HH:mm:ss" display-pattern="yyyyMMdd HH:mm:ss" />
+		<time-pattern>HH:mm:ss</time-pattern>
+		<full-pattern>yyyyMMdd HH:mm:ss</full-pattern>
+	</date-setting>
+	<!-- 設定Persistence transaction-class : PersistableTransaction的實作類別. 此外在<persistence/>內可利用<param/> 
+		來設定transaciton-manager-factory的相關參數, 實際需設定之參數視各種不同之實作而訂. -->
+	<persistence transaction-manager-factory="com.edstw.persist.impl.PersistableManagerFactoryImpl">
+		<transactional-resources
+			default-transactional-resource-name="LogSearchJdbcLdssDSResource">
+			<transactional-resource name="LogSearchJdbcLdssDSResource"
+				class="com.edstw.persist.jdbc.impl.DataSourceTransactionalResource">
+				<param name="dataSourceName" value="LogSearchJdbcLdssDS" />
+			</transactional-resource>
+		</transactional-resources>
+		<dao-manager>
+			<!-- 設定DAO物件. name: dao名稱, 在程式中需使用此名稱透過DaoManager取得對應之DAO物件. class: dao類別. 
+				transactional-resource-name: 指定此dao物件要使用之TransactionalResource的name. 若未設定, 
+				則會使用預設之transactional resource name. -->
+			<!-- <dao name="paramDao" class="proj.nccc.logsearch.dao.ParamDAO" transactional-resource-name="emsDSResource"/> -->
+		</dao-manager>
+		<!-- 設定StoreManager, 可設定多個 store-manager-class : PersistableManager的實作類別. 
+			此外在<manager/>內可利用<param/> 來設定PersistableManager的相關參數, 實際需設定之參數視各種不同之PersistableManager之實作而訂. -->
+		<store-manager store-manager-class="com.edstw.persist.jdbc.impl.JdbcStoreManagerImpl"
+			transactional-resource-name="LogSearchJdbcLdssDSResource">
+			<!-- 設定Persistable類別及其PersistableStore類別 class : Persistable類別 store : 
+				PersistableStore類別 -->
+			<!-- <persistable class="proj.nccc.logsearch.persist.Authorization"> <store 
+				class="proj.nccc.logsearch.persist.AuthorizationStore"> <param name="generatedKeyProperty" 
+				value="id"/> </store> </persistable> -->
+			<persistable class="com.edstw.nccc.sql.log.AccessLog">
+				<store class="com.edstw.nccc.sql.log.AccessLogStore">
+					<param name="accessLogTableName" value="" />
+				</store>
+			</persistable>
+						
+			 <persistable class="proj.nccc.logsearch.persist.EmvCardType">
+				<store class="proj.nccc.logsearch.persist.EmvCardTypeStore"/>
+			</persistable>
+			
+			<persistable class="proj.nccc.logsearch.persist.EmvCardTypeTemp">
+				<store class="proj.nccc.logsearch.persist.EmvCardTypeTempStore"/>
+			</persistable>
+			
+			<persistable class="proj.nccc.logsearch.persist.EmvUiLog">
+				<store class="proj.nccc.logsearch.persist.EmvUiLogStore"/>
+			</persistable>
+			
+			<persistable class="proj.nccc.logsearch.persist.EmvRefSpec">
+				<store class="proj.nccc.logsearch.persist.EmvRefSpecStore"/>
+			</persistable>
+			
+			<persistable class="proj.nccc.logsearch.persist.EmvRefSpecTemp">
+				<store class="proj.nccc.logsearch.persist.EmvRefSpecTempStore"/>
+			</persistable>
+			
+			<persistable class="proj.nccc.logsearch.persist.EmvTagRecordMaster">
+				<store class="proj.nccc.logsearch.persist.EmvTagRecordMasterStore"/>
+			</persistable>
+			
+			<persistable class="proj.nccc.logsearch.persist.EmvTagRecordDetail">
+				<store class="proj.nccc.logsearch.persist.EmvTagRecordDetailStore"/>
+			</persistable>
+			
+			<persistable class="proj.nccc.logsearch.persist.EmvTagRecordMasterTemp">
+				<store class="proj.nccc.logsearch.persist.EmvTagRecordMasterTempStore"/>
+			</persistable>
+			
+			<persistable class="proj.nccc.logsearch.persist.EmvTagRecordDetailTemp">
+				<store class="proj.nccc.logsearch.persist.EmvTagRecordDetailTempStore"/>
+			</persistable> 
+			
+			<persistable class="proj.nccc.logsearch.persist.AuthAccessLog">
+				<store class="proj.nccc.logsearch.persist.AuthAccessLogStore"/>
+			</persistable> 
+			
+			<persistable class="proj.nccc.logsearch.persist.AuthLogData">
+				<store class="proj.nccc.logsearch.persist.AuthLogDataStore"/>
+			</persistable>
+			
+			<persistable class="proj.nccc.logsearch.persist.ChesgDailyTotals">
+				<store class="proj.nccc.logsearch.persist.ChesgDailyTotalsStore"/>
+			</persistable>
+			
+			<!-- aplog start -->	
+			<persistable class="com.dxc.nccc.aplog.edstw.persist.LogMasterImpl">
+				<store class="com.dxc.nccc.aplog.edstw.persist.LogMasterImplStore">
+					<param name="tableName" value="LOG_MASTER"/>
+				</store>
+			</persistable>
+			<persistable class="com.dxc.nccc.aplog.edstw.persist.LogDetailImpl">
+				<store class="com.dxc.nccc.aplog.edstw.persist.LogDetailImplStore">
+					<param name="tableName" value="LOG_DETAIL"/>
+				</store>
+			</persistable>				
+			<persistable class="com.dxc.nccc.aplog.edstw.persist.LogFunctionState">
+				<store class="com.dxc.nccc.aplog.edstw.persist.LogFunctionStateStore">
+					<param name="tableName" value="LOG_FUNCTION_STATS"/>
+				</store>
+			</persistable>	
+			<!-- aplog end -->
+		</store-manager>
+		<!-- <store-manager store-manager-class="com.edstw.persist.io.IOPersistableManager"> 
+			<persistable class="com.edstw.web.struts.FormFilePersistable" store="com.edstw.web.struts.FormFilePersistableStore"/> 
+			</store-manager> -->
+	</persistence>
+	<!-- 定義系統中所使用之service. default-restricted-records : 針對QueryService, 設定查詢限制筆數的預設值, 
+		若設定為0, 代表無限制. 每個QueryService仍可以使用參數'restrictedRecords'來設定. join-transaction-when-query 
+		: 針對QueryService, 設定執行查詢時是否要加入當時的transaction中. 此為所有QueryService的預設值, 每個QueryService仍可以使用參數'joinTransaction'來設定. -->
+	<services default-restricted-records="0"
+		join-transaction-when-query="true">
+		<!-- 定義各項 Service 的參數. serviceKey : 在 factory 中用來儲max-query-records=存本 
+			Service 的 key, 此值必須與 Constant 中對應之 key 值內容相同. class : Service 的實作類別. 此外在<service/>內可利用<param/> 
+			來設定各Service的相關參數, 實際需設定之參數視各種不同之Service之實作而訂. PS. 若Service是繼承自ConnectionService, 
+			可設定參數'dataSourceName'來指定該Service所使用之data source name, 若未設定, 會使用data-sources中所設定之預設值. 
+			若有設定, 使用者可不必自己於實作時處理參數之設定, 系統會自動將dataSourceName之值設定給ConnectionService物件. -->
+
+		<!-- AP LOG -->
+		<service serviceKey="query.logFunctionState" class="com.dxc.nccc.aplog.edstw.sql.LogFunctionStateQSImpl" />
+		<service serviceKey="proc.logFunctionState" class="com.dxc.nccc.aplog.edstw.proc.LogFunctionStateProcImpl" />
+
+		<service serviceKey="query.SpswReasonCode"
+			class="proj.nccc.logsearch.qs.SpswReasonCodeQSImpl" />
+		<service serviceKey="query.SpswResponseCode"
+			class="proj.nccc.logsearch.qs.SpswResponseCodeSetupQSImpl" />
+		<service serviceKey="query.ChipcardInfo"
+			class="proj.nccc.logsearch.qs.ChipcardInfoQSImpl" />
+		 <service serviceKey="query.EmvCardType"
+			class="proj.nccc.logsearch.qs.EmvCardTypeQSImpl" />
+		<service serviceKey="query.EmvCardTypeTemp"
+			class="proj.nccc.logsearch.qs.EmvCardTypeTempQSImpl" />
+		<service serviceKey="query.EmvUiLog"
+			class="proj.nccc.logsearch.qs.EmvUiLogQSImpl" />
+		<service serviceKey="query.EmvUiLogQuery"
+			class="proj.nccc.logsearch.qs.EmvUiLogQueryQSImpl" />
+		<service serviceKey="query.EmvRefSpec"
+			class="proj.nccc.logsearch.qs.EmvRefSpecQSImpl" />
+		<service serviceKey="query.EmvRefSpecTemp"
+			class="proj.nccc.logsearch.qs.EmvRefSpecTempQSImpl" />
+		<service serviceKey="query.EmvTagRecordMaster"
+			class="proj.nccc.logsearch.qs.EmvTagRecordMasterQSImpl" />
+		<service serviceKey="query.EmvTagRecordMasterTemp"
+			class="proj.nccc.logsearch.qs.EmvTagRecordMasterTempQSImpl" />
+		<service serviceKey="query.EmvTagRecordDetail"
+			class="proj.nccc.logsearch.qs.EmvTagRecordDetailQSImpl" />
+		<service serviceKey="query.EmvTagRecordDetailTemp"
+			class="proj.nccc.logsearch.qs.EmvTagRecordDetailTempQSImpl" />
+		<service serviceKey="query.Parameter"
+			class="proj.nccc.logsearch.qs.ParameterQSImpl" />
+
+		<service serviceKey="query.Nssmbank" class="proj.nccc.logsearch.qs.NssmbankQSImpl">
+			<param name="dataSourceName" value="LogSearchR6JdbcDS" />
+		</service>
+		<service serviceKey="query.MerchantChin"
+			class="proj.nccc.logsearch.qs.MerchantChinQSImpl">
+			<param name="dataSourceName" value="LogSearchStoreJdbcDS" />
+		</service>
+
+		<service serviceKey="query.AtsRejectCodeSetup"
+			class="proj.nccc.logsearch.qs.AtsRejectCodeSetupQSImpl">
+			<param name="dataSourceName" value="LogTransJdbcDS" />
+		</service>
+		<service serviceKey="query.AtsResponseCodeSetup"
+			class="proj.nccc.logsearch.qs.AtsResponseCodeSetupQSImpl">
+			<param name="dataSourceName" value="LogTransJdbcDS" />
+		</service>
+
+		<service serviceKey="query.AtsTransType"
+			class="proj.nccc.logsearch.qs.AtsTransTypeQSImpl">
+			<param name="dataSourceName" value="LogTransJdbcDS" />
+		</service>
+		
+		<service serviceKey="query.AtsCpcMerchant"
+			class="proj.nccc.logsearch.qs.AtsCpcMerchantQSImpl">
+			<param name="dataSourceName" value="LogTransJdbcDS" />
+		</service>
+
+		 <service serviceKey="query.EmvCardTypeSetup"
+			class="proj.nccc.logsearch.qs.EmvCardTypeSetupQSImpl" />
+		
+		<service serviceKey="query.IFESTransTypeMapping"
+			class="proj.nccc.logsearch.qs.IFESTransTypeMappingQSImpl" />
+			
+		<service serviceKey="query.AtslogTransLog"
+			class="proj.nccc.logsearch.qs.AtslogTransLogQSImpl" />
+			
+		<service serviceKey="query.AtslogRawLog"
+			class="proj.nccc.logsearch.qs.AtslogRawLogQSImpl" />
+			
+		<service serviceKey="query.IFESTransLog"
+			class="proj.nccc.logsearch.qs.IFESTransLogQSImpl" />
+			
+		<service serviceKey="query.IFESRawLog"
+			class="proj.nccc.logsearch.qs.IFESRawLogQSImpl" />
+			
+		<service serviceKey="query.LDSSTransLog"
+			class="proj.nccc.logsearch.qs.LDSSTransLogQSImpl" />
+		
+		<service serviceKey="query.LDSSRawLog"
+			class="proj.nccc.logsearch.qs.LDSSRawLogQSImpl" />
+		
+		<service serviceKey="proc.LDSSTransLog"
+			class="proj.nccc.logsearch.proc.LDSSTransLogProcImpl" />
+		
+		<service serviceKey="query.LDSSTransTypeMapping"
+			class="proj.nccc.logsearch.qs.LDSSTransTypeMappingQSImpl" />
+		
+		<service serviceKey="query.MFESCheckoutLog"
+			class="proj.nccc.logsearch.qs.MFESCheckoutLogQSImpl">
+			<param name="dataSourceName" value="LogSearchStoreJdbcDS" />
+		</service>
+		
+		<service serviceKey="query.MFESCheckoutLogGetTermina"
+			class="proj.nccc.logsearch.qs.MFESCheckoutLogGetTerminalQSImpl">
+			<param name="dataSourceName" value="LogTransJdbcDS" />
+		</service>
+		
+		<service serviceKey="proc.MFESCheckoutLog"
+			class="proj.nccc.logsearch.proc.MFESCheckoutLogProcImpl" />
+		
+		<service serviceKey="query.TKSTransTypeMapping"
+			class="proj.nccc.logsearch.qs.TKSTransTypeMappingQSImpl" />
+		
+		<service serviceKey="proc.AtslogTransLog"
+			class="proj.nccc.logsearch.proc.AtslogTransLogProcImpl" />
+		
+		 <service serviceKey="proc.EmvCardType"
+			class="proj.nccc.logsearch.proc.EmvCardTypeProcImpl" />
+		
+		<service serviceKey="proc.EmvCardTypeTemp"
+			class="proj.nccc.logsearch.proc.EmvCardTypeTempProcImpl" />
+
+		<service serviceKey="proc.EmvUiLog"
+			class="proj.nccc.logsearch.proc.EmvUiLogProcImpl" />
+		<service serviceKey="proc.EmvUiLogQuery"
+			class="proj.nccc.logsearch.proc.EmvUiLogQueryProcImpl" />
+		
+		<service serviceKey="proc.EmvRefSpec"
+			class="proj.nccc.logsearch.proc.EmvRefSpecProcImpl" />
+		
+		<service serviceKey="proc.EmvRefSpecTemp"
+			class="proj.nccc.logsearch.proc.EmvRefSpecTempProcImpl" />
+		
+		<service serviceKey="proc.EmvTagRecordMaster"
+			class="proj.nccc.logsearch.proc.EmvTagRecordMasterProcImpl" />
+		
+		<service serviceKey="proc.EmvTagRecordDetail"
+			class="proj.nccc.logsearch.proc.EmvTagRecordDetailProcImpl" />
+		
+		<service serviceKey="proc.EmvTagRecordMasterTemp"
+			class="proj.nccc.logsearch.proc.EmvTagRecordMasterTempProcImpl" />
+		
+		<service serviceKey="proc.EmvTagRecordDetailTemp"
+			class="proj.nccc.logsearch.proc.EmvTagRecordDetailTempProcImpl" />
+		
+		<service serviceKey="proc.IFESTransLog"
+			class="proj.nccc.logsearch.proc.IFESTransLogProcImpl" /> 
+	
+	
+        <service serviceKey="query.authLogData" class="proj.nccc.logsearch.qs.AuthLogDataQSImpl">
+			<param name="joinTransaction" value="false"/>
+		</service>
+		<service serviceKey="proc.authLogData" class="proj.nccc.logsearch.proc.AuthLogDataProcImpl"/>
+		<service serviceKey="query.binBinoParm"
+			class="proj.nccc.logsearch.qs.BinBinoParmQSImpl">
+			<param name="joinTransaction" value="false" />
+		</service>		
+		<service serviceKey="query.binBinoParm"
+			class="proj.nccc.logsearch.qs.BinBinoParmQSImpl">
+			<param name="joinTransaction" value="false" />
+		</service>
+		<service serviceKey="query.binBankParm"
+			class="proj.nccc.logsearch.qs.BinBankParmQSImpl">
+			<param name="joinTransaction" value="false" />
+		</service>		
+        <service serviceKey="query.authRule" class="proj.nccc.logsearch.qs.AuthRuleQSImpl">
+			<param name="joinTransaction" value="false"/>
+		</service> 		
+		<service serviceKey="query.setlBinDatas" class="proj.nccc.logsearch.qs.SetlBinDatasQSImpl">
+			<param name="joinTransaction" value="false"/>
+		</service>		
+		<service serviceKey="query.merchant" class="proj.nccc.logsearch.qs.MerchantQSImpl">
+			<param name="joinTransaction" value="false"/>
+		</service>		
+		<service serviceKey="query.callBankParm" class="proj.nccc.logsearch.qs.CallBankParmQSImpl">
+			<param name="joinTransaction" value="false"/>
+		</service>	
+		<service serviceKey="proc.authBizOut0200" class="proj.nccc.logsearch.proc.AuthBizOut0200ProcImpl"/>
+		
+        <service serviceKey="query.AuthRule" class="proj.nccc.logsearch.qs.AuthRuleQSImpl">
+			<param name="joinTransaction" value="false"/>
+		</service> 		
+		<service serviceKey="query.SetlBinDatas" class="proj.nccc.logsearch.qs.SetlBinDatasQSImpl">
+			<param name="joinTransaction" value="false"/>
+		</service>
+		<service serviceKey="report.authLogReport" class="proj.nccc.logsearch.proc.AuthLogReportProcImpl"/>
+		
+		<!-- Echo Message -->
+		<service serviceKey="proc.echoMessage" class="proj.nccc.logsearch.proc.EchoMessageProcImpl" />
+
+		<service serviceKey="proc.ChesgDailyTotals" class="proj.nccc.logsearch.proc.ChesgDailyTotalsProcImpl" />
+		
+	</services>
+	<!-- 設定系統啟動時, 要預先載入之bean object. 系統中經常使用且可以共用之物件可以在此宣告. 系統啟動後, 裡面宣告的bean物件會以其name所指定的名稱存放在com.edstw.BeanManager中, 
+		使用者可以直接取用. -->
+	<beans>
+		<!-- 定義Application中使用到之Bean物件, 若為com.edstw.bean.BaseBean之子類別, 則可以利用<param/>設定初始參數. 
+			bean-name : 用來在BeanManager中存放物件的key值. bean-class : Bean類別. factory-method 
+			: 若bean為singleton, 可在此指定其factory-method. -->
+		<!-- 各個bean的設定中, 可以<param name="propName" value="propValue"/>來設定bean物件的參數, 
+			若bean類別是繼承自com.edstw.bean.BaseBean, 則參數的設定會透過該類別的setParam介面設定, 若是一般的類別, 則name必須對應至該類別的一個property 
+			name, value則會視該property之型別自動轉型. 此外, 若bean是繼承自com.edstw.bean.TaskBean, 則必須設定<task-info/>, 
+			相關說明請參考<tasks/>中的說明. -->
+		<bean bean-name="paramBean" bean-class="proj.nccc.logsearch.beans.ParamBean"
+			factory-method="getInstance" />
+		<bean bean-name="chipUtil" bean-class="proj.nccc.logsearch.parse.ChipUtil"
+			factory-method="getInstance" />
+		<bean bean-name="isoUtil" bean-class="proj.nccc.logsearch.parse.ISOUtil"
+			factory-method="getInstance" />
+	</beans>
+	<!-- 設定Task, 在此設定之task, 均會以daemon的形式排程執行, 相關說明請參考TaskManager類別之說明. schedule-scan-period 
+		: 設定多久掃描一次(ms)daemon task queue, 設定值應較實際排程之task的間隔時間小, 才能儘可能在最正確的時間執行task. 
+		max-concurrent-instant-task : 系統中同時間執行之instant task的上限數目. instant task相關說明請參考TaskManager類別之說明 -->
+	<tasks schedule-scan-period="60000" max-concurrent-instant-task="1"
+		enable-schedule="true" instant-queue-class="com.edstw.task.InstantTaskQueue"
+		schedule-queue-class="com.edstw.task.ScheduleTaskQueue">
+		<!-- 設定task. class : task的類別. factory-method : 若task為singleton, 可在此指定其factory-method. 
+			<task class="" factory-method=""> <!- 設定Task的TaskInfo task-id : task id task-name 
+			: task-name -> <task-info task-id="" task-name=""> <!- 設定task的schedule start-at 
+			: 第一次啟動時間. format必須為'yyyyMMdd HH:mm:ss', 若設定的時間發生在過去, 則會立即啟動. period-unit 
+			: 間隔時間. task第二次以後之執行時間是依start-at所設定之時間加上間隔的時間. 若第二次以後的時間仍出現在過去, 則會依間隔時間的設定, 
+			自動調整至系統日期之後, 避免連續執行. 此外, 間隔時間的設定, 也應考量task本身執行時間之長短, 若task執行時間超過間隔時間, 則該task將會不斷執行, 
+			影響其他task的執行. period-type : 間隔時間單位類別, 合法值為'second', 'minute', 'hour', 'day', 
+			'week', 'month'跟'year' repeat-count : 執行次數(含第一次). 若設定為0 , 代表不限次數. run-when-outdated 
+			: 設定當start-at所設定的時間發生在過去時, 是否要於系統啟動時先執行一次 -> <schedule start-at="20050801 
+			12:00:00" period-type="minute" period-unit="3" repeat-count="0"/> </task-info> 
+			<!- 設定參數. name : 參數名稱, 必須對應至task中的一個property(必須有setXXX()介面). value : 參數值, 
+			會依照實際task中該property的型別自動轉型. <param name="" value=""/> -> </task> -->
+		<task class="com.edstw.task.bean.CacheableBeanTask">
+			<task-info task-id="paramBeanTask" task-name="Parameter Refresh Task">
+				<schedule start-at="20050101 12:00:00" period-type="hour"
+					period-unit="1" repeat-count="0" run-when-outdated="false" />
+			</task-info>
+			<param name="beanName" value="paramBean" />
+		</task>
+		<task class="com.edstw.task.bean.CacheableBeanTask">
+			<task-info task-id="chipUtilTask" task-name="Chip Util Refresh Task">
+				<schedule start-at="20050101 12:00:00" period-type="hour"
+					period-unit="1" repeat-count="0" run-when-outdated="false" />
+			</task-info>
+			<param name="beanName" value="chipUtil" />
+		</task>
+       <!-- APLOG -->
+		<task class="proj.nccc.logsearch.proc.RefreshServerTokenTask">
+			<task-info task-id="refreshServerTokenTask" task-name="Server task token Refresh Task">
+				<schedule start-at="20190101 00:05:00" period-type="week" period-unit="1" repeat-count="0" run-when-outdated="false"/>
+			</task-info>
+		</task>		
+		<task class="proj.nccc.logsearch.proc.LogFunctionStateTask">
+			<task-info task-id="logFunctionStateTask" task-name="Add log_function_state record">
+				<schedule start-at="20190128 03:05:00" period-type="month" period-unit="1" repeat-count="0" run-when-outdated="false"/>
+			</task-info>
+		</task>
+		
+		<!-- Echo Message -->
+		<task class="proj.nccc.logsearch.proc.EchoMessageTask">
+			<task-info task-id="echoMessageTask" task-name="Echo Message Task">
+				<schedule start-at="20210101 06:00:00" period-type="hour" period-unit="1" repeat-count="0" run-when-outdated="false"/>
+			</task-info>
+		</task>
+		
+		<!-- M2025074_R114117 CHESG Daily Totals -->
+		<task class="proj.nccc.logsearch.proc.ChesgDailyTotalsTask">
+			<task-info task-id="ChesgDailyTotalsTask" task-name="Chesg Daily Totals Task">
+				<schedule start-at="20251201 07:00:00" period-type="day" period-unit="1" repeat-count="0" run-when-outdated="false"/>
+			</task-info>
+		</task>
+	</tasks>
+	<web-info>
+		<script-folder folder="/scripts" />
+		<css-folder folder="/css" />
+		<image-folder folder="/images" />
+	</web-info>
+	<!-- 設定系統啟動時, 要預先載入並存放於ServletContext的物件. 系統啟動後, 裡面宣告的bean物件會以其name所指定的名稱存放在ServletContext中. -->
+	<context-attribute>
+		<!-- 設定要置於ServletContext中的物件. 注意!!若為com.edstw.bean.BaseBean之子類別, 必須在<beans/>中設定, 
+			才會自動呼叫該介面定義之函式. 於此定義之bean物件, 只會當成一般物件處理, 並且不會加入至BeanManager中. name : 用來在ServletContext中存放物件的key值. 
+			bean-class : Bean類別. factory-method : 若bean-class指定之bean為singleton, 可在此指定其factory-method. 
+			ref-bean-name : reference beans中設定之beanName, 若使用refBeanName時, 便無需bean-class的設定. 
+			若沒有指定name, 則會以refBeanName為其名. -->
+		<!-- 當直接以bean-class設定context-attribute中的一個物件時, 可以利用<param/>來設定參數, param同樣可以設定name及value屬性. 
+			name : 變數名稱, 此變數名稱應對應至bean-class指定之class中的一變數名稱. value : 變數值. 會依實際類別中對應變數的型別自動做型別轉換. -->
+		<attribute name="dateUtil" bean-class="com.edstw.util.DateUtil"
+			factory-method="getInstance" />
+		<attribute name="authManager"
+			bean-class="com.edstw.nccc.security.NcccAuthorizationManager"
+			factory-method="getInstance" />
+		<attribute name="menu" bean-class="com.edstw.security.Menu" factory-method="getInstance" />
+<!-- 		<attribute name="menu2" bean-class="com.edstw.security.Menu" factory-method="getInstance" /> -->
+		<attribute ref-bean-name="paramBean" />
+		<attribute name="projConfig" bean-class="proj.nccc.logsearch.ProjConfig"
+			factory-method="getInstance" />
+		<!-- <attribute name="constBean" bean-class="proj.nccc.logsearch.beans.ConstantsBean" 
+			factory-method="getInstance"/> <attribute name="enumBean" bean-class="proj.nccc.logsearch.beans.EnumBean" 
+			factory-method="getInstance"/> <attribute name="authManager" bean-class="proj.nccc.logsearch.security.AuthorizationManager" 
+			factory-method="getInstance"/> <attribute name="menu" bean-class="proj.nccc.logsearch.security.Menu" 
+			factory-method="getInstance"/> -->
+	</context-attribute>
+	<!-- 設定各程式之權限. -->
+	<authorization skip-authorization="false"
+		class="com.edstw.nccc.security.NcccAuthorizationManager">
+		<!-- 參數維護設定 begin -->
+		<!-- program代表的是系統中的某一功能, 此設定檔中可針對一功能的資料維護或查詢(CRUD)作業(即function)權限加以設定, 
+			至於一功能中要包含哪些作業(function)則視需要而定, 例如某一特定資料的維護(CRUD)動作定義於同一program, 並用不同function實作, 
+			亦可分散於不同program中, 只看實際需求而定. 在program中需要針對該program下所會用到的所有function做設定, function代表一功能下的各種作業項目或CRUD功能, 
+			其需設定之參數如下: id: 整個系統中必須唯一. name: 作業名稱 function-value : 代表此作業的型態, 也相當於執行本作業所需之權限, 
+			合法值如下: 0 : 無需權限 1 : 修改 2 : 刪除 4 : 新增 8 : 作業權限/查詢 16: 覆核 除了無需權限之function外, 
+			在一program下, 一種權限只能定義一個function. ldap-func-id: 在NCCC環境下的function id. 注意, 在NCCC環境下, 
+			以下program的設定順序必須與LDAP上權限之設定順序一致. -->
+
+		<program id="LOGSEARCH-TRANS-001" name="交易Log查詢" ldap-func-id="A001" ldap-order="1">
+			<function id="LOGSEARCH-TRANS-001_Q01" name="交易Log查詢"
+				function-value="8">
+				<action entry="true">/trans/toQueryTransLog.do</action>
+				<action>/trans/queryTransLog.do</action>
+				<action>/trans/queryTransLogRpt.do</action>
+				<action>/trans/queryTransLogRptAll.do</action>
+				<action>/trans/queryTransLogIC.do</action>
+				<action>/trans/parseFixedCode.do</action>
+				<action>/trans/parseISOCode.do</action>
+				<action>/trans/parseICCode.do</action>
+				<action>/trans/praseETData.do</action>
+				<action>/trans/showETData.do</action>
+				<action>/trans/parseUnyCode.do</action>
+				<action>/trans/parseTrustCode.do</action>
+			</function>
+		</program>
+
+		<program id="LOGSEARCH-TRANS-010" name="交易Log查詢-可看到完整卡號" ldap-func-id="A012" ldap-order="11">
+			<function id="LOGSEARCH-TRANS-001_Q02" name="交易Log查詢-可看到完整卡號" function-value="8">
+				<action entry="true">/trans/checkingShowCardNo.do</action>
+			</function>
+		</program>
+
+		<program id="LOGSEARCH-TRANS-011" name="交易Log查詢-可查看ISO內容" ldap-func-id="A013" ldap-order="12">
+			<function id="LOGSEARCH-TRANS-001_Q03" name="交易Log查詢-可查看ISO內容" function-value="8">
+				<action entry="true">/trans/queryTransLogISO.do</action>
+				<action>/trans/checkingShowISO.do</action>
+			</function>
+		</program>
+
+		<program id="LOGSEARCH-TRANS-002" name="交易編號還原" ldap-func-id="A002" ldap-order="2">
+			<function id="LOGSEARCH-TRANS-002_Q01" name="交易編號還原" function-value="8">
+			    <action entry="true">/trans/toReverseTransNo.do</action>
+				<action>/trans/rverseTransNo.do</action>		 				 	
+			</function>
+		</program>
+		
+ 		<program id="LOGSEARCH-TRANS-005" name="IFES Log查詢" ldap-func-id="A006" ldap-order="5">
+			<function id="LOGSEARCH-TRANS-005_Q01" name="IFES Log查詢"
+				function-value="8">
+				<action entry="true">/trans/toQueryIFESTransLog.do</action>
+				<action>/trans/queryIFESTransLog.do</action>
+			</function>
+			<function id="LOGSEARCH-TRANS-005_Q02" name="IFES Log查詢"
+				function-value="32">
+				<action>/trans/checkingIFESShowCardNo.do</action>
+			</function>
+			<function id="LOGSEARCH-TRANS-005_Q03" name="IFES Log查詢"
+				function-value="4">
+				<action>/trans/queryIFESTransLogISO.do</action>
+				<action>/trans/checkingIFESShowISO.do</action>
+			</function>
+		</program>
+		
+ 		<program id="LOGSEARCH-TRANS-008" name="LDSS Log查詢" ldap-func-id="A008" ldap-order="7">
+			<function id="LOGSEARCH-TRANS-008_Q01" name="LDSS Log查詢"
+				function-value="8">
+				<action entry="true">/trans/toQueryLDSSTransLog.do</action>
+				<action>/trans/queryLDSSTransLog.do</action>
+				<action>/trans/parseLDSSData.do</action>
+			</function>
+			<function id="LOGSEARCH-TRANS-008_Q02" name="LDSS Log查詢"
+				function-value="32">
+				<action>/trans/checkingLDSSShowCardNo.do</action>
+			</function>
+			<function id="LOGSEARCH-TRANS-008_Q03" name="LDSS Log查詢"
+				function-value="4">
+				<action>/trans/queryLDSSTransLogISO.do</action>
+				<action>/trans/parseDCCData.do</action>
+				<action>/trans/parseE1E2Data.do</action>
+				<action>/trans/checkingLDSSShowISO.do</action>
+			</function>
+		</program>
+		
+ 		 <program id="LOGSEARCH-TRANS-009" name="MFES未結帳端末機查詢" ldap-func-id="A009" ldap-order="8">
+			<function id="LOGSEARCH-TRANS-009_Q01" name="MFES未結帳端末機查詢" function-value="8">
+			    <action entry="true">/trans/toQueryMFESCheckout.do</action>
+			    <action>/trans/queryMFESCheckout.do</action>
+			</function>
+		</program>
+		
+		<program id="LOGSEARCH-TRANS-003" name="AE交易Log查詢" ldap-func-id="A003" ldap-order="3">
+			<function id="LOGSEARCH-TRANS-003_Q01" name="AE交易Log查詢"
+				function-value="8">
+				<action entry="true">/trans/toQueryAETransLog.do</action>
+				<action>/trans/queryAETransLog.do</action>
+				<action>/trans/queryAETransLogRpt.do</action>
+				<action>/trans/queryAETransLogRptAll.do</action>
+				<action>/trans/queryAETransLogIC.do</action>
+				<action>/trans/parseAEFixedCode.do</action>
+				<action>/trans/parseAEISOCode.do</action>
+				<action>/trans/parseAEICCode.do</action>
+			</function>
+			<function id="LOGSEARCH-TRANS-003_Q03" name="AE交易Log查詢"
+				function-value="4">
+				<action>/trans/queryAETransLogISO.do</action>
+				<action>/trans/checkingAEShowISO.do</action>
+			</function>
+			<function id="LOGSEARCH-TRANS-003_Q02" name="AE交易Log查詢"
+				function-value="32">
+				<action>/trans/checkingAEShowCardNo.do</action>
+			</function>
+		</program>
+		
+		<program id="LOGSEARCH-TRANS-004" name="併機代號查詢" ldap-func-id="A004" ldap-order="4">
+			<function id="LOGSEARCH-TRANS-004_Q01" name="併機代號查詢" function-value="8">
+			    <action entry="true">/trans/toTransformCPCNo.do</action>
+				<action>/trans/transformCPCNo.do</action>		 				 	
+			</function>
+		</program>
+	
+		<program id="EMV-SEARCH-001" name="晶片資料查詢" ldap-func-id="A007" ldap-order="6">
+		    <function id="EMV-SEARCH-001_Q03" name="EMV新增" function-value="4">
+		        <action>/emv/toEmvTagRecordCreate.do</action>
+			 	<action>/emv/createEmvTagRecord.do</action>
+		    </function>
+		    <function id="EMV-SEARCH-001_Q04" name="EMV修改" function-value="1">
+		        <action>/emv/toEmvTagRecordModQuery.do</action>
+			 	<action>/emv/queryEmvTagRecordMod.do</action>
+			 	<action>/emv/toModifyEmvTagRecord.do</action>	
+			 	<action>/emv/modifyEmvTagRecord.do</action>
+		    </function>
+		    <function id="EMV-SEARCH-001_Q05" name="EMV刪除" function-value="2">
+		        <action>/emv/toEmvTagRecordDelQuery.do</action>	
+			 	<action>/emv/queryEmvTagRecordDel.do</action>
+			 	<action>/emv/deleteEmvTagRecord.do</action>
+		    </function>
+			<function id="EMV-SEARCH-001_Q01" name="EMV查詢" function-value="8">
+				<action entry="true">/emv/toEmvQuery.do</action>
+			 	<action>/emv/toEmvIndex.do</action>		 	
+				<action>/emv/queryEmvCardType.do</action>
+			 	<action>/emv/toMaintainEmvCardType.do</action>
+			 	<action>/emv/toCreateEmvCardType.do</action>
+			 	<action>/emv/createEmvCardType.do</action>
+			 	<action>/emv/toModifyEmvCardType.do</action>
+			 	<action>/emv/modifyEmvCardType.do</action>
+			 	<action>/emv/deleteEmvCardType.do</action>			 	
+			 	<action>/emv/toEmvUiLogQuery.do</action>			 	
+			 	<action>/emv/toMaintainEmvRefSpec.do</action>
+			 	<action>/emv/queryEmvRefSpec.do</action>
+			 	<action>/emv/toCreateEmvRefSpec.do</action>
+			 	<action>/emv/createEmvRefSpec.do</action>
+			 	<action>/emv/toModifyEmvRefSpec.do</action>
+			 	<action>/emv/modifyEmvRefSpec.do</action>
+			 	<action>/emv/deleteEmvRefSpec.do</action>	 	
+			 	<action>/emv/queryEmvUiLogList.do</action>
+			 	<action>/emv/toEmvTagRecordQuery.do</action>
+			 	<action>/emv/queryEmvTagRecord.do</action>	
+			 	<action>/emv/toShowDetail.do</action>
+			 	<action>/emv/toEmvCardTypeTemp.do</action>
+			 	<action>/emv/queryEmvCardTypeTemp.do</action>
+			 	<action>/emv/toEmvRefSpecTemp.do</action>	
+			    <action>/emv/queryEmvRefSpecTemp.do</action>
+			    <action>/emv/toEmvTagRecordTemp.do</action>
+			    <action>/emv/queryEmvTagRecordTemp.do</action>
+			    <action>/emv/toShowModDetail.do</action>
+			</function>
+			<function id="EMV-SEARCH-001_Q02" name="EMV覆核" function-value="32">
+			    <action>/emv/approveEmvCardTypeTemp.do</action>
+			 	<action>/emv/rejectEmvCardTypeTemp.do</action>			 	
+			 	<action>/emv/approveEmvRefSpecTemp.do</action>
+			 	<action>/emv/rejectEmvRefSpecTemp.do</action>		 	
+			    <action>/emv/approveEmvTagRecordTemp.do</action>
+			    <action>/emv/rejectEmvTagRecordTemp.do</action>		    
+			</function>
+			<function id="EMV-SEARCH-001_Q06" name="待辦事項" function-value="0">
+			    <action>/emv/toBeApprove.do</action>
+			</function>
+		</program> 
+		
+		<program id="LOGSEARCH-TRANS-006" name="授權室授權資料登錄" ldap-func-id="A010" ldap-order="9">
+			<function id="LOGSEARCH-TRANS-006_Q01" name="授權室授權資料登錄" function-value="4">
+				<action entry="true">/auth/toQueryCreateAuthorize.do</action>
+				<action>/auth/queryCreateAuthorize.do</action>
+				<action>/auth/mAuthorizerGetApproveNo.do</action>
+                <action>/auth/mAuthorizerCreateAuthorize.do</action>
+                <action>/auth/authorizerLogQuery.do</action>
+                <action>/auth/goBackHomePf8.do</action>
+			</function>				
+		</program>
+		
+		<program id="LOGSEARCH-TRANS-007" name="信用卡授權交易資料查詢" ldap-func-id="A011" ldap-order="10">
+			<function id="LOGSEARCH-TRANS-007_Q01" name="信用卡授權交易資料查詢" function-value="8">
+				<action entry="true">/auth/toQueryAuthLogByAuthTrans.do</action>
+				<action>/auth/queryAuthLogByAuthTrans.do</action>
+				<action>/auth/queryAuthLogAuthTransReport.do</action>				
+			</function>
+		</program>
+
+		<program id="LOGSEARCH-TRANS-012" name="數位化簽帳單查詢" ldap-func-id="A014" ldap-order="13">
+			<function id="LOGSEARCH-TRANS-012_Q01" name="數位化簽帳單查詢" function-value="8">
+				<action entry="true">/report/toQueryChesg.do</action>
+				<action>/report/queryChesg.do</action>
+				<action>/report/queryChesgRpt.do</action>
+			</function>
+		</program>
+
+		<program id="OTHER" name="其他無需權限功能" non-ldap-func="true">
+			<function id="downloadTemplate" name="樣版檔案下載"
+				function-value="0">
+				<action entry="true">/downloadTemplate.do</action>
+			</function>
+		</program>
+		<program id="PREF" name="個人喜好設定" non-ldap-func="true">
+			<function id="uiconfig" name="個人喜好設定" function-value="0">
+				<action entry="true">/toUIConfig.do</action>
+			</function>
+		</program>
+		<program id="AJAX" name="Ajax功能" non-ldap-func="true">
+			<function id="query_options" name="選項查詢" function-value="0">
+				<action entry="true">/ajax/queryOptions.do</action>
+				<action>/ajax/queryTranTypeOptionsFromMti.do</action>
+				<action>/ajax/queryTranTypeOptionsFromHost.do</action>
+				<action>/ajax/queryBankBase.do</action>
+				<action>/ajax/queryMchtBase.do</action>
+			</function>
+		</program>
+	</authorization>
+	<!-- 設定menu. not-authorized : 設定未被授權的項目要如何顯示. 合法值為 : 'hide' : 隱藏不顯示. 'show' 
+		: 顯示. 'disable' : 顯示, 但不能連結. -->
+	<menu not-authorized="disable">
+		<!-- group代表menu中的一個folder, 可用來做功能的分類. program-id : 對應到權限設定裡的program id, 
+			代表此group對應到該program, 本group的名稱會直接套用該program所設定之名稱. name : 若沒有指定program-id時, 
+			代表要自訂一個group, 便可使用name來指定其名稱. -->
+		<!-- <group name="端末機管理系統"> <!- item代表一個實際可連結的項目. 可置於group中, 也可置於menu之下. 
+			program-id : 對應到權限設定裡的program id, 代表此item對應到該program, 本item的名稱會直接套用該program所設定之名稱. 
+			function-id : 指定本項目對應之作業, 此參數必須指定, 在menu顯示時, 此item便會以指定之function中的entry action的url為其連結. 
+			若未指定program-id時, 則本item的名稱會直接套用該function所設定之名稱. open-on-start : 若為true, 使用者登入後自動打開此一連結. 
+			整個menu中只能有一個item設定為true. -> </group> -->
+		<group name="交易Log查詢">
+			<item program-id="LOGSEARCH-TRANS-001" function-id="LOGSEARCH-TRANS-001_Q01" />
+			<item program-id="LOGSEARCH-TRANS-002" function-id="LOGSEARCH-TRANS-002_Q01" />
+			 <item program-id="EMV-SEARCH-001" function-id="EMV-SEARCH-001_Q01" />
+			<item program-id="LOGSEARCH-TRANS-005" function-id="LOGSEARCH-TRANS-005_Q01" /> 
+			<item program-id="LOGSEARCH-TRANS-008" function-id="LOGSEARCH-TRANS-008_Q01" /> 
+			<item program-id="LOGSEARCH-TRANS-009" function-id="LOGSEARCH-TRANS-009_Q01" /> 
+		</group>
+		<group name="AE交易Log查詢">
+			<item program-id="LOGSEARCH-TRANS-003" function-id="LOGSEARCH-TRANS-003_Q01" />
+			<item program-id="LOGSEARCH-TRANS-004" function-id="LOGSEARCH-TRANS-004_Q01" />
+		</group>
+		<group name="人工授權作業">
+			<item program-id="LOGSEARCH-TRANS-006" function-id="LOGSEARCH-TRANS-006_Q01" />
+			<item program-id="LOGSEARCH-TRANS-007" function-id="LOGSEARCH-TRANS-007_Q01" />
+		</group>
+		<group name="報表">
+			<item program-id="LOGSEARCH-TRANS-012" function-id="LOGSEARCH-TRANS-012_Q01" />
+		</group>
+	</menu>
+
+	<single-sign-on app-id="AP004" auth-type-number="5"
+		skip-ldap="false" default-auth-value="63">
+		<new-user-listener>proj.nccc.logsearch.user.ProjUserProfileListener
+		</new-user-listener>
+	</single-sign-on>
+	<!--  @{skipLdap}@設定access log的功能. class: 設定AccessLog的實際類別, 必須繼承自com.edstw.nccc.sql.log.AccessLog. 
+		enable-query-log: 是否開啟query log的功能, 合法值為true/false, 代表開啟/關閉此功能. enable-update-log: 
+		是否開啟update log的功能, 合法值為true/false, 代表開啟/關閉此功能. enable-entry-log: 是否開啟entry 
+		log的功能(當使用者執行功能時會針對其執行的程式於進入點做log), 合法值為true/false, 代表開啟/關閉此功能, 若設為true, 
+		仍要在web.xml中定義EntryLogFilter才能正確做log. ignore-system-query: 是否忽略system user的查詢動作. 
+		ignore-system-update: 是否忽略system user的更新動作. include-app-id: log的資訊中是否包含application 
+		id. image-length: 設定代表資料的image字串長度. 預設為4000. value-separator: 製作image字串時, 
+		用來分隔不同欄位值的分隔字元, 'TAB'代表以tab字元為分隔字元. apply-to-all-table: access log的設定是否套用到所有table. 
+		若為false, 則必須設定哪些table需要做access log, 若沒有設定table, 相當於關閉了access log的功能. 若為true, 
+		則table的設定將會被忽略, 全部套用預設值. 但實際上會不會做log, 需視實作之程式有無符合做access log的規範. -->
+		<access-log class="com.edstw.nccc.sql.log.AccessLog" enable-query-log="false" enable-command-log="false" enable-update-log="false" enable-entry-log="false" ignore-system-query="false" ignore-system-update="false"
+			 include-app-id="false" image-length="4000" value-separator="TAB" apply-to-all-table="false">
+	
+	<!-- <access-log class="com.edstw.nccc.sql.log.AccessLog"
+		enable-query-log="false" enable-update-log="false" enable-entry-log="false"
+		ignore-system-query="true" ignore-system-update="true" include-app-id="false"
+		image-length="4000" value-separator="TAB" apply-to-all-table="true"> -->
+		<!-- 設定個別table的access log設定, 若apply-to-all-table為true時, 此設定會被忽略. table-name: 
+			table name enable-query-log: 是否針對此table開啟query log功能, 但若access log的enable-query-log設定為false時, 
+			此處即使設定也true也會被忽略. enable-update-log: 是否針對此table開啟update log功能, 但若access log的enable-update-log設定為false時, 
+			此處即使設定也true也會被忽略. -->
+		<!-- <table table-name="TMS_MEMV_CONTACT" enable-query-log="false" enable-update-log="false"/> -->
+	</access-log>
+	<customize-setting class="proj.nccc.logsearch.ProjConfig"
+		config-file="/WEB-INF/conf/proj-config.xml" factory-method="getInstance" />
+</app-config>

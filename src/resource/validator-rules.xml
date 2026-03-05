@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.4.0//EN" "http://jakarta.apache.org/commons/dtds/validator_1_4_0.dtd">
+
+<!--
+    Document   : validator-rules.xml
+    Created on : 2005年10月3日, 下午 6:35
+    Author     : 許欽程/Vincent Shiu
+    Description:
+        Validator Rules
+    =====================================================================================================
+    $Id$
+    =====================================================================================================
+-->
+<!--
+  $Id$
+
+   This file contains the default Struts Validator pluggable validator
+   definitions.  It should be placed somewhere under /WEB-INF and
+   referenced in the struts-config.xml under the plug-in element
+   for the ValidatorPlugIn.
+
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,
+                                                  /WEB-INF/validation.xml"/>
+      </plug-in>
+
+   These are the default error messages associated with
+   each validator defined in this file.  They should be
+   added to your projects ApplicationResources.properties
+   file or you can associate new ones by modifying the
+   pluggable validators msg attributes in this file.
+
+   # Struts Validator Error Messages
+   errors.required={0} is required.
+   errors.minlength={0} can not be less than {1} characters.
+   errors.maxlength={0} can not be greater than {1} characters.
+   errors.invalid={0} is invalid.
+
+   errors.byte={0} must be a byte.
+   errors.short={0} must be a short.
+   errors.integer={0} must be an integer.
+   errors.long={0} must be a long.
+   errors.float={0} must be a float.
+   errors.double={0} must be a double.
+
+   errors.date={0} is not a date.
+   errors.range={0} is not in the range {1} through {2}.
+   errors.creditcard={0} is an invalid credit card number.
+   errors.email={0} is an invalid e-mail address.
+
+   Note: Starting in Struts 1.2.0 the default javascript definitions have
+         been consolidated to commons-validator. The default can be overridden
+         by supplying a <javascript> element with a CDATA section, just as
+         in struts 1.1.
+
+-->
+
+<form-validation>
+   <global>
+       <validator name="mchtNo"
+            classname="com.edstw.nccc.struts2.commonsvalidator.NcccValidationRules"
+               method="validateMchtNo"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+                  msg="validator.errors.mchtNo"/>
+     <validator name="noUnicode"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateNoUnicode"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+                  msg="validator.errors.noUnicode"/>
+				  
+     <validator name="maxByteLength"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateMaxByteLength"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+                  msg="validator.errors.maxByteLength"/>
+				  
+     <validator name="options"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateOptions"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+                  msg="validator.errors.options"/>
+				  
+     <validator name="multipleField"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateMultipleField"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+                  msg="validator.errors.multipleField"/>
+				  
+     <validator name="nChooseM"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateNChooseM"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+                  msg="validator.errors.nChooseM"/>
+				  
+      <validator name="uniformNo"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateUniformNo"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+                  msg="validator.errors.uniformNo"/>
+				  
+      <validator name="personID"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validatePersonID"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+                  msg="validator.errors.personID"/>
+				  
+      <validator name="yearMonth"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateYearMonth"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+                  msg="validator.errors.yearMonth"/>
+				  
+      <validator name="dateFormat"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateDateFormat"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+                  msg="validator.errors.date"/>
+				  
+      <validator name="dateBefore"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateDateBefore"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends="dateFormat"
+                  msg="validator.errors.date.before"/>
+				  
+      <validator name="dateAfter"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateDateAfter"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends="dateFormat"
+                  msg="validator.errors.date.after"/>
+				  
+      <validator name="dateEquals"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateDateEquals"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends="dateFormat"
+                  msg="validator.errors.date.equals"/>
+
+      <validator name="required"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateRequired"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+                  msg="validator.errors.required"/>
+
+      <validator name="requiredif"
+			classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateRequiredIf"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+                 msg="validator.errors.required"/>
+
+      <validator name="validwhen"
+            classname="org.apache.struts.validator.validwhen.ValidWhen"
+			   method="validateValidWhen"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+				 msg="validator.errors.validwhen"/>
+
+      <validator name="minlength"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateMinLength"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends=""
+                  msg="validator.errors.minlength"
+           jsFunction="org.apache.commons.validator.javascript.validateMinLength"/>
+
+      <validator name="maxlength"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateMaxLength"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends=""
+                  msg="validator.errors.maxlength"
+           jsFunction="org.apache.commons.validator.javascript.validateMaxLength"/>
+
+
+
+      <validator name="mask"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateMask"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends=""
+                  msg="validator.errors.invalid"/>
+
+
+      <validator name="byte"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateByte"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends=""
+                  msg="validator.errors.byte"
+       jsFunctionName="ByteValidations"/>
+
+
+      <validator name="short"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateShort"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends=""
+                  msg="validator.errors.short"
+       jsFunctionName="ShortValidations"/>
+
+
+      <validator name="integer"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateInteger"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends=""
+                  msg="validator.errors.integer"
+       jsFunctionName="IntegerValidations"/>
+
+
+
+      <validator name="long"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateLong"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends=""
+                  msg="validator.errors.long"/>
+
+
+      <validator name="float"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateFloat"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends=""
+                  msg="validator.errors.float"
+       jsFunctionName="FloatValidations"/>
+
+      <validator name="double"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateDouble"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends=""
+                  msg="validator.errors.double"/>
+
+
+      <validator name="date"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateDate"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends=""
+                  msg="validator.errors.date"
+       jsFunctionName="DateValidations"/>
+
+
+      <validator name="intRange"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateIntRange"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends="integer"
+                  msg="validator.errors.range"/>
+
+
+      <validator name="floatRange"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateFloatRange"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends="float"
+                  msg="validator.errors.range"/>
+
+      <validator name="doubleRange"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateDoubleRange"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends="double"
+                  msg="validator.errors.range"/>
+
+
+      <validator name="creditCard"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateCreditCard"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends=""
+                  msg="validator.errors.creditcard"/>
+
+
+      <validator name="email"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateEmail"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends=""
+                  msg="validator.errors.email"/>
+
+      <validator name="url"
+            classname="com.edstw.struts2.commonsvalidator.CommonsValidationRule"
+               method="validateUrl"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.commons.validator.Validator"
+              depends=""
+                  msg="validator.errors.url"/>
+     <!--
+       This simply allows struts to include the validateUtilities into a page, it should
+       not be used as a validation rule.
+     -->
+     <validator name="includeJavaScriptUtilities"
+            classname=""
+               method=""
+         methodParams=""
+              depends=""
+                  msg=""
+           jsFunction="org.apache.commons.validator.javascript.validateUtilities"/>
+
+   </global>
+
+</form-validation>

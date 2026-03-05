@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ISO8583-config SYSTEM "iso8583.dtd">
+<ISO8583-config encoding="BIG5">
+	<header length="5" ref="default">TPDU</header>
+	<parse id="default" desc="通用規格">
+		<field num="3" type="NUMERIC" length="6" desc="Processing Code" />
+		<field num="11" type="NUMERIC" length="6" desc="System Trace Audit Number" />
+        <field num="12" type="TIME" desc="Time, Local Transaction" />
+        <field num="13" type="DATE4" desc="Date, Local Transaction" />
+		<field num="24" type="NUMERIC" length="3" desc="Network International Identifier" />
+		<field num="39" type="ALPHA" length="2" desc="Response Code" />
+		<field num="41" type="ALPHA" length="8" desc="Card Acceptor Terminal Identification" />
+		<field num="42" type="ALPHA" length="15" desc="Card Acceptor Identification Code" />
+		<field num="58" type="LLLVAR" desc="Reserved – Private Data" ref="f58" />
+		<field num="61" type="LLLVAR" desc="Reserved – Private Data" />
+	</parse>
+	<parse id="f58" desc="Batch Totals for Close Batch">
+		<field num="1" type="ALPHA" length="8" desc="Host Date (TMS)" />
+		<field num="2" type="ALPHA" length="6" desc="Host Time (TMS)" />
+		<field num="3" type="ALPHA" length="1" desc="Download Flag" />
+		<field num="4" type="ALPHA" length="1" desc="Download Scope" />
+		<field num="5" type="ALPHA" length="15" desc="Download TEL" />
+		<field num="6" type="ALPHA" length="8" desc="Schedule Date" />
+		<field num="7" type="ALPHA" length="6" desc="Schedule Time" />
+	</parse>
+</ISO8583-config>
